@@ -1,7 +1,7 @@
 //package com.vo.movie.collector.parser.impl
 //
 //import com.vo.movie.collector.parser.MovieParser
-//import com.vo.movie.commons.dto.Movie
+//import com.vo.movie.collector.dto.Movie
 //import org.jsoup.nodes.Document
 //
 //class KinopoiskMovieParser : MovieParser {

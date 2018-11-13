@@ -3,22 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.vo.movie</groupId>
-    <artifactId>collector</artifactId>
+    <artifactId>movie-collector</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>movie-collector</name>
 
     <parent>
-        <groupId>com.vo</groupId>
+        <groupId>com.vo.movie</groupId>
         <artifactId>movie-forecast</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <properties>
-        <org.jsoup>1.9.1</org.jsoup>
-    </properties>
 
     <profiles>
         <profile>
@@ -30,12 +25,9 @@
     </profiles>
 
     <dependencies>
-
-        <!--Commons-dto-->
         <dependency>
-            <groupId>com.vo.movie.commons</groupId>
-            <artifactId>dto</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>page-reader</artifactId>
         </dependency>
 
         <!--Spring-->
@@ -53,7 +45,6 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>${org.jsoup}</version>
         </dependency>
 
         <!--Swagger-->
@@ -70,6 +61,10 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

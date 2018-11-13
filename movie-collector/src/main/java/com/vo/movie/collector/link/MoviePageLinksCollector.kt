@@ -1,6 +1,5 @@
 package com.vo.movie.collector.link
 
-import org.jsoup.nodes.Document
 import java.time.LocalDate
 
 interface MoviePageLinksCollector {

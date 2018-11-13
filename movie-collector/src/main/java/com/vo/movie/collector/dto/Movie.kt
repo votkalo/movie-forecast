@@ -1,4 +1,4 @@
-package com.vo.movie.commons.dto
+package com.vo.movie.collector.dto
 
 data class Movie(val title: String) {
 
