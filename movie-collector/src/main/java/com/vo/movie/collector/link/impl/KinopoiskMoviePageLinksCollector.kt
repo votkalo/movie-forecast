@@ -2,6 +2,8 @@ package com.vo.movie.collector.link.impl
 
 import com.vo.movie.collector.link.MoviePageLinksCollector
 import com.vo.movie.page.reader.api.PageReaderApi
+import com.vo.movie.page.reader.dto.PageRequest
+import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,7 +22,7 @@ class KinopoiskMoviePageLinksCollector(private val pageReaderApi: PageReaderApi)
     }
 
     private fun getAllLinks(url: String): List<String> {
-        val document = pageReaderApi.getPageContent(url)
+        val document = Jsoup.parse(pageReaderApi.getPage(PageRequest(url, true)).html)
         return document.select(cssElementSelector).map { urlPrefix + it.attr(cssElementAttribute) }
     }
 }

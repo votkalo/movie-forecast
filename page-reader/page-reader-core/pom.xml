@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-collector</artifactId>
+    <artifactId>page-reader-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>movie-collector</name>
+    <name>page-reader-core</name>
 
     <parent>
+        <artifactId>page-reader</artifactId>
         <groupId>com.vo.movie</groupId>
-        <artifactId>movie-forecast</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -19,8 +20,19 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
+            <artifactId>feign-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
             <artifactId>page-reader-feign</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <!--Feign-->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
         </dependency>
 
         <!--Spring-->
@@ -28,21 +40,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!--Jsoup-->
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
         <!--Kotlin-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
         </dependency>
     </dependencies>
 
@@ -78,6 +84,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
