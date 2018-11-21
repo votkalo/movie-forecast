@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class KinopoiskMoviePageLinksCollector(private val pageReaderApi: PageReaderApi) : MoviePageLinksCollector {
 
+    //TODO: move into properties
     private val urlPrefix: String = "https://www.kinopoisk.ru"
     private val urlTemplate: String = "$urlPrefix/premiere/ru/%d/month/%d/"
     private fun createUrl(month: Int, year: Int): String = String.format(urlTemplate, year, month)
