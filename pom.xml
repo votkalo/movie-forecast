@@ -32,7 +32,6 @@
 
     <modules>
         <module>movie-collector</module>
-        <module>movie-db</module>
         <module>movie-commons</module>
         <module>page-reader</module>
     </modules>
