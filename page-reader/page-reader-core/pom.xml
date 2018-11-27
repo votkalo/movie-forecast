@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>page-reader-feign</artifactId>
+            <artifactId>page-reader-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 

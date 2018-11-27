@@ -1,6 +1,7 @@
 package com.vo.movie.collector.service.impl
 
 import com.vo.movie.collector.configuration.ParserProperties
+import com.vo.movie.collector.dto.Movie
 import com.vo.movie.collector.parser.MovieParser
 import com.vo.movie.collector.service.MovieCollector
 import com.vo.movie.page.reader.api.PageReaderApi
@@ -15,25 +16,30 @@ class KinopoiskMovieCollector(private val pageReaderApi: PageReaderApi,
                               private val movieParser: MovieParser,
                               parserProperties: ParserProperties) : MovieCollector {
 
-    private val kinopoisk: ParserProperties.Resource
-    private val premieres: ParserProperties.Resource.Properties
-
-    init {
-        kinopoisk = parserProperties.kinopoisk!!
-        premieres = kinopoisk.premieres!!
-    }
+    private val kinopoisk: ParserProperties.Resource = parserProperties.kinopoisk!!
 
     override fun collectMovies(month: Int, year: Int) {
-        val premieresUrl: String = createPremieresUrl(month, year)
-        val premieresPageResponse: PageResponse = pageReaderApi.getPage(PageRequest(premieresUrl, true))
-        val premieresDocument: Document = Jsoup.parse(premieresPageResponse.html)
-        val premiereURLs: List<String> = movieParser.getPremiereURLs(premieresDocument)
-        premiereURLs.forEach {
-            val premierePageResponse: PageResponse = pageReaderApi.getPage(PageRequest(it))
-            val premiereDocument: Document = Jsoup.parse(premierePageResponse.html)
-            //TODO: parse premiere
-        }
+        val premieresURL: String = createPremieresUrl(month, year)
+        val premiereURLs: List<String> = getPremiereURLs(premieresURL)
+        collectMovies(premiereURLs)
     }
 
-    private fun createPremieresUrl(month: Int, year: Int): String = String.format(premieres.urlTemplate!!, year, month)
+    private fun createPremieresUrl(month: Int, year: Int): String =
+        String.format(kinopoisk.premieres?.urlTemplate!!, year, month)
+
+    private fun getPremiereURLs(premieresURL: String): List<String> {
+        val premieresPageResponse: PageResponse = pageReaderApi.getPage(PageRequest(premieresURL, true))
+        val premieresDocument: Document = Jsoup.parse(premieresPageResponse.html)
+        return movieParser.getPremiereURLs(premieresDocument)
+    }
+
+    private fun collectMovies(premiereURLs: List<String>): List<Movie> {
+        return premiereURLs.map {
+            val premierePageResponse: PageResponse = pageReaderApi.getPage(PageRequest(it))
+            val premiereDocument: Document = Jsoup.parse(premierePageResponse.html)
+            val movie = movieParser.getMovie(premiereDocument)
+            movie.sourceURL = it
+            movie
+        }
+    }
 }

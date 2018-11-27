@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+feign:
+  page-reader:
+    url: http://localhost:8081/page-reader
+
+parser:
+  kinopoisk:
+    url: https://www.kinopoisk.ru
+
+    premieres:
+      url-template: ${parser.kinopoisk.url}/premiere/ru/%d/month/%d/
+      premiere-link:
+        selector: div.premier_item > div.text > div.textBlock > span.name > a
+        attribute: href
+
+    movie:
+      title:
+        selector: table#headerFilm
+      property:
+        selector: table.info > tbody > tr
+        delimiter: ", "
+        unused-lines:
+          - "..."
+          - "-"
+          - "слова"
+          - "сборы"
+      rating-kinopoisk:
+        selector: span.rating_ball
+      rating-imdb:
+        selector: div.block_2

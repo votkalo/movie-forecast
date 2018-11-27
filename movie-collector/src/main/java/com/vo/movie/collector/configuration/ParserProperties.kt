@@ -9,12 +9,32 @@ class ParserProperties {
 
     class Resource {
         var url: URI? = null
-        var premieres: Properties? = null
+        var premieres: PremieresProperties? = null
+        var movie: MovieProperties? = null
 
-        class Properties {
+        class PremieresProperties {
             var urlTemplate: String? = null
+            var premiereLink: PremieresElement? = null
+
+            class PremieresElement : Element() {
+                var attribute: String? = null
+            }
+        }
+
+        class MovieProperties {
+            var title: Element? = null
+            var property: MovieElement? = null
+            var ratingKinopoisk: Element? = null
+            var ratingIMDB: Element? = null
+
+            class MovieElement : Element() {
+                var delimiter: String? = null
+                var unusedLines: List<String> = emptyList()
+            }
+        }
+
+        open class Element {
             var selector: String? = null
-            var attribute: String? = null
         }
     }
 }
