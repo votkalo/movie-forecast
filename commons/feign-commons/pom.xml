@@ -4,22 +4,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>page-reader-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <name>page-reader-api</name>
-
     <parent>
-        <artifactId>page-reader</artifactId>
+        <artifactId>commons</artifactId>
         <groupId>com.vo.movie</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <artifactId>feign-commons</artifactId>
 
     <dependencies>
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-json</artifactId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--Feign-->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form-spring</artifactId>
         </dependency>
 
         <!--Kotlin-->

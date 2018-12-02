@@ -1,3 +1,6 @@
 package com.vo.movie.page.reader.dto
 
-data class PageRequest(val url: String, val infinite: Boolean = false)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class PageRequest(@JsonProperty("url") val url: String,
+                       @JsonProperty("infinite") val infinite: Boolean = false)

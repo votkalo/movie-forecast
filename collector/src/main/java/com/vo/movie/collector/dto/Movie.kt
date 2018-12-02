@@ -1,0 +1,20 @@
+package com.vo.movie.collector.dto
+
+data class Movie(val russianTitle: String,
+                 val originalTitle: String,
+                 val year: Int,
+                 val counties: List<String>,
+                 val genres: List<String>,
+                 val premiereRussian: String,
+                 val tagline: String? = null,
+                 val premiereWorld: String? = null,
+                 val bluRayRelease: String? = null,
+                 val digitalRelease: String? = null,
+                 val reRelease: String? = null,
+                 val allowAge: String? = null,
+                 val pg: String? = null,
+                 val duration: String? = null,
+                 val ratingKinopoisk: Double? = null,
+                 val ratingIMDB: Double? = null,
+                 val sourceURL: String? = null,
+                 var poster: Image? = null)

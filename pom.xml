@@ -31,8 +31,8 @@
     </properties>
 
     <modules>
-        <module>movie-collector</module>
-        <module>movie-commons</module>
+        <module>collector</module>
+        <module>commons</module>
         <module>page-reader</module>
     </modules>
 

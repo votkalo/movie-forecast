@@ -7,4 +7,4 @@ import com.vo.movie.page.reader.dto.PageResponseExternal
 
 fun PageRequest.toExternal() = PageRequestExternal(url, infinite)
 
-fun PageResponseExternal.toResponse() = PageResponse(html)
+fun PageResponseExternal.toResponse(): PageResponse = PageResponse(html)

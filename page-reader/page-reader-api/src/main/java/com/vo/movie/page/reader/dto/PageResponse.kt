@@ -1,3 +1,5 @@
 package com.vo.movie.page.reader.dto
 
-data class PageResponse(val html: String)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class PageResponse(@JsonProperty("html") val html: String)
