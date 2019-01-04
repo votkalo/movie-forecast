@@ -1,7 +1,6 @@
 package com.vo.movie.collector.parser.impl
 
 import com.vo.movie.collector.configuration.ParserProperties
-import com.vo.movie.collector.configuration.StorageProperties
 import com.vo.movie.collector.dto.Movie
 import com.vo.movie.collector.parser.MovieParser
 import com.vo.movie.collector.util.MovieDictionary
@@ -11,13 +10,6 @@ import com.vo.movie.collector.util.parseValues
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.springframework.stereotype.Service
-import java.awt.image.BufferedImage
-import java.io.File
-import java.net.URL
-import java.nio.file.Paths
-import javax.imageio.ImageIO
-import java.nio.file.Files
-
 
 
 @Service
@@ -78,7 +70,6 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
             .forEach {
                 val ratingValue = it.getMovieRatingKinopoiskValue().orEmpty()
                 if (ratingValue.isNotBlank()) values[MovieDictionary.RATING_KINOPOISK.kinopoisk] = arrayListOf(ratingValue)
-
             }
         select(ratingIMDB.selector)
             .forEach {
@@ -96,8 +87,10 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
 
     private fun Element.getMovieRussianTitleValue(): String = this.child(0).text()
 
-    private fun Element.getMovieOriginalTitleValue(): String = this.child(1).text() ?: getMovieRussianTitleValue()
-
+    private fun Element.getMovieOriginalTitleValue(): String {
+        val originalTitle = this.child(1).text()
+        return if (originalTitle.isBlank()) this.getMovieRussianTitleValue() else originalTitle
+    }
 
     private fun Element.getMoviePropertyKey(): String = this.child(0).text()
 
