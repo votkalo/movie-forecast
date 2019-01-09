@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add-country-table" author="kirill.votkalo">
+        <createTable tableName="country" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"
+                             primaryKeyName="pk_country_id" uniqueConstraintName="uk_country_id"/>
+            </column>
+            <column name="name" type="varchar(40)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_country_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-country-id-index" author="kirill.votkalo">
+        <createIndex tableName="country"
+                     indexName="country_id_index"
+                     schemaName="public"
+                     unique="true">
+            <column name="id" type="bigint"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="fill-country-table" author="kirill.votkalo">
+        <loadData tableName="country" file="changelog/0.0.1/data/country.csv" schemaName="public">
+            <column name="name" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,52 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add-movie-table" author="kirill.votkalo">
+        <createTable tableName="movie" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"
+                             primaryKeyName="pk_movie_id" uniqueConstraintName="uk_movie_id"/>
+            </column>
+            <column name="year" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="russian_title" type="varchar(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alternative_title" type="varchar(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="russian_premiere" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source_url" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="world_premiere" type="date"/>
+            <column name="tagline" type="text"/>
+            <column name="blu_ray_release" type="date"/>
+            <column name="digital_release" type="date"/>
+            <column name="re_release" type="date"/>
+            <column name="allow_age" type="varchar(64)"/>
+            <column name="pg" type="varchar(64)"/>
+            <column name="duration" type="varchar(32)"/>
+            <column name="kinopoisk_rating" type="decimal(3,2)"/>
+            <column name="imdb_rating" type="decimal(3,2)"/>
+            <column name="poster_url" type="varchar(256)"/>
+            <column name="created" type="timestamp"/>
+            <column name="updated" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-movie-id-index" author="kirill.votkalo">
+        <createIndex tableName="movie"
+                     indexName="movie_id_index"
+                     schemaName="public"
+                     unique="true">
+            <column name="id" type="bigint"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,37 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add-movie-genre-table" author="kirill.votkalo">
+        <createTable tableName="movie_genre">
+            <column name="fk_movie_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_movie_key"
+                             referencedTableName="movie" referencedColumnNames="id"/>
+            </column>
+            <column name="fk_genre_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_genre_key"
+                             referencedTableName="genre" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-movie-genre-fk-movie-id-index" author="kirill.votkalo">
+        <createIndex tableName="movie_genre"
+                     indexName="movie_genre_fk_movie_id_index"
+                     schemaName="public"
+                     unique="false">
+            <column name="fk_movie_id" type="bigint"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="create-movie-genre-fk-genre-id-index" author="kirill.votkalo">
+        <createIndex tableName="movie_genre"
+                     indexName="movie_genre_fk_genre_id_index"
+                     schemaName="public"
+                     unique="false">
+            <column name="fk_genre_id" type="bigint"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

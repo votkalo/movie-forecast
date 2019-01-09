@@ -22,6 +22,7 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
     private val property: ParserProperties.Resource.Element
     private val ratingKinopoisk: ParserProperties.Resource.Element
     private val ratingIMDB: ParserProperties.Resource.Element
+    private val poster: ParserProperties.Resource.Element
 
     init {
         kinopoisk = parserProperties.kinopoisk!!
@@ -31,6 +32,7 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
         property = movie.property!!
         ratingKinopoisk = movie.ratingKinopoisk!!
         ratingIMDB = movie.ratingIMDB!!
+        poster = movie.poster!!
     }
 
     override fun getPremiereURLs(document: Document): List<String> =
@@ -44,6 +46,7 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
         movieProperties.putAll(document.parseMovieProperties())
         movieProperties.putAll(document.parseMovieRatings())
         movieProperties.putAll(document.parseMovieSourceURL())
+        movieProperties.putAll(document.parseMoviePosterURL())
         return createByKinopoiskProperties(movieProperties)
     }
 
@@ -52,7 +55,7 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
         select(title.selector)
             .forEach {
                 values[MovieDictionary.RUSSIAN_TITLE.kinopoisk] = arrayListOf(it.getMovieRussianTitleValue())
-                values[MovieDictionary.ORIGINAL_TITLE.kinopoisk] = arrayListOf(it.getMovieOriginalTitleValue())
+                values[MovieDictionary.ALTERNATIVE_TITLE.kinopoisk] = arrayListOf(it.getMovieOriginalTitleValue())
             }
         return values
     }
@@ -69,12 +72,12 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
         select(ratingKinopoisk.selector)
             .forEach {
                 val ratingValue = it.getMovieRatingKinopoiskValue().orEmpty()
-                if (ratingValue.isNotBlank()) values[MovieDictionary.RATING_KINOPOISK.kinopoisk] = arrayListOf(ratingValue)
+                if (ratingValue.isNotBlank()) values[MovieDictionary.KINOPOISK_RATING.kinopoisk] = arrayListOf(ratingValue)
             }
         select(ratingIMDB.selector)
             .forEach {
                 val ratingValue = it.getMovieRatingIMDBValue().orEmpty()
-                if (ratingValue.isNotBlank()) values[MovieDictionary.RATING_IMDB.kinopoisk] = arrayListOf(ratingValue)
+                if (ratingValue.isNotBlank()) values[MovieDictionary.IMDB_RATING.kinopoisk] = arrayListOf(ratingValue)
             }
         return values
     }
@@ -82,6 +85,15 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
     private fun Document.parseMovieSourceURL(): Map<String, List<String>> {
         val values: MutableMap<String, List<String>> = HashMap()
         values[MovieDictionary.SOURCE_URL.kinopoisk] = arrayListOf(baseUri())
+        return values
+    }
+
+    private fun Document.parseMoviePosterURL(): Map<String, List<String>> {
+        val values: MutableMap<String, List<String>> = HashMap()
+        select(poster.selector)
+                .forEach {
+                    values[MovieDictionary.POSTER_URL.kinopoisk] = arrayListOf(it.getMoviePosterURL())
+                }
         return values
     }
 
@@ -100,5 +112,8 @@ class KinopoiskMovieParser(parserProperties: ParserProperties) : MovieParser {
     private fun Element.getMovieRatingKinopoiskValue(): String? = ratingKinopoisk.parseValues(this.text()).getOrNull(0)
 
     private fun Element.getMovieRatingIMDBValue(): String? =
-        ratingIMDB.parseValues(getElementsContainingOwnText(MovieDictionary.RATING_IMDB.kinopoisk).text()).getOrNull(1)
+            ratingIMDB.parseValues(getElementsContainingOwnText(MovieDictionary.IMDB_RATING.kinopoisk).text()).getOrNull(1)
+
+    private fun Element.getMoviePosterURL(): String = kinopoisk.createFullURL(poster.parseValues(attr(poster.attribute))[0])
+
 }
