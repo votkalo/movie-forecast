@@ -20,35 +20,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <swagger.version>2.9.2</swagger.version>
         <kotlin.version>1.3.11</kotlin.version>
-        <ktor.version>1.0.0-beta-3</ktor.version>
-        <jsoup.version>1.9.1</jsoup.version>
         <project.version>0.0.1-SNAPSHOT</project.version>
+        <jsoup.version>1.9.1</jsoup.version>
         <feign.version>10.1.0</feign.version>
         <feign.form.version>3.4.1</feign.form.version>
-        <apache.client.version>4.5.6</apache.client.version>
-        <jackson.kotlin.version>2.9.8</jackson.kotlin.version>
+        <telegrambots.version>4.1</telegrambots.version>
     </properties>
 
     <modules>
-        <module>collector</module>
-        <module>commons</module>
-        <module>page-reader</module>
+        <module>movie-forecast-worker</module>
+        <module>movie-forecast-commons</module>
+        <module>movie-forecast-parser</module>
+        <module>movie-forecast-bot</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-            <!--Swagger-->
+            <!--Telegram-->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambots</artifactId>
+                <version>${telegrambots.version}</version>
             </dependency>
 
             <!--Feign-->

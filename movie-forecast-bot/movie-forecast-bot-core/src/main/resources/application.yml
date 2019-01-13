@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+feign:
+  movie-forecast-parser:
+    url: http://localhost:8000
