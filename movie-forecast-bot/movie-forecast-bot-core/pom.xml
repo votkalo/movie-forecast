@@ -16,6 +16,13 @@
     </parent>
 
     <dependencies>
+        <!--Project-->
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
