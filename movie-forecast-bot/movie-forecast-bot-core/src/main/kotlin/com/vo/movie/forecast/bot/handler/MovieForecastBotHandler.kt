@@ -51,7 +51,6 @@ class MovieForecastBotHandler(private val botProperties: BotProperties,
     private fun createAnswerInlineQuery(inlineQueryId: String, inlineQueryResults: List<InlineQueryResult>): AnswerInlineQuery {
         val answerInlineQuery = AnswerInlineQuery()
         answerInlineQuery.inlineQueryId = inlineQueryId
-//        answerInlineQuery.cacheTime = 300
         answerInlineQuery.results = inlineQueryResults
         return answerInlineQuery
     }
@@ -62,19 +61,68 @@ class MovieForecastBotHandler(private val botProperties: BotProperties,
         val article = InlineQueryResultArticle()
         article.inputMessageContent = toInputTextMessageContent()
         article.id = kinopoiskMovieId.toString()
-        article.title = "$title ($year)"
-        article.description = "$originalTitle ★$kinopoiskRating\n$genres"
+        article.title = createArticleTitle()
+        article.description = createArticleDescription()
         article.thumbUrl = smallPosterURL
-//        article.thumbHeight =
-//        article.thumbWidth =
         return article
+    }
+
+    private fun Movie.createArticleTitle(): String {
+        val titleBuilder = StringBuilder()
+        titleBuilder.append(title)
+        if (year != null) {
+            titleBuilder.append(" ($year)")
+        }
+        return titleBuilder.toString()
+    }
+
+    private fun Movie.createArticleDescription(): String {
+        val descriptionBuilder = StringBuilder()
+        if (originalTitle != null) {
+            descriptionBuilder.append("$originalTitle ")
+        }
+        if (kinopoiskRating != null) {
+            descriptionBuilder.append("★$kinopoiskRating")
+        }
+        if (genres != null) {
+            descriptionBuilder.append("\n$genres")
+        }
+        if (countries != null) {
+            descriptionBuilder.append("\n$countries")
+        }
+        return descriptionBuilder.toString()
     }
 
     private fun Movie.toInputTextMessageContent(): InputTextMessageContent {
         val messageContent = InputTextMessageContent()
-        messageContent.disableWebPagePreview()
-        messageContent.enableMarkdown(true)
-        messageContent.messageText = title
+        messageContent.enableWebPagePreview()
+        messageContent.enableHtml(true)
+        messageContent.messageText = createMessageText()
         return messageContent
+    }
+
+    private fun Movie.createMessageText(): String {
+        val messageBuilder = StringBuilder()
+        messageBuilder.append("<b>")
+        messageBuilder.append(title)
+        if (year != null) {
+            messageBuilder.append(" ($year)")
+        }
+        messageBuilder.append("</b>")
+        if (originalTitle != null) {
+            messageBuilder.append("\n<i>$originalTitle</i>")
+        }
+        messageBuilder.append("\n<a href=\"$bigPosterURL\">&#8205;</a>")
+        messageBuilder.append("\n<a href=\"$sourceURL\">Кинопоиск</a>")
+        if (kinopoiskRating != null) {
+            messageBuilder.append(" &#x2B50; $kinopoiskRating")
+        }
+        if (genres != null) {
+            messageBuilder.append("\nЖанр: $genres")
+        }
+        if (countries != null) {
+            messageBuilder.append("\nСтрана: $countries")
+        }
+        return messageBuilder.toString()
     }
 }
