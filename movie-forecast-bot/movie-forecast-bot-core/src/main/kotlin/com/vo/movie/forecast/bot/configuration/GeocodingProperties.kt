@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 @Configuration
-@PropertySource("classpath:bot.properties")
-@ConfigurationProperties(prefix = "bot")
-open class BotProperties {
-    var username: String? = null
-    var token: String? = null
+@PropertySource("classpath:geocoding.properties")
+@ConfigurationProperties(prefix = "geocoding")
+open class GeocodingProperties {
+    var apiKey: String? = null
 }

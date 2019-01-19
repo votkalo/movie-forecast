@@ -40,6 +40,12 @@
             <artifactId>telegrambots</artifactId>
         </dependency>
 
+        <!--Google-->
+        <dependency>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+        </dependency>
+
         <!--Jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>

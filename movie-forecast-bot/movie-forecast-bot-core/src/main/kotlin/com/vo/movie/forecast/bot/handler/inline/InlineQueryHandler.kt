@@ -1,51 +1,32 @@
-package com.vo.movie.forecast.bot.handler
+package com.vo.movie.forecast.bot.handler.inline
 
-import com.vo.movie.forecast.bot.configuration.BotProperties
+import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.parser.api.MovieForecastParserApi
 import com.vo.movie.forecast.parser.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
-import org.slf4j.LoggerFactory
-import org.telegram.telegrambots.bots.TelegramLongPollingBot
+import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.inlinequery.inputmessagecontent.InputTextMessageContent
 import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQueryResult
 import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQueryResultArticle
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 
-class MovieForecastBotHandler(private val botProperties: BotProperties,
-                              private val movieForecastParserApi: MovieForecastParserApi) : TelegramLongPollingBot() {
-    private val logger = LoggerFactory.getLogger(this::class.java)
+@Component
+class InlineQueryHandler(private val movieForecastParserApi: MovieForecastParserApi) : UpdateHandler() {
 
-    override fun getBotUsername(): String {
-        return botProperties.username!!
-    }
+    override fun shouldHandle(update: Update): Boolean = update.hasInlineQuery()
+            && update.inlineQuery.hasQuery()
+            && update.inlineQuery.query.isNotBlank()
 
-    override fun getBotToken(): String {
-        return botProperties.token!!
-    }
-
-    override fun onUpdateReceived(update: Update) {
-        inlineQueryHandler(update)
-    }
-
-    private fun inlineQueryHandler(update: Update) {
-        if (!update.hasInlineQuery()) {
-            return
-        }
+    override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-        val query = inlineQuery.query
-        if (query.isEmpty()) {
-            return
-        }
-        val movies = movieForecastParserApi.searchMovie(MovieSearchParams(query))
+
+        val usefulQuery = inlineQuery.query.substring(3)
+
+        val movies = movieForecastParserApi.searchMovie(MovieSearchParams(usefulQuery))
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
-        try {
-            execute(answerInlineQuery)
-        } catch (e: TelegramApiException) {
-            logger.error(e.message)
-        }
+        getBot().execute(answerInlineQuery)
     }
 
     private fun createAnswerInlineQuery(inlineQueryId: String, inlineQueryResults: List<InlineQueryResult>): AnswerInlineQuery {
