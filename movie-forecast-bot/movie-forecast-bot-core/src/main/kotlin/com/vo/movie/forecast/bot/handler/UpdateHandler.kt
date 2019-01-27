@@ -12,6 +12,16 @@ abstract class UpdateHandler {
 
     protected fun getBot(): TelegramLongPollingBot = bot
 
+    fun Update.chatId(): Long {
+        if (hasMessage()) {
+            return message.chatId
+        }
+        if (hasCallbackQuery()) {
+            return callbackQuery.message.chatId
+        }
+        throw NullPointerException("Chat id not found")
+    }
+
     abstract fun handle(update: Update)
 
     abstract fun shouldHandle(update: Update): Boolean

@@ -19,7 +19,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-feign</artifactId>
+            <artifactId>movie-forecast-parser-provider</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -44,6 +44,13 @@
         <dependency>
             <groupId>com.google.maps</groupId>
             <artifactId>google-maps-services</artifactId>
+        </dependency>
+
+        <!--Apache-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${apache.collection.version}</version>
         </dependency>
 
         <!--Jackson-->

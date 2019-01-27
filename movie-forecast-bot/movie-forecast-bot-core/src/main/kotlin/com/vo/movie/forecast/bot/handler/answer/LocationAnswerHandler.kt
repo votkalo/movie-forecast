@@ -3,78 +3,65 @@ package com.vo.movie.forecast.bot.handler.answer
 import com.google.maps.GeoApiContext
 import com.google.maps.GeocodingApi
 import com.google.maps.model.AddressComponentType
-import com.google.maps.model.GeocodingResult
+import com.google.maps.model.AddressType
 import com.google.maps.model.LatLng
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
-import com.vo.movie.forecast.bot.handler.command.Command
+import com.vo.movie.forecast.bot.util.createMessage
+import com.vo.movie.forecast.bot.util.createSearchLocalityInlineKeyboardMarkup
+import com.vo.movie.forecast.parser.api.LocalityApi
 import org.springframework.stereotype.Component
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
-import java.util.*
 
 @Component
-class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties) : UpdateHandler() {
+class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties,
+                            private val localityApi: LocalityApi) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean = update.hasMessage() && update.message.hasLocation()
 
     override fun handle(update: Update) {
+        val chatId: Long = update.chatId()
+        var message = createMessage(chatId, "Геолокация получена, идёт поиск населённого пункта", ReplyKeyboardRemove())
+        getBot().execute(message)
+
         val location = update.message.location
+        val geolocationLocality = geLocality(location.latitude, location.longitude)
 
-        val message1 = SendMessage()
-        message1.chatId = update.message.chatId.toString()
-        message1.text = "Геолокация получена, идёт поиск населённого пунтка."
-        message1.replyMarkup = ReplyKeyboardRemove()
-        getBot().execute(message1)
+        val inlineKeyboardMarkup = createSearchLocalityInlineKeyboardMarkup()
 
+        if (geolocationLocality == null) {
+            message = createMessage(chatId, "В данный момент вы находитесь вне населённого пункта", inlineKeyboardMarkup)
+            getBot().execute(message)
+            return
+        }
+
+        val isLocalityKnown = localityApi.getLocalities().any { locality -> locality.name == geolocationLocality }
+
+        if (isLocalityKnown) {
+            message = createMessage(chatId, "Ваш текущий населённый пункт обновлён на:\n<b>$geolocationLocality</b>")
+            getBot().execute(message)
+            return
+        }
+
+        message = createMessage(chatId, "К сожалению, нам неизвестно о кинотеатрах вашего населённого пункта:\n<b>$geolocationLocality</b>", inlineKeyboardMarkup)
+        getBot().execute(message)
+    }
+
+    private fun geLocality(latitude: Float, longitude: Float): String? {
         val context = GeoApiContext.Builder()
                 .apiKey(geocodingProperties.apiKey)
                 .build()
 
         val request = GeocodingApi.newRequest(context)
                 .language("ru")
-                .latlng(LatLng(location.latitude.toDouble(), location.longitude.toDouble()))
+                .resultType(AddressType.LOCALITY)
+                .latlng(LatLng(latitude.toDouble(), longitude.toDouble()))
 
-        val results = request.await()
-        val cities = getPossibleCities(results)
-
-        if (cities.isEmpty()) {
-
-        }
-
-        val buttons: MutableList<List<InlineKeyboardButton>> = cities.map {
-            val inlineKeyboardButton = InlineKeyboardButton()
-            inlineKeyboardButton.text = it
-            inlineKeyboardButton.callbackData = it
-            Collections.singletonList(inlineKeyboardButton)
-        }.toMutableList()
-
-        val inlineKeyboardButton = InlineKeyboardButton()
-        inlineKeyboardButton.text = "Выбрать населённый пункт"
-        inlineKeyboardButton.callbackData = Command.LOCALITY.value
-        buttons.add(Collections.singletonList(inlineKeyboardButton))
-
-        val inlineKeyboardMarkup = InlineKeyboardMarkup()
-        inlineKeyboardMarkup.keyboard = buttons
-
-        val message = SendMessage()
-        message.chatId = update.message.chatId.toString()
-        message.text = CityCallbackQueryHandler.CITY_CALLBACK_QUERY_MESSAGE
-        message.replyMarkup = inlineKeyboardMarkup
-        message.enableMarkdown(true)
-        getBot().execute(message)
-    }
-
-    private fun getPossibleCities(results: Array<GeocodingResult>): List<String> {
-        return results.flatMap {
+        return request.await().flatMap {
             it.addressComponents
-                    .filter { address ->
-                        address.types.contains(AddressComponentType.LOCALITY) && address.types.contains(AddressComponentType.POLITICAL)
-                    }
+                    .filter { address -> address.types.contains(AddressComponentType.LOCALITY) }
                     .map { address -> address.longName }
-        }.distinct()
+        }.getOrNull(0)
     }
 }

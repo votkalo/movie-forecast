@@ -28,6 +28,7 @@
         <telegrambots.version>4.1</telegrambots.version>
         <reflections.version>0.9.11</reflections.version>
         <google.maps.version>0.9.1</google.maps.version>
+        <apache.collection.version>4.2</apache.collection.version>
     </properties>
 
     <modules>
@@ -94,11 +95,11 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-            <!--Reflections-->
+            <!--Apache-->
             <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>${reflections.version}</version>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${apache.collection.version}</version>
             </dependency>
 
             <!--Kotlin-->

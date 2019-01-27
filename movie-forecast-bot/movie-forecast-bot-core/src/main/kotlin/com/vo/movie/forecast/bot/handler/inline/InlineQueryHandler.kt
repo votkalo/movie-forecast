@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.bot.handler.inline
 
 import com.vo.movie.forecast.bot.handler.UpdateHandler
-import com.vo.movie.forecast.parser.api.MovieForecastParserApi
+import com.vo.movie.forecast.parser.api.MovieApi
 import com.vo.movie.forecast.parser.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
 import org.springframework.stereotype.Component
@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQuery
 import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQueryResultArticle
 
 @Component
-class InlineQueryHandler(private val movieForecastParserApi: MovieForecastParserApi) : UpdateHandler() {
+class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean = update.hasInlineQuery()
             && update.inlineQuery.hasQuery()
@@ -20,10 +20,7 @@ class InlineQueryHandler(private val movieForecastParserApi: MovieForecastParser
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-
-        val usefulQuery = inlineQuery.query.substring(3)
-
-        val movies = movieForecastParserApi.searchMovie(MovieSearchParams(usefulQuery))
+        val movies = movieApi.searchMovie(MovieSearchParams(inlineQuery.query))
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
         getBot().execute(answerInlineQuery)
