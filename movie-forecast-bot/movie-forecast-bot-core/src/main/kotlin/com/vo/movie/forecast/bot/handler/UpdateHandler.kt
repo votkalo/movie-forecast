@@ -1,6 +1,7 @@
 package com.vo.movie.forecast.bot.handler
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
+import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Update
 
 abstract class UpdateHandler {
@@ -12,14 +13,34 @@ abstract class UpdateHandler {
 
     protected fun getBot(): TelegramLongPollingBot = bot
 
-    fun Update.chatId(): Long {
+    protected fun Update.chatId(): Long {
         if (hasMessage()) {
             return message.chatId
         }
-        if (hasCallbackQuery()) {
+        if (hasCallbackQuery() && callbackQuery.message != null) {
             return callbackQuery.message.chatId
         }
         throw NullPointerException("Chat id not found")
+    }
+
+    protected fun Update.chat(): Chat {
+        if (hasMessage()) {
+            return message.chat
+        }
+        if (hasCallbackQuery() && callbackQuery.message != null) {
+            return callbackQuery.message.chat
+        }
+        throw NullPointerException("Chat not found")
+    }
+
+    protected fun Update.userId(): Long {
+        if (hasMessage()) {
+            return message.from.id.toLong()
+        }
+        if (hasCallbackQuery()) {
+            return callbackQuery.from.id.toLong()
+        }
+        throw NullPointerException("UserId not found")
     }
 
     abstract fun handle(update: Update)

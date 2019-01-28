@@ -3,14 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-forecast-bot-core</artifactId>
+    <artifactId>movie-forecast-backend-feign</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
-    <name>movie-forecast-bot-core</name>
+    <name>movie-forecast-backend-feign</name>
 
     <parent>
-        <artifactId>movie-forecast-bot</artifactId>
+        <artifactId>movie-forecast-backend</artifactId>
         <groupId>com.vo.movie</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -19,43 +18,19 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider</artifactId>
+            <artifactId>movie-forecast-commons-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-feign</artifactId>
+            <artifactId>movie-forecast-backend-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!--Telegram-->
-        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambots</artifactId>
-        </dependency>
-
-        <!--Google-->
-        <dependency>
-            <groupId>com.google.maps</groupId>
-            <artifactId>google-maps-services</artifactId>
-        </dependency>
-
-        <!--Apache-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${apache.collection.version}</version>
+            <artifactId>spring-boot</artifactId>
         </dependency>
 
         <!--Jackson-->
@@ -75,10 +50,6 @@
         <sourceDirectory>src/main/kotlin</sourceDirectory>
 
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>

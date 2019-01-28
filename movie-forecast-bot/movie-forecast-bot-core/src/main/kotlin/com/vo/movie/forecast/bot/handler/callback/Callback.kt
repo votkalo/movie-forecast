@@ -1,6 +1,7 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 enum class Callback(val value: String) {
-    LOCALITY_FIRST_LETTER("loc_let:"),
-    LOCALITY_NAME("loc_name:");
+    LOCALITY_FIRST_LETTER("LL:"),
+    LOCALITY_NAME("LN:"),
+    MOVIE_INFO("MI:");
 }

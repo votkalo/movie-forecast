@@ -4,3 +4,5 @@ server:
 feign:
   movie-forecast-parser:
     url: http://localhost:8000
+  movie-forecast-backend:
+    url: http://localhost:8080

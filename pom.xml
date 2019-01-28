@@ -32,7 +32,7 @@
     </properties>
 
     <modules>
-        <module>movie-forecast-worker</module>
+        <module>movie-forecast-backend</module>
         <module>movie-forecast-commons</module>
         <module>movie-forecast-parser</module>
         <module>movie-forecast-bot</module>

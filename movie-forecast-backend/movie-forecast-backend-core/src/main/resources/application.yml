@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/movie-forecast?currentSchema=public
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+  liquibase:
+    default-schema: public
+    change-log: classpath:changelog/changelog-master.xml

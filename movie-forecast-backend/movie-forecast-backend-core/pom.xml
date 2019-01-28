@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-forecast-bot-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>movie-forecast-backend-core</artifactId>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
-    <name>movie-forecast-bot-core</name>
+    <name>movie-forecast-backend-core</name>
 
     <parent>
-        <artifactId>movie-forecast-bot</artifactId>
+        <artifactId>movie-forecast-backend</artifactId>
         <groupId>com.vo.movie</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -19,12 +19,12 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider</artifactId>
+            <artifactId>movie-forecast-backend-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-feign</artifactId>
+            <artifactId>movie-forecast-backend-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -32,30 +32,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!--Telegram-->
-        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambots</artifactId>
-        </dependency>
-
-        <!--Google-->
-        <dependency>
-            <groupId>com.google.maps</groupId>
-            <artifactId>google-maps-services</artifactId>
-        </dependency>
-
-        <!--Apache-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${apache.collection.version}</version>
         </dependency>
 
         <!--Jackson-->
@@ -68,6 +44,10 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
         </dependency>
     </dependencies>
 
@@ -100,8 +80,18 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <compilerPlugins>
+                        <plugin>jpa</plugin>
+                    </compilerPlugins>
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -1,6 +1,11 @@
 package com.vo.movie.forecast.bot.handler.inline
 
 import com.vo.movie.forecast.bot.handler.UpdateHandler
+import com.vo.movie.forecast.bot.handler.callback.Callback
+import com.vo.movie.forecast.bot.util.addCallbackPrefix
+import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
+import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
+import com.vo.movie.forecast.bot.util.createOneRowButton
 import com.vo.movie.forecast.parser.api.MovieApi
 import com.vo.movie.forecast.parser.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
@@ -10,13 +15,13 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.inlinequery.inputmessagecontent.InputTextMessageContent
 import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQueryResult
 import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQueryResultArticle
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 
 @Component
 class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
 
-    override fun shouldHandle(update: Update): Boolean = update.hasInlineQuery()
-            && update.inlineQuery.hasQuery()
-            && update.inlineQuery.query.isNotBlank()
+    override fun shouldHandle(update: Update): Boolean =
+            update.hasInlineQuery() && update.inlineQuery.hasQuery() && update.inlineQuery.query.isNotBlank()
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
@@ -42,6 +47,7 @@ class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
         article.title = createArticleTitle()
         article.description = createArticleDescription()
         article.thumbUrl = smallPosterURL
+        article.replyMarkup = createFollowButtonMarkup()
         return article
     }
 
@@ -102,5 +108,14 @@ class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
             messageBuilder.append("\nСтрана: $countries")
         }
         return messageBuilder.toString()
+    }
+
+    private fun Movie.createFollowButtonMarkup(): InlineKeyboardMarkup {
+        val button = createInlineKeyboardButton(
+                "Добавить в отслеживаемые",
+                Callback.MOVIE_INFO.addCallbackPrefix(kinopoiskMovieId.toString())
+        )
+        val keyboard = createOneRowButton(button)
+        return createInlineKeyboardMarkup(keyboard)
     }
 }
