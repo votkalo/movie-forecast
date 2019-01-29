@@ -4,5 +4,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <include file="changelog/0.0.1/add-user-table.xml"/>
+    <include file="changelog/0.0.1/add-follow-table.xml"/>
 </databaseChangeLog>

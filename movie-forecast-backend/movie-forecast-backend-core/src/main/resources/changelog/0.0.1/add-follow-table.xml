@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add-follow-table" author="kirill.votkalo">
+        <createTable tableName="follow" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"
+                             primaryKeyName="pk_follow_id" uniqueConstraintName="uk_follow_id"/>
+            </column>
+            <column name="telegram_user_id" type="bigint" autoIncrement="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kinopoisk_movie_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-follow-user-movie-constraint" author="kirill.votkalo">
+        <addUniqueConstraint columnNames="telegram_user_id, kinopoisk_movie_id"
+                             constraintName="const_follow_user_movie"
+                             schemaName="public"
+                             tableName="follow"/>
+    </changeSet>
+</databaseChangeLog>
