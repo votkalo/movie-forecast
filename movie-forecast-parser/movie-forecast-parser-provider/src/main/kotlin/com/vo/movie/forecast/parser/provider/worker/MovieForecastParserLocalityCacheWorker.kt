@@ -41,7 +41,7 @@ class MovieForecastParserLocalityCacheWorker(private val cacheManager: CacheMana
     }
 
     private fun updateLocalitiesLettersCache(localities: List<Locality>): List<String> {
-        val localitiesLetters = getLocalitiesLetters(localities)
+        val localitiesLetters = localities.getLocalitiesLetters()
         cacheManager.getCache(LOCALITIES_LETTERS_CACHE_NAME)?.putIfAbsent(SimpleKey.EMPTY, localitiesLetters)
         return localitiesLetters
     }
@@ -50,7 +50,7 @@ class MovieForecastParserLocalityCacheWorker(private val cacheManager: CacheMana
         val localitiesNamesByLetterCache = cacheManager.getCache(LOCALITIES_NAMES_BY_LETTER_CACHE_NAME)
         localitiesLetters.forEach {
             val localityLetter = it.first()
-            val localitiesNamesByLetter = getLocalitiesNamesByLetter(localities, localityLetter)
+            val localitiesNamesByLetter = localities.getLocalitiesNamesByLetter(localityLetter)
             localitiesNamesByLetterCache?.put(localityLetter, localitiesNamesByLetter)
         }
     }
@@ -59,7 +59,7 @@ class MovieForecastParserLocalityCacheWorker(private val cacheManager: CacheMana
         val localityByNameCache = cacheManager.getCache(LOCALITY_BY_NAME_CACHE_NAME)
         localities.forEach {
             val localityName = it.name
-            val localityByName = getLocalityByName(localities, localityName)
+            val localityByName = localities.getLocalityByName(localityName)
             localityByNameCache?.put(localityName, localityByName)
         }
     }

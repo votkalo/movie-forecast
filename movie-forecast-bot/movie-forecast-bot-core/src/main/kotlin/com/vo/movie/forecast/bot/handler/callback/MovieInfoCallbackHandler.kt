@@ -11,7 +11,7 @@ class MovieInfoCallbackHandler(private val userApi: UserApi) : CallbackUpdateHan
 
     override fun handle(update: Update) {
         val kinopoiskMovieId = update.getCallbackData().toLong()
-        val userId = update.chatId()
+        val userId = update.userId()
         val answerCallbackQuery = AnswerCallbackQuery()
         answerCallbackQuery.callbackQueryId = update.callbackQuery.id
         try {

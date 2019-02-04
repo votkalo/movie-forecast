@@ -5,18 +5,20 @@ import com.google.maps.GeocodingApi
 import com.google.maps.model.AddressComponentType
 import com.google.maps.model.AddressType
 import com.google.maps.model.LatLng
+import com.vo.movie.forecast.backend.api.api.UserApi
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.util.createMessage
 import com.vo.movie.forecast.bot.util.createSearchLocalityInlineKeyboardMarkup
-import com.vo.movie.forecast.parser.api.LocalityApi
+import com.vo.movie.forecast.parser.provider.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove
 
 @Component
 class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties,
-                            private val localityApi: LocalityApi) : UpdateHandler() {
+                            private val localityProvider: LocalityProvider,
+                            private val userApi: UserApi) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean = update.hasMessage() && update.message.hasLocation()
 
@@ -26,7 +28,7 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
         getBot().execute(message)
 
         val location = update.message.location
-        val geolocationLocality = geLocality(location.latitude, location.longitude)
+        val geolocationLocality = getLocality(location.latitude, location.longitude)
 
         val inlineKeyboardMarkup = createSearchLocalityInlineKeyboardMarkup()
 
@@ -36,9 +38,10 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
             return
         }
 
-        val isLocalityKnown = localityApi.getLocalities().any { locality -> locality.name == geolocationLocality }
+        val isLocalityKnown = localityProvider.getLocalities().any { locality -> locality.name == geolocationLocality }
 
         if (isLocalityKnown) {
+            userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(geolocationLocality))
             message = createMessage(chatId, "Ваш текущий населённый пункт обновлён на:\n<b>$geolocationLocality</b>")
             getBot().execute(message)
             return
@@ -48,7 +51,7 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
         getBot().execute(message)
     }
 
-    private fun geLocality(latitude: Float, longitude: Float): String? {
+    private fun getLocality(latitude: Float, longitude: Float): String? {
         val context = GeoApiContext.Builder()
                 .apiKey(geocodingProperties.apiKey)
                 .build()

@@ -28,6 +28,16 @@ abstract class UpdateHandler {
         throw NullPointerException("Chat id not found")
     }
 
+    protected fun Update.userId(): Long {
+        if (hasMessage()) {
+            return message.from.id.toLong()
+        }
+        if (hasCallbackQuery()) {
+            return callbackQuery.from.id.toLong()
+        }
+        throw NullPointerException("User id not found")
+    }
+
     abstract fun handle(update: Update)
 
     abstract fun shouldHandle(update: Update): Boolean
