@@ -10,10 +10,9 @@ class LocalityFirstLetterCallbackHandler(private val localityProvider: LocalityP
 
     override fun handle(update: Update) {
         val firstLetter = update.getCallbackData().single()
-        val localities = localityProvider.getLocalitiesByLetter(firstLetter)
-        val keyboard = localities.map {
-            val localityName = it.name
-            val button = createInlineKeyboardButton(localityName, Callback.LOCALITY_NAME.addCallbackPrefix(localityName))
+        val localitiesNames = localityProvider.getLocalitiesNamesByLetter(firstLetter)
+        val keyboard = localitiesNames.map {
+            val button = createInlineKeyboardButton(it, Callback.LOCALITY_NAME.addCallbackPrefix(it))
             createRowButton(button)
         }
         val inlineKeyboardMarkup = createInlineKeyboardMarkup(keyboard)

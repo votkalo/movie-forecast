@@ -1,10 +1,14 @@
 package com.vo.movie.forecast.parser.provider
 
+import com.vo.movie.forecast.commons.dto.Locality
 import com.vo.movie.forecast.parser.api.LocalityApi
-import com.vo.movie.forecast.parser.dto.Locality
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_BY_LETTER_CACHE_NAME
 import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITY_LETTERS_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.util.getLocalitiesLetters
+import com.vo.movie.forecast.parser.provider.util.getLocalitiesNamesByLetter
+import com.vo.movie.forecast.parser.provider.util.getLocalityByName
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 
@@ -14,14 +18,12 @@ open class LocalityCacheableProvider(private val localityApi: LocalityApi) : Loc
     @Cacheable(cacheNames = [LOCALITIES_CACHE_NAME])
     override fun getLocalities(): List<Locality> = localityApi.getLocalities()
 
-    @Cacheable(cacheNames = [LOCALITY_LETTERS_CACHE_NAME])
-    override fun getLocalitiesLetters(): List<String> = getLocalities()
-            .map { it.name.first().toString() }
-            .distinct()
-            .sorted()
+    @Cacheable(cacheNames = [LOCALITIES_LETTERS_CACHE_NAME])
+    override fun getLocalitiesLetters(): List<String> = getLocalitiesLetters(getLocalities())
 
-    @Cacheable(cacheNames = [LOCALITIES_BY_LETTER_CACHE_NAME])
-    override fun getLocalitiesByLetter(letter: Char): List<Locality> = getLocalities()
-            .filter { it.name.first() == letter }
+    @Cacheable(cacheNames = [LOCALITIES_NAMES_BY_LETTER_CACHE_NAME])
+    override fun getLocalitiesNamesByLetter(letter: Char): List<String> = getLocalitiesNamesByLetter(getLocalities(), letter)
 
+    @Cacheable(cacheNames = [LOCALITY_BY_NAME_CACHE_NAME])
+    override fun getLocalityByName(name: String): Locality = getLocalityByName(getLocalities(), name)
 }

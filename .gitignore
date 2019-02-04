@@ -25,5 +25,4 @@
 /nbdist/
 /.nb-gradle/
 **/logs
-**/bot.properties
-**/geocoding.properties
+**/.config

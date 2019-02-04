@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-forecast-parser-api</artifactId>
+    <artifactId>movie-forecast-commons-dto</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>movie-forecast-parser-api</name>
+    <name>movie-forecast-commons-dto</name>
 
     <parent>
-        <artifactId>movie-forecast-parser</artifactId>
+        <artifactId>movie-forecast-commons</artifactId>
         <groupId>com.vo.movie</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>
-        <!--Project-->
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-dto</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!--Kotlin-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -60,4 +52,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

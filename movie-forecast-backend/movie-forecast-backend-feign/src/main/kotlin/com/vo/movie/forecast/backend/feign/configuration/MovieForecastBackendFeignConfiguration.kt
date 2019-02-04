@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.feign.configuration
 
-import com.vo.movie.forecast.backend.api.api.FollowApi
-import com.vo.movie.forecast.backend.feign.FollowApiFeign
+import com.vo.movie.forecast.backend.api.api.UserApi
+import com.vo.movie.forecast.backend.feign.UserApiFeign
 import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
 import com.vo.movie.forecast.commons.feign.FeignProperties
 import org.springframework.context.annotation.Bean
@@ -12,6 +12,6 @@ open class MovieForecastBackendFeignConfiguration(private val feignBuilderFactor
                                                   private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun userApi(): FollowApi = feignBuilderFactory.jsonFeignBuilder()
-            .target(FollowApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
+    open fun userApi(): UserApi = feignBuilderFactory.jsonFeignBuilder()
+            .target(UserApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
 }

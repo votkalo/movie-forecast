@@ -14,8 +14,9 @@ open class MovieForecastParserCacheConfiguration {
 
     companion object {
         const val LOCALITIES_CACHE_NAME: String = "localities"
-        const val LOCALITY_LETTERS_CACHE_NAME: String = "localityLetters"
-        const val LOCALITIES_BY_LETTER_CACHE_NAME: String = "localitiesByLetter"
+        const val LOCALITIES_LETTERS_CACHE_NAME: String = "localitiesLetters"
+        const val LOCALITIES_NAMES_BY_LETTER_CACHE_NAME: String = "localitiesNamesByLetter"
+        const val LOCALITY_BY_NAME_CACHE_NAME: String = "localityByName"
     }
 
     @Bean
@@ -24,8 +25,9 @@ open class MovieForecastParserCacheConfiguration {
         cacheManager.setCaches(
                 arrayListOf(
                         ConcurrentMapCache(LOCALITIES_CACHE_NAME),
-                        ConcurrentMapCache(LOCALITY_LETTERS_CACHE_NAME),
-                        ConcurrentMapCache(LOCALITIES_BY_LETTER_CACHE_NAME)
+                        ConcurrentMapCache(LOCALITIES_LETTERS_CACHE_NAME),
+                        ConcurrentMapCache(LOCALITIES_NAMES_BY_LETTER_CACHE_NAME),
+                        ConcurrentMapCache(LOCALITY_BY_NAME_CACHE_NAME)
                 )
         )
         return cacheManager

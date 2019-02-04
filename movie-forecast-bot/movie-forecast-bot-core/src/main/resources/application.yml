@@ -1,6 +1,13 @@
 server:
   port: 8081
 
+bot:
+  username: ${BOT_USERNAME}
+  token: ${BOT_TOKEN}
+
+geocoding:
+  api-key: ${GEOCODING_API_KEY}
+
 feign:
   movie-forecast-parser:
     url: http://localhost:8000

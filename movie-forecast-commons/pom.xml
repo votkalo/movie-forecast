@@ -17,5 +17,6 @@
 
     <modules>
         <module>movie-forecast-commons-feign</module>
+        <module>movie-forecast-commons-dto</module>
     </modules>
 </project>
