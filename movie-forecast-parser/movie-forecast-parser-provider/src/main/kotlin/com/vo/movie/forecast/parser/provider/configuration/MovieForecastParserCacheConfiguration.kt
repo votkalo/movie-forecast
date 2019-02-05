@@ -1,16 +1,20 @@
 package com.vo.movie.forecast.parser.provider.configuration
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.vo.movie.forecast.commons.dto.Movie
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache
 import org.springframework.cache.support.SimpleCacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.Duration
 
 
 @Configuration
 @EnableCaching
-open class MovieForecastParserCacheConfiguration {
+open class MovieForecastParserCacheConfiguration(private val caffeineCacheProperties: CaffeineCacheProperties) {
 
     companion object {
         const val LOCALITIES_CACHE_NAME: String = "localities"
@@ -20,7 +24,7 @@ open class MovieForecastParserCacheConfiguration {
     }
 
     @Bean
-    open fun cacheManager(): CacheManager {
+    open fun infiniteCacheManager(): CacheManager {
         val cacheManager = SimpleCacheManager()
         cacheManager.setCaches(
                 arrayListOf(
@@ -31,5 +35,14 @@ open class MovieForecastParserCacheConfiguration {
                 )
         )
         return cacheManager
+    }
+
+    @Bean
+    open fun movieCaffeineCache(): Cache<Long, Movie> {
+        val movieCacheProperties = caffeineCacheProperties.movie
+        return Caffeine.newBuilder()
+                .expireAfterWrite(Duration.ofDays(movieCacheProperties.days))
+                .maximumSize(movieCacheProperties.maxSize)
+                .build<Long, Movie>()
     }
 }

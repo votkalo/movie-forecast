@@ -1,9 +1,9 @@
-package com.vo.movie.forecast.parser.api
+package com.vo.movie.forecast.parser.provider
 
 import com.vo.movie.forecast.commons.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
 
-interface MovieApi {
+interface MovieProvider {
 
     fun searchMovie(searchParams: MovieSearchParams): List<Movie>
 

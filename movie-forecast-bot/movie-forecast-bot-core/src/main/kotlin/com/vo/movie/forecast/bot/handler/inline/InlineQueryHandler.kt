@@ -6,9 +6,9 @@ import com.vo.movie.forecast.bot.util.addCallbackPrefix
 import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
 import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
 import com.vo.movie.forecast.bot.util.createOneRowButton
-import com.vo.movie.forecast.parser.api.MovieApi
-import com.vo.movie.forecast.parser.dto.Movie
+import com.vo.movie.forecast.commons.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
+import com.vo.movie.forecast.parser.provider.MovieProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -18,14 +18,14 @@ import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQuery
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 
 @Component
-class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
+class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean =
             update.hasInlineQuery() && update.inlineQuery.hasQuery() && update.inlineQuery.query.isNotBlank()
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-        val movies = movieApi.searchMovie(MovieSearchParams(inlineQuery.query))
+        val movies = movieProvider.searchMovie(MovieSearchParams(inlineQuery.query))
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
         getBot().execute(answerInlineQuery)

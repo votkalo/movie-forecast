@@ -23,6 +23,12 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--Caffeine-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
         <!--Kotlin-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
