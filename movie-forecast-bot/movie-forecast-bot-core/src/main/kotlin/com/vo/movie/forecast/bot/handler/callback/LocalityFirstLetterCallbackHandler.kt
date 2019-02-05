@@ -1,6 +1,9 @@
 package com.vo.movie.forecast.bot.handler.callback
 
-import com.vo.movie.forecast.bot.util.*
+import com.vo.movie.forecast.bot.util.addCallbackPrefix
+import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
+import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
+import com.vo.movie.forecast.bot.util.createRowButton
 import com.vo.movie.forecast.parser.provider.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -16,11 +19,7 @@ class LocalityFirstLetterCallbackHandler(private val localityProvider: LocalityP
             createRowButton(button)
         }
         val inlineKeyboardMarkup = createInlineKeyboardMarkup(keyboard)
-        val message = createMessage(
-                update.chatId(),
-                "Выберите ваш населённый пункт",
-                inlineKeyboardMarkup
-        )
-        getBot().execute(message)
+        val editMessageText = update.createEditMessageText("Выберите ваш населённый пункт", inlineKeyboardMarkup)
+        getBot().execute(editMessageText)
     }
 }

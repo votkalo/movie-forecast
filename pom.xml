@@ -25,7 +25,7 @@
         <jsoup.version>1.9.1</jsoup.version>
         <feign.version>10.1.0</feign.version>
         <feign.form.version>3.4.1</feign.form.version>
-        <telegrambots.version>4.1</telegrambots.version>
+        <telegrambots.version>4.1.2</telegrambots.version>
         <reflections.version>0.9.11</reflections.version>
         <google.maps.version>0.9.1</google.maps.version>
         <apache.collection.version>4.2</apache.collection.version>

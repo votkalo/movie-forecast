@@ -1,7 +1,10 @@
 package com.vo.movie.forecast.bot.handler
 
+import com.vo.movie.forecast.bot.util.createEditMessageText
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText
 import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 
 abstract class UpdateHandler {
     private lateinit var bot: TelegramLongPollingBot
@@ -36,6 +39,25 @@ abstract class UpdateHandler {
             return callbackQuery.from.id.toLong()
         }
         throw NullPointerException("User id not found")
+    }
+
+    protected fun Update.createEditMessageText(text: String): EditMessageText {
+        if (hasMessage()) {
+            return createEditMessageText(message.chatId, message.messageId, text)
+        }
+        if (hasCallbackQuery() && callbackQuery.message != null) {
+            return createEditMessageText(callbackQuery.message.chatId, callbackQuery.message.messageId, text)
+        }
+        if (hasCallbackQuery()) {
+            return createEditMessageText(callbackQuery.inlineMessageId, text)
+        }
+        throw NullPointerException("Data for edit message not found")
+    }
+
+    protected fun Update.createEditMessageText(text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+        val editMessageText = createEditMessageText(text)
+        editMessageText.replyMarkup = inlineKeyboardMarkup
+        return editMessageText
     }
 
     abstract fun handle(update: Update)

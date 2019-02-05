@@ -2,6 +2,7 @@ package com.vo.movie.forecast.bot.util
 
 import com.vo.movie.forecast.bot.handler.command.Command
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
@@ -21,6 +22,35 @@ fun createMessage(chatId: Long, text: String, replyMarkup: ReplyKeyboard): SendM
     val message = createMessage(chatId, text)
     message.replyMarkup = replyMarkup
     return message
+}
+
+fun createEditMessageText(chatId: Long, messageId: Int, text: String): EditMessageText {
+    val editMessageText = EditMessageText()
+    editMessageText.setChatId(chatId)
+    editMessageText.messageId = messageId
+    editMessageText.text = text
+    editMessageText.enableHtml(true)
+    return editMessageText
+}
+
+fun createEditMessageText(chatId: Long, messageId: Int, text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+    val editMessageText = createEditMessageText(chatId, messageId, text)
+    editMessageText.replyMarkup = inlineKeyboardMarkup
+    return editMessageText
+}
+
+fun createEditMessageText(inlineMessageId: String, text: String): EditMessageText {
+    val editMessageText = EditMessageText()
+    editMessageText.inlineMessageId = inlineMessageId
+    editMessageText.text = text
+    editMessageText.enableHtml(true)
+    return editMessageText
+}
+
+fun createEditMessageText(inlineMessageId: String, text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+    val editMessageText = createEditMessageText(inlineMessageId, text)
+    editMessageText.replyMarkup = inlineKeyboardMarkup
+    return editMessageText
 }
 
 fun createRowButton(button: InlineKeyboardButton): List<InlineKeyboardButton> = Collections.singletonList(button)
