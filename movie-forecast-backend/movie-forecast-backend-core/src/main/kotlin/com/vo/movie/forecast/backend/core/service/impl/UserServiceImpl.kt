@@ -11,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional
 open class UserServiceImpl(private val userRepository: UserRepository) : UserService {
 
     @Transactional
-    override fun registerMovie(userId: Long, movie: Movie) {
-        return userRepository.registerMovie(userId, movie)
-    }
+    override fun registerMovie(userId: Long, movie: Movie) = userRepository.registerMovie(userId, movie)
 
     @Transactional
-    override fun updateLocality(userId: Long, locality: Locality) {
-        return userRepository.updateLocality(userId, locality)
-    }
+    override fun updateLocality(userId: Long, locality: Locality) = userRepository.updateLocality(userId, locality)
+
+    @Transactional(readOnly = true)
+    override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean = userRepository.existsMovie(userId, kinopoiskMovieId)
 }

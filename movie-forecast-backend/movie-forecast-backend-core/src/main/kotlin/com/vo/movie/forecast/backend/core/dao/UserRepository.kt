@@ -8,4 +8,6 @@ interface UserRepository {
     fun registerMovie(userId: Long, movie: Movie)
 
     fun updateLocality(userId: Long, locality: Locality)
+
+    fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean
 }

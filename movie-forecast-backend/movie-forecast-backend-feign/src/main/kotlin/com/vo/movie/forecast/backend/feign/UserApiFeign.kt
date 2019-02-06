@@ -13,4 +13,7 @@ interface UserApiFeign : UserApi {
 
     @RequestLine("PUT /users/{userId}/updateLocality")
     override fun updateLocality(@Param("userId") userId: Long, locality: Locality)
+
+    @RequestLine("GET /users/{userId}/movies/{kinopoiskMovieId}/exists")
+    override fun existsMovie(@Param("userId") userId: Long, @Param("kinopoiskMovieId") kinopoiskMovieId: Long): Boolean
 }

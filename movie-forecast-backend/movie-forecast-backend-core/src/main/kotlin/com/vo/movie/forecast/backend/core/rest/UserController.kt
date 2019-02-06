@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*
 class UserController(private val userService: UserService) {
 
     @PutMapping("/{userId}/registerMovie")
-    fun registerMovie(@PathVariable userId: Long, @RequestBody movie: Movie) {
-        userService.registerMovie(userId, movie)
-    }
+    fun registerMovie(@PathVariable userId: Long, @RequestBody movie: Movie) = userService.registerMovie(userId, movie)
 
     @PutMapping("/{userId}/updateLocality")
-    fun updateLocality(@PathVariable userId: Long, @RequestBody locality: Locality) {
-        userService.updateLocality(userId, locality)
-    }
+    fun updateLocality(@PathVariable userId: Long, @RequestBody locality: Locality) = userService.updateLocality(userId, locality)
+
+    @GetMapping("/{userId}/movies/{kinopoiskMovieId}/exists")
+    fun existsMovie(@PathVariable userId: Long, @PathVariable kinopoiskMovieId: Long): Boolean = userService.existsMovie(userId, kinopoiskMovieId)
 }

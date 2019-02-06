@@ -1,9 +1,10 @@
-package com.vo.movie.forecast.parser.provider
+package com.vo.movie.forecast.parser.provider.impl
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.vo.movie.forecast.parser.api.MovieApi
 import com.vo.movie.forecast.commons.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
+import com.vo.movie.forecast.parser.provider.MovieProvider
 import org.springframework.stereotype.Component
 
 @Component

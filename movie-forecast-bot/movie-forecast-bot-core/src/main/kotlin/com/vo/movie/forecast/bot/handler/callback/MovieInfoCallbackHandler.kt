@@ -12,17 +12,22 @@ class MovieInfoCallbackHandler(private val userApi: UserApi,
                                private val movieProvider: MovieProvider) : CallbackUpdateHandler(Callback.MOVIE_INFO) {
 
     override fun handle(update: Update) {
-        val movie = movieProvider.getMovie(update.getCallbackData().toLong())
-        val userId = update.userId()
         val answerCallbackQuery = AnswerCallbackQuery()
         answerCallbackQuery.callbackQueryId = update.callbackQuery.id
         try {
-            userApi.registerMovie(userId, movie)
+            registerMovie(update.userId(), update.getCallbackData().toLong())
             answerCallbackQuery.text = "Фильм добавлен в отслеживаемые"
         } catch (e: FeignException) {
             answerCallbackQuery.showAlert = true
             answerCallbackQuery.text = "К сожалению данная функция сейчас не доступна"
         }
         getBot().execute(answerCallbackQuery)
+    }
+
+    @Throws(FeignException::class)
+    private fun registerMovie(userId: Long, kinopoiskMovieId: Long) {
+        if (!userApi.existsMovie(userId, kinopoiskMovieId)) {
+            userApi.registerMovie(userId, movieProvider.getMovie(kinopoiskMovieId))
+        }
     }
 }

@@ -41,7 +41,7 @@ open class MovieForecastParserCacheConfiguration(private val caffeineCacheProper
     open fun movieCaffeineCache(): Cache<Long, Movie> {
         val movieCacheProperties = caffeineCacheProperties.movie
         return Caffeine.newBuilder()
-                .expireAfterWrite(Duration.ofDays(movieCacheProperties.days))
+                .expireAfterAccess(Duration.ofDays(movieCacheProperties.days))
                 .maximumSize(movieCacheProperties.maxSize)
                 .build<Long, Movie>()
     }
