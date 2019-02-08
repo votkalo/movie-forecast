@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.backend.feign
 
 import com.vo.movie.forecast.backend.api.api.UserApi
-import com.vo.movie.forecast.commons.dto.Locality
-import com.vo.movie.forecast.commons.dto.Movie
+import com.vo.movie.forecast.commons.data.Locality
+import com.vo.movie.forecast.commons.data.Movie
 import feign.Param
 import feign.RequestLine
 

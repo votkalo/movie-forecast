@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>movie-forecast-bot-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>movie-forecast-bot-core</name>
 

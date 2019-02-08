@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.parser.provider.util
 
-import com.vo.movie.forecast.commons.dto.Locality
+import com.vo.movie.forecast.commons.data.Locality
 
 fun List<Locality>.getLocalitiesLetters(): List<String> = this
         .map { it.name.first().toString() }

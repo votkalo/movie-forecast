@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.parser.provider.impl
 
-import com.vo.movie.forecast.commons.dto.Locality
+import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.parser.api.LocalityApi
 import com.vo.movie.forecast.parser.provider.LocalityProvider
 import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_CACHE_NAME

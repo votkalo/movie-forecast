@@ -1,12 +1,12 @@
 package com.vo.movie.forecast.backend.core.dao.impl
 
 import com.vo.movie.forecast.backend.core.dao.UserRepository
-import com.vo.movie.forecast.backend.core.entity.PROPERTY_USER_LOCALITY
-import com.vo.movie.forecast.backend.core.entity.PROPERTY_USER_MOVIES
-import com.vo.movie.forecast.backend.core.entity.PROPERTY_USER_USER_ID
-import com.vo.movie.forecast.backend.core.entity.User
-import com.vo.movie.forecast.commons.dto.Locality
-import com.vo.movie.forecast.commons.dto.Movie
+import com.vo.movie.forecast.backend.core.document.User
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_LOCALITY
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_MOVIES
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_USER_ID
+import com.vo.movie.forecast.commons.data.Locality
+import com.vo.movie.forecast.commons.data.Movie
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.exists
 import org.springframework.data.mongodb.core.query.Criteria

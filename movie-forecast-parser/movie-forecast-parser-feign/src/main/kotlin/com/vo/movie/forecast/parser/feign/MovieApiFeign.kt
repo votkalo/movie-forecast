@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.parser.feign
 
+import com.vo.movie.forecast.commons.data.Movie
 import com.vo.movie.forecast.parser.api.MovieApi
-import com.vo.movie.forecast.commons.dto.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
 import feign.Param
 import feign.RequestLine

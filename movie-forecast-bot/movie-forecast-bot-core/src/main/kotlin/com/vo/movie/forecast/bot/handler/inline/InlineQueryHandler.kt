@@ -6,7 +6,7 @@ import com.vo.movie.forecast.bot.util.addCallbackPrefix
 import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
 import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
 import com.vo.movie.forecast.bot.util.createOneRowButton
-import com.vo.movie.forecast.commons.dto.Movie
+import com.vo.movie.forecast.commons.data.Movie
 import com.vo.movie.forecast.parser.dto.MovieSearchParams
 import com.vo.movie.forecast.parser.provider.MovieProvider
 import org.springframework.stereotype.Component

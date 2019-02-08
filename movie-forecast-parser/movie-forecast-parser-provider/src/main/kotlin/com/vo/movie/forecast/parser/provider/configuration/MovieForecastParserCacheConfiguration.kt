@@ -2,7 +2,7 @@ package com.vo.movie.forecast.parser.provider.configuration
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.vo.movie.forecast.commons.dto.Movie
+import com.vo.movie.forecast.commons.data.Movie
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache

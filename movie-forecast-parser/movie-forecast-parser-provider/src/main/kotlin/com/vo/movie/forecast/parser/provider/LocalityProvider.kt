@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.parser.provider
 
-import com.vo.movie.forecast.commons.dto.Locality
+import com.vo.movie.forecast.commons.data.Locality
 
 interface LocalityProvider {
 

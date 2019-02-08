@@ -19,7 +19,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-dto</artifactId>
+            <artifactId>movie-forecast-commons-data-object</artifactId>
             <version>${project.version}</version>
         </dependency>
 

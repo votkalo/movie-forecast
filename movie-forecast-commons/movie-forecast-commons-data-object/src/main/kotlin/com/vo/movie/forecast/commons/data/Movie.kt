@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.commons.dto
+package com.vo.movie.forecast.commons.data
 
 import java.math.BigDecimal
 
