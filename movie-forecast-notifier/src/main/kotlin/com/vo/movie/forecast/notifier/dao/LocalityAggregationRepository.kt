@@ -1,6 +1,6 @@
-package com.vo.movie.forecast.worker.dao
+package com.vo.movie.forecast.notifier.dao
 
-import com.vo.movie.forecast.worker.entity.LocalityAggregation
+import com.vo.movie.forecast.notifier.entity.LocalityAggregation
 
 interface LocalityAggregationRepository {
 

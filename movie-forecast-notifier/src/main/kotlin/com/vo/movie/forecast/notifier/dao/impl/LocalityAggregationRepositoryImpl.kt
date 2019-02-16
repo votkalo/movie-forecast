@@ -1,14 +1,13 @@
-package com.vo.movie.forecast.worker.dao.impl
+package com.vo.movie.forecast.notifier.dao.impl
 
-import com.vo.movie.forecast.worker.dao.LocalityAggregationRepository
-import com.vo.movie.forecast.worker.entity.LocalityAggregation
-import com.vo.movie.forecast.worker.entity.LocalityAggregation.Companion.PROPERTY_LOCALITY_AGGREGATION_LOCALITY
-import com.vo.movie.forecast.worker.entity.LocalityAggregation.Companion.PROPERTY_LOCALITY_AGGREGATION_MOVIES
+import com.vo.movie.forecast.notifier.dao.LocalityAggregationRepository
+import com.vo.movie.forecast.notifier.entity.LocalityAggregation
+import com.vo.movie.forecast.notifier.entity.LocalityAggregation.Companion.PROPERTY_LOCALITY_AGGREGATION_LOCALITY
+import com.vo.movie.forecast.notifier.entity.LocalityAggregation.Companion.PROPERTY_LOCALITY_AGGREGATION_MOVIES
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.Fields
 import org.springframework.stereotype.Repository
-
 
 @Repository
 open class LocalityAggregationRepositoryImpl(private val mongoOperation: MongoOperations) : LocalityAggregationRepository {

@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.worker.entity
+package com.vo.movie.forecast.notifier.entity
 
 import com.vo.movie.forecast.commons.data.Locality
 

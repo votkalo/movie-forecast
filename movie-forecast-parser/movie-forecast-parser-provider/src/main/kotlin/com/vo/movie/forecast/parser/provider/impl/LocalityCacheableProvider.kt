@@ -3,10 +3,10 @@ package com.vo.movie.forecast.parser.provider.impl
 import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.parser.api.LocalityApi
 import com.vo.movie.forecast.parser.provider.LocalityProvider
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
 import com.vo.movie.forecast.parser.provider.util.getLocalitiesLetters
 import com.vo.movie.forecast.parser.provider.util.getLocalitiesNamesByLetter
 import com.vo.movie.forecast.parser.provider.util.getLocalityByName

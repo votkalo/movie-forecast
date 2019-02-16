@@ -2,13 +2,15 @@ package com.vo.movie.forecast.parser.provider.worker
 
 import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.parser.provider.LocalityProvider
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
-import com.vo.movie.forecast.parser.provider.configuration.MovieForecastParserCacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
+import com.vo.movie.forecast.parser.provider.configuration.CacheConfiguration.Companion.LOCALITY_CACHE_MANAGER
 import com.vo.movie.forecast.parser.provider.util.getLocalitiesLetters
 import com.vo.movie.forecast.parser.provider.util.getLocalitiesNamesByLetter
 import com.vo.movie.forecast.parser.provider.util.getLocalityByName
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.CacheManager
 import org.springframework.cache.interceptor.SimpleKey
 import org.springframework.scheduling.annotation.Scheduled
@@ -17,11 +19,11 @@ import javax.annotation.PostConstruct
 
 
 @Component
-class MovieForecastParserLocalityCacheWorker(private val cacheManager: CacheManager,
-                                             private val localityProvider: LocalityProvider) {
+class LocalityCacheWorker(@Qualifier(LOCALITY_CACHE_MANAGER) private val cacheManager: CacheManager,
+                          private val localityProvider: LocalityProvider) {
 
-    @Scheduled(cron = "0 0 0 1 * ?")
-    fun evictAllCachesAtIntervals() {
+    @Scheduled(cron = "0 0 0 1 * ?", zone = "Europe/Minsk")
+    fun cleanUpdateCaches() {
         cacheManager.cacheNames.forEach { cacheManager.getCache(it)?.clear() }
         updateCaches()
     }

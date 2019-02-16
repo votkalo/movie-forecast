@@ -36,7 +36,7 @@
         <module>movie-forecast-commons</module>
         <module>movie-forecast-parser</module>
         <module>movie-forecast-bot</module>
-        <module>movie-forecast-worker</module>
+        <module>movie-forecast-notifier</module>
     </modules>
 
     <dependencyManagement>

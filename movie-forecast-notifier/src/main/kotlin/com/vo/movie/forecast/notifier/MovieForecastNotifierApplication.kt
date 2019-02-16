@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.worker
+package com.vo.movie.forecast.notifier
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -6,9 +6,9 @@ import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
 @ComponentScan("com.vo.movie")
-open class MovieForecastWorkerApplication
+open class MovieForecastNotifierApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(MovieForecastWorkerApplication::class.java, *args)
+    SpringApplication.run(MovieForecastNotifierApplication::class.java, *args)
 }
 

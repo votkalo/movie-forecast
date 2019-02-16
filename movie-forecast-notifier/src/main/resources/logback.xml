@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="LOG_PATH" value="./additional/logs"/>
-    <property name="LOG_NAME" value="movie-forecast-worker"/>
+    <property name="LOG_NAME" value="movie-forecast-notifier"/>
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">

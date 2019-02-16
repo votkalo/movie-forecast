@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-forecast-worker</artifactId>
+    <artifactId>movie-forecast-notifier</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>movie-forecast-worker</name>
+    <name>movie-forecast-notifier</name>
 
     <parent>
         <artifactId>movie-forecast</artifactId>
@@ -20,6 +20,11 @@
         <dependency>
             <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-commons-data-object</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
 
