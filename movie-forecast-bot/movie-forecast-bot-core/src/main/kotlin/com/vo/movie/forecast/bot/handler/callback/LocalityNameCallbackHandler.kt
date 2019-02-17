@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 import com.vo.movie.forecast.backend.api.api.UserApi
-import com.vo.movie.forecast.parser.provider.LocalityProvider
+import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 

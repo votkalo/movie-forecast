@@ -5,7 +5,7 @@ import com.vo.movie.forecast.bot.util.addCallbackPrefix
 import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
 import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
 import com.vo.movie.forecast.bot.util.createMessage
-import com.vo.movie.forecast.parser.provider.LocalityProvider
+import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import org.apache.commons.collections4.ListUtils
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update

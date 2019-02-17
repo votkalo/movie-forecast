@@ -11,4 +11,3 @@ open class MovieForecastNotifierApplication
 fun main(args: Array<String>) {
     SpringApplication.run(MovieForecastNotifierApplication::class.java, *args)
 }
-

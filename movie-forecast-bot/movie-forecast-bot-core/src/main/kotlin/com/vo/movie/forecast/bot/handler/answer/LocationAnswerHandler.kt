@@ -10,7 +10,7 @@ import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.util.createMessage
 import com.vo.movie.forecast.bot.util.createSearchLocalityInlineKeyboardMarkup
-import com.vo.movie.forecast.parser.provider.LocalityProvider
+import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove

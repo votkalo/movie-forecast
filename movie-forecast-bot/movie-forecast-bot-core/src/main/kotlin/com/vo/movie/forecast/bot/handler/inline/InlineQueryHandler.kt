@@ -7,8 +7,8 @@ import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
 import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
 import com.vo.movie.forecast.bot.util.createOneRowButton
 import com.vo.movie.forecast.commons.data.Movie
-import com.vo.movie.forecast.parser.dto.MovieSearchParams
-import com.vo.movie.forecast.parser.provider.MovieProvider
+import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParams
+import com.vo.movie.forecast.parser.provider.movie.MovieProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
 import org.telegram.telegrambots.meta.api.objects.Update
