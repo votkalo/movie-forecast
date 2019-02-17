@@ -1,12 +1,5 @@
-spring:
-  data:
-    mongodb:
-      host: ${DATABASE_HOST}
-      port: ${DATABASE_PORT}
-      database: ${DATABASE_NAME}
-      username: ${DATABASE_USER}
-      password: ${DATABASE_PASSWORD}
-
 feign:
   movie-forecast-parser:
     url: http://localhost:8000
+  movie-forecast-backend:
+    url: http://localhost:8080

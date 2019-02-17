@@ -19,6 +19,7 @@
         <module>movie-forecast-backend-core</module>
         <module>movie-forecast-backend-api</module>
         <module>movie-forecast-backend-feign</module>
+        <module>movie-forecast-backend-data-object</module>
     </modules>
 
 </project>

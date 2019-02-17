@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>movie-forecast-backend-api</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>movie-forecast-backend-api</name>
@@ -14,23 +15,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <dependencies>
-        <!--Project-->
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-data-object</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>movie-forecast-backend-api-bot</module>
+        <module>movie-forecast-backend-api-notifier</module>
+    </modules>
 
-    <build>
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-
-        <plugins>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

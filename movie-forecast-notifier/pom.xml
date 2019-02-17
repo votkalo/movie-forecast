@@ -19,19 +19,13 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-data-object</artifactId>
+            <artifactId>movie-forecast-backend-feign-notifier</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-parser-provider-schedule</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!--MongoDB-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
     </dependencies>
 

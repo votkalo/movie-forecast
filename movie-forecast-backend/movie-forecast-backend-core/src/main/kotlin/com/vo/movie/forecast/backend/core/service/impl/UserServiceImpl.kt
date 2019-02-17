@@ -2,6 +2,7 @@ package com.vo.movie.forecast.backend.core.service.impl
 
 import com.vo.movie.forecast.backend.core.dao.UserRepository
 import com.vo.movie.forecast.backend.core.service.UserService
+import com.vo.movie.forecast.backend.data.User
 import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.commons.data.Movie
 import org.springframework.stereotype.Service
@@ -18,4 +19,7 @@ open class UserServiceImpl(private val userRepository: UserRepository) : UserSer
 
     @Transactional(readOnly = true)
     override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean = userRepository.existsMovie(userId, kinopoiskMovieId)
+
+    @Transactional(readOnly = true)
+    override fun getUsers(page: Int, size: Int): List<User> = userRepository.getUsers(page, size)
 }

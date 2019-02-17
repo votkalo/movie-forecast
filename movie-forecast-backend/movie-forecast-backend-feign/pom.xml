@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>movie-forecast-backend-feign</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>movie-forecast-backend-feign</name>
@@ -14,35 +15,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <dependencies>
-        <!--Project-->
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!--Spring-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-
-        <plugins>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <modules>
+        <module>movie-forecast-backend-feign-bot</module>
+        <module>movie-forecast-backend-feign-notifier</module>
+    </modules>
 
 </project>

@@ -19,7 +19,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-api</artifactId>
+            <artifactId>movie-forecast-backend-data-object</artifactId>
             <version>${project.version}</version>
         </dependency>
 

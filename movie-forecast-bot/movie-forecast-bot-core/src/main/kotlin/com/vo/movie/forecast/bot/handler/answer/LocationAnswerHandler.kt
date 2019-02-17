@@ -5,7 +5,7 @@ import com.google.maps.GeocodingApi
 import com.google.maps.model.AddressComponentType
 import com.google.maps.model.AddressType
 import com.google.maps.model.LatLng
-import com.vo.movie.forecast.backend.api.api.UserApi
+import com.vo.movie.forecast.backend.api.bot.UserApi
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.util.createMessage
@@ -44,6 +44,7 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
             userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(geolocationLocality))
             message = createMessage(chatId, "Ваш текущий населённый пункт обновлён на:\n<b>$geolocationLocality</b>")
             getBot().execute(message)
+            //TODO: send request for check cinema schedule if city changed
             return
         }
 

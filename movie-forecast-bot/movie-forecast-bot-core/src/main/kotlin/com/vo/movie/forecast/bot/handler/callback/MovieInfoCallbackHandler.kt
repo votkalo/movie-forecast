@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.bot.handler.callback
 
-import com.vo.movie.forecast.backend.api.api.UserApi
+import com.vo.movie.forecast.backend.api.bot.UserApi
 import com.vo.movie.forecast.parser.provider.movie.MovieProvider
 import feign.FeignException
 import org.springframework.stereotype.Component

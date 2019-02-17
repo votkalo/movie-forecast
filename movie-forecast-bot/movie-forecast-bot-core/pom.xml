@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-feign</artifactId>
+            <artifactId>movie-forecast-backend-feign-bot</artifactId>
             <version>${project.version}</version>
         </dependency>
 
