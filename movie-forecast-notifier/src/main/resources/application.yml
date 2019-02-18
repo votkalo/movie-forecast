@@ -3,3 +3,5 @@ feign:
     url: http://localhost:8000
   movie-forecast-backend:
     url: http://localhost:8080
+  movie-forecast-bot:
+    url: http://localhost:8081

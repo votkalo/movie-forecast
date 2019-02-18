@@ -26,12 +26,6 @@
             <artifactId>movie-forecast-parser-api-locality</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!--Spring-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

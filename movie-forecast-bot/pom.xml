@@ -19,5 +19,6 @@
         <module>movie-forecast-bot-api</module>
         <module>movie-forecast-bot-feign</module>
         <module>movie-forecast-bot-core</module>
+        <module>movie-forecast-bot-data-object</module>
     </modules>
 </project>

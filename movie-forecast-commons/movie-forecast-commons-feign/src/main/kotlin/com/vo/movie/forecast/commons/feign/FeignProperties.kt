@@ -7,6 +7,7 @@ import java.net.URI
 open class FeignProperties {
     var movieForecastParser: FeignURL? = null
     var movieForecastBackend: FeignURL? = null
+    var movieForecastBot: FeignURL? = null
 
     class FeignURL {
         var url: URI? = null

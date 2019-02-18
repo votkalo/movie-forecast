@@ -18,19 +18,13 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>feign-commons</artifactId>
+            <artifactId>movie-forecast-commons-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-api</artifactId>
+            <artifactId>movie-forecast-bot-api</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!--Spring-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
         </dependency>
     </dependencies>
 

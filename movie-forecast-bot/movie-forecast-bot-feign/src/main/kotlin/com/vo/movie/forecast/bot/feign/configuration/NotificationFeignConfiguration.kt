@@ -1,0 +1,16 @@
+package com.vo.movie.forecast.bot.feign.configuration
+
+import com.vo.movie.forecast.bot.api.NotificationApi
+import com.vo.movie.forecast.bot.feign.NotificationApiFeign
+import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
+import com.vo.movie.forecast.commons.feign.FeignProperties
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+
+@Configuration
+open class NotificationFeignConfiguration(private val feignBuilderFactory: FeignBuilderFactory,
+                                          private val feignProperties: FeignProperties) {
+    @Bean
+    open fun notificationApi(): NotificationApi = feignBuilderFactory.jsonFeignBuilder()
+            .target(NotificationApiFeign::class.java, feignProperties.movieForecastBot?.url?.toASCIIString())
+}

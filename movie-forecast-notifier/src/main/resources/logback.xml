@@ -33,14 +33,4 @@
         <appender-ref ref="Console"/>
     </logger>
 
-    <logger name="org.hibernate" level="debug" additivity="false">
-        <appender-ref ref="RollingFile"/>
-        <appender-ref ref="Console"/>
-    </logger>
-
-    <logger name="org.springframework.data.mongodb" level="debug" additivity="false">
-        <appender-ref ref="RollingFile"/>
-        <appender-ref ref="Console"/>
-    </logger>
-
 </configuration>
