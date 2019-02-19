@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.backend.api.notifier
 
-import com.vo.movie.forecast.backend.data.User
+import com.vo.movie.forecast.backend.data.UserInfo
 
 interface UserApi {
 
-    fun getUsers(page: Int, size: Int): List<User>
+    fun getUsersWithoutMovies(page: Int, size: Int): List<UserInfo>
 }

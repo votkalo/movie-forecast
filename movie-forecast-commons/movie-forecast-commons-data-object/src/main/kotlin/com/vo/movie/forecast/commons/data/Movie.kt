@@ -11,4 +11,11 @@ data class Movie(val title: String,
                  val kinopoiskMovieId: Long,
                  val bigPosterURL: String,
                  val smallPosterURL: String,
-                 val sourceURL: String)
+                 val sourceURL: String) {
+    companion object {
+        const val PROPERTY_MOVIE_TITLE = "title"
+        const val PROPERTY_MOVIE_ORIGINAL_TITLE = "originalTitle"
+        const val PROPERTY_MOVIE_YEAR = "year"
+        const val PROPERTY_MOVIE_KINOPOISK_MOVIE_ID = "kinopoiskMovieId"
+    }
+}

@@ -1,15 +1,19 @@
 package com.vo.movie.forecast.backend.core.dao.impl
 
 import com.vo.movie.forecast.backend.core.dao.UserRepository
-import com.vo.movie.forecast.backend.data.User
-import com.vo.movie.forecast.backend.data.User.Companion.PROPERTY_USER_LOCALITY
-import com.vo.movie.forecast.backend.data.User.Companion.PROPERTY_USER_MOVIES
-import com.vo.movie.forecast.backend.data.User.Companion.PROPERTY_USER_USER_ID
+import com.vo.movie.forecast.backend.core.document.User
+import com.vo.movie.forecast.backend.core.document.User.Companion.DOCUMENT_USER__NAME
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_LOCALITY
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_MOVIES
+import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_USER_ID
+import com.vo.movie.forecast.backend.data.UserInfo
 import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.commons.data.Movie
+import com.vo.movie.forecast.commons.data.Movie.Companion.PROPERTY_MOVIE_KINOPOISK_MOVIE_ID
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.exists
+import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
@@ -22,7 +26,7 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
     override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean {
         val query = Query()
         query.addCriteria(Criteria.where(PROPERTY_USER_USER_ID).`is`(userId))
-        query.addCriteria(Criteria.where("movies.kinopoiskMovieId").`is`(kinopoiskMovieId))
+        query.addCriteria(Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_MOVIE_ID").`is`(kinopoiskMovieId))
         return mongoOperation.exists(query, User::class)
     }
 
@@ -40,14 +44,15 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
         mongoOperation.upsert(query, update, User::class)
     }
 
-    override fun getUsers(page: Int, size: Int): List<User> {
+    override fun getUsersInfoWithLocality(page: Int, size: Int): List<UserInfo> {
         val pageRequest = PageRequest.of(page, size)
-        return mongoOperation.find(Query().with(pageRequest), User::class.java)
+        val query = Query(Criteria.where(PROPERTY_USER_LOCALITY).exists(true))
+                .with(pageRequest)
+        query.fields()
+                .include(PROPERTY_USER_USER_ID)
+                .include(PROPERTY_USER_LOCALITY)
+        return mongoOperation.find(query, DOCUMENT_USER__NAME)
     }
 
-    private fun findUserQuery(userId: Long): Query {
-        val query = Query()
-        query.addCriteria(Criteria.where(PROPERTY_USER_USER_ID).`is`(userId))
-        return query
-    }
+    private fun findUserQuery(userId: Long): Query = Query(Criteria.where(PROPERTY_USER_USER_ID).`is`(userId))
 }
