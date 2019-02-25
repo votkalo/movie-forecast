@@ -77,11 +77,11 @@ class MovieScheduleNotifier(private val userApi: UserApi,
     private fun MovieSchedule.isScheduleMatch(movies: List<MovieInfo>): Boolean = movies.any { it.isEqualsSchedule(this) }
 
     private fun MovieInfo.isEqualsSchedule(movieSchedule: MovieSchedule): Boolean {
-        return removeAllExceptLetters(title) == removeAllExceptLetters(movieSchedule.title)
+        return removeAllExceptDigitsLetters(title) == removeAllExceptDigitsLetters(movieSchedule.title)
                 && year == movieSchedule.year
     }
 
-    private fun removeAllExceptLetters(value: String?): String? {
+    private fun removeAllExceptDigitsLetters(value: String?): String? {
         return value?.replace(Regex("[\\s\\\\\\-'\"@#\$%^&*()+=<>/`~!?;:.,_]"), "")
     }
 }
