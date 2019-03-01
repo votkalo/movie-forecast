@@ -77,7 +77,7 @@ class MovieScheduleNotifier(private val userApi: UserApi,
     private fun MovieSchedule.isScheduleMatch(movies: List<MovieInfo>): Boolean = movies.any { it.isEqualsSchedule(this) }
 
     private fun MovieInfo.isEqualsSchedule(movieSchedule: MovieSchedule): Boolean {
-        return removeAllExceptDigitsLetters(title) == removeAllExceptDigitsLetters(movieSchedule.title)
+        return removeAllExceptDigitsLetters(title).equals(removeAllExceptDigitsLetters(movieSchedule.title), true)
                 && year == movieSchedule.year
     }
 
