@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.core.rest
 
 import com.vo.movie.forecast.backend.core.service.MovieService
-import com.vo.movie.forecast.backend.data.MovieInfo
+import com.vo.movie.forecast.commons.data.MovieInfo
 import org.springframework.web.bind.annotation.*
 
 @RestController

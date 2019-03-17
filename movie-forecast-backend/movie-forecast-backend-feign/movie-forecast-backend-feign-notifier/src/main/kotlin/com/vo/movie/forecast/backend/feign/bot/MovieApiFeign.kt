@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.feign.bot
 
 import com.vo.movie.forecast.backend.api.notifier.MovieApi
-import com.vo.movie.forecast.backend.data.MovieInfo
+import com.vo.movie.forecast.commons.data.MovieInfo
 import feign.Param
 import feign.RequestLine
 

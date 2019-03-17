@@ -17,4 +17,6 @@ open class UserServiceImpl(private val userRepository: UserRepository) : UserSer
     override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean = userRepository.existsMovie(userId, kinopoiskMovieId)
 
     override fun getUsersInfoWithLocality(page: Int, size: Int): List<UserInfo> = userRepository.getUsersInfoWithLocality(page, size)
+
+    override fun getUsersIds(page: Int, size: Int): List<Long> = userRepository.getUsersIds(page, size)
 }

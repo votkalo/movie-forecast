@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.backend.data
+package com.vo.movie.forecast.commons.data
 
 class MovieInfo(val title: String,
                 val originalTitle: String?,

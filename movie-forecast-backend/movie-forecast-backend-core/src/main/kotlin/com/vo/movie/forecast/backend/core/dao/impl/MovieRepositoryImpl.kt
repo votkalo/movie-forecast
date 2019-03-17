@@ -1,13 +1,13 @@
 package com.vo.movie.forecast.backend.core.dao.impl
 
 import com.vo.movie.forecast.backend.core.dao.MovieRepository
-import com.vo.movie.forecast.backend.core.document.User.Companion.DOCUMENT_USER__NAME
+import com.vo.movie.forecast.backend.core.document.User.Companion.DOCUMENT_USER_NAME
 import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_MOVIES
 import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_USER_ID
-import com.vo.movie.forecast.backend.data.MovieInfo
 import com.vo.movie.forecast.commons.data.Movie.Companion.PROPERTY_MOVIE_ORIGINAL_TITLE
 import com.vo.movie.forecast.commons.data.Movie.Companion.PROPERTY_MOVIE_TITLE
 import com.vo.movie.forecast.commons.data.Movie.Companion.PROPERTY_MOVIE_YEAR
+import com.vo.movie.forecast.commons.data.MovieInfo
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.aggregation.Aggregation
@@ -28,6 +28,6 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
         val skipStage = Aggregation.skip(pageRequest.offset)
         val limitStage = Aggregation.limit(pageRequest.pageSize.toLong())
         val aggregation = Aggregation.newAggregation(matchStage, unwindStage, projectStage, skipStage, limitStage)
-        return mongoOperation.aggregate(aggregation, DOCUMENT_USER__NAME, MovieInfo::class.java).mappedResults
+        return mongoOperation.aggregate(aggregation, DOCUMENT_USER_NAME, MovieInfo::class.java).mappedResults
     }
 }

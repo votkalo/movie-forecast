@@ -13,4 +13,6 @@ interface UserService {
     fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean
 
     fun getUsersInfoWithLocality(page: Int, size: Int): List<UserInfo>
+
+    fun getUsersIds(page: Int, size: Int): List<Long>
 }

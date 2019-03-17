@@ -20,6 +20,7 @@
         <module>movie-forecast-parser-feign-locality</module>
         <module>movie-forecast-parser-feign-movie</module>
         <module>movie-forecast-parser-feign-schedule</module>
+        <module>movie-forecast-parser-feign-online-cinema</module>
     </modules>
 
 </project>

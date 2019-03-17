@@ -2,10 +2,10 @@ package com.vo.movie.forecast.notifier.worker
 
 import com.vo.movie.forecast.backend.api.notifier.MovieApi
 import com.vo.movie.forecast.backend.api.notifier.UserApi
-import com.vo.movie.forecast.backend.data.MovieInfo
 import com.vo.movie.forecast.backend.data.Notification
 import com.vo.movie.forecast.backend.data.UserInfo
 import com.vo.movie.forecast.bot.api.NotificationApi
+import com.vo.movie.forecast.commons.data.MovieInfo
 import com.vo.movie.forecast.parser.api.schedule.dto.MovieSchedule
 import com.vo.movie.forecast.parser.provider.schedule.ScheduleProvider
 import org.springframework.scheduling.annotation.Scheduled
@@ -17,7 +17,7 @@ class MovieScheduleNotifier(private val userApi: UserApi,
                             private val scheduleProvider: ScheduleProvider,
                             private val notificationApi: NotificationApi) {
 
-    @Scheduled(cron = "0 36 15 * * ?", zone = "Europe/Minsk")
+    @Scheduled(cron = "0 47 23 * * ?", zone = "Europe/Minsk")
     fun notifyUsersAboutMoviesInCinema() {
         var userPage = 0
         val pageSize = 50

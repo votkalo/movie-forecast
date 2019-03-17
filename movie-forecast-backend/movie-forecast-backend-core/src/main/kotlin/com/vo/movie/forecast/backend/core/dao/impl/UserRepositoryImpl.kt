@@ -2,7 +2,7 @@ package com.vo.movie.forecast.backend.core.dao.impl
 
 import com.vo.movie.forecast.backend.core.dao.UserRepository
 import com.vo.movie.forecast.backend.core.document.User
-import com.vo.movie.forecast.backend.core.document.User.Companion.DOCUMENT_USER__NAME
+import com.vo.movie.forecast.backend.core.document.User.Companion.DOCUMENT_USER_NAME
 import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_LOCALITY
 import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_MOVIES
 import com.vo.movie.forecast.backend.core.document.User.Companion.PROPERTY_USER_USER_ID
@@ -51,7 +51,13 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
         query.fields()
                 .include(PROPERTY_USER_USER_ID)
                 .include(PROPERTY_USER_LOCALITY)
-        return mongoOperation.find(query, DOCUMENT_USER__NAME)
+        return mongoOperation.find(query, DOCUMENT_USER_NAME)
+    }
+
+    override fun getUsersIds(page: Int, size: Int): List<Long> {
+        val pageRequest = PageRequest.of(page, size)
+        val query = Query().with(pageRequest)
+        return mongoOperation.findDistinct(query, PROPERTY_USER_USER_ID, DOCUMENT_USER_NAME, Long::class.java)
     }
 
     private fun findUserQuery(userId: Long): Query = Query(Criteria.where(PROPERTY_USER_USER_ID).`is`(userId))

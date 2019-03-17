@@ -21,4 +21,7 @@ class UserController(private val userService: UserService) {
 
     @GetMapping
     fun getUsersInfoWithLocality(@RequestParam page: Int, @RequestParam size: Int): List<UserInfo> = userService.getUsersInfoWithLocality(page, size)
+
+    @GetMapping("/ids")
+    fun getUsersIds(@RequestParam page: Int, @RequestParam size: Int): List<Long> = userService.getUsersIds(page, size)
 }

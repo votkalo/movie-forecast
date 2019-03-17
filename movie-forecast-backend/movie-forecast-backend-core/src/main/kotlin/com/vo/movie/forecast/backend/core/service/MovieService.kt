@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.backend.core.service
 
-import com.vo.movie.forecast.backend.data.MovieInfo
+import com.vo.movie.forecast.commons.data.MovieInfo
 
 interface MovieService {
 

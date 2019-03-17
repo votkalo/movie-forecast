@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class ScheduleCacheWorker(@Qualifier(SCHEDULE_CACHE_MANAGER) private val cacheManager: CacheManager) {
 
-    @Scheduled(cron = "0 01 00 * * ?", zone = "Europe/Minsk")
+    @Scheduled(cron = "0 05 00 * * ?", zone = "Europe/Minsk")
     fun cleanCaches() {
         cacheManager.cacheNames.forEach { cacheManager.getCache(it)?.clear() }
     }

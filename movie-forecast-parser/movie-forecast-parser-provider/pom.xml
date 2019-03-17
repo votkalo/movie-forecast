@@ -20,6 +20,7 @@
         <module>movie-forecast-parser-provider-locality</module>
         <module>movie-forecast-parser-provider-movie</module>
         <module>movie-forecast-parser-provider-schedule</module>
+        <module>movie-forecast-parser-provider-online-cinema</module>
     </modules>
 
 </project>

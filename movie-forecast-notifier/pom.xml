@@ -24,12 +24,17 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-bot-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-parser-provider-schedule</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-bot-feign</artifactId>
+            <artifactId>movie-forecast-parser-provider-online-cinema</artifactId>
             <version>${project.version}</version>
         </dependency>
 

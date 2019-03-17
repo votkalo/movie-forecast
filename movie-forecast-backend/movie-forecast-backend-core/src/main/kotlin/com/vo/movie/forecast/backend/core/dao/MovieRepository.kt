@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.backend.core.dao
 
-import com.vo.movie.forecast.backend.data.MovieInfo
+import com.vo.movie.forecast.commons.data.MovieInfo
 
 interface MovieRepository {
 
