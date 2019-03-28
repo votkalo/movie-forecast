@@ -11,4 +11,6 @@ abstract class CallbackUpdateHandler(private val callback: Callback) : UpdateHan
             update.hasCallbackQuery() && callback.isCallbackData(update.callbackQuery.data)
 
     protected fun Update.getCallbackData(): String = callback.removeCallbackPrefix(callbackQuery.data)
+
+    protected fun getCallback(): Callback = callback
 }

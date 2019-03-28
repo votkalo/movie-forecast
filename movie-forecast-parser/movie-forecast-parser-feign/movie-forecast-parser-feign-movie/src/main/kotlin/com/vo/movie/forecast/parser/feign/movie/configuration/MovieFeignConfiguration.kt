@@ -12,7 +12,7 @@ open class MovieFeignConfiguration(private val feignBuilderFactory: FeignBuilder
                                    private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun movieApi(): MovieApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun parserMovieApi(): MovieApi = feignBuilderFactory.jsonFeignBuilder()
             .target(MovieApiFeign::class.java, feignProperties.movieForecastParser?.url?.toASCIIString())
 
 }

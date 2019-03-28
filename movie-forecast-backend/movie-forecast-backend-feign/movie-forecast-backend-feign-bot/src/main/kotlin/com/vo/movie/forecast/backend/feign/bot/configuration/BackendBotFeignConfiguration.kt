@@ -1,6 +1,8 @@
 package com.vo.movie.forecast.backend.feign.bot.configuration
 
+import com.vo.movie.forecast.backend.api.bot.MovieApi
 import com.vo.movie.forecast.backend.api.bot.UserApi
+import com.vo.movie.forecast.backend.feign.bot.MovieApiFeign
 import com.vo.movie.forecast.backend.feign.bot.UserApiFeign
 import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
 import com.vo.movie.forecast.commons.feign.FeignProperties
@@ -12,6 +14,10 @@ open class BackendBotFeignConfiguration(private val feignBuilderFactory: FeignBu
                                         private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun userApi(): UserApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun backendUserApiForBot(): UserApi = feignBuilderFactory.jsonFeignBuilder()
             .target(UserApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
+
+    @Bean
+    open fun backendMovieApiForBot(): MovieApi = feignBuilderFactory.jsonFeignBuilder()
+            .target(MovieApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
 }

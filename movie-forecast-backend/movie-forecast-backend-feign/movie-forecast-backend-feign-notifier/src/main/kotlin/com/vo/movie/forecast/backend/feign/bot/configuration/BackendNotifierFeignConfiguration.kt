@@ -14,10 +14,10 @@ open class BackendNotifierFeignConfiguration(private val feignBuilderFactory: Fe
                                              private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun userApi(): UserApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun backendUserApiForNotifier(): UserApi = feignBuilderFactory.jsonFeignBuilder()
             .target(UserApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
 
     @Bean
-    open fun movieApi(): MovieApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun backendMovieApiForNotifier(): MovieApi = feignBuilderFactory.jsonFeignBuilder()
             .target(MovieApiFeign::class.java, feignProperties.movieForecastBackend?.url?.toASCIIString())
 }

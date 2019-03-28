@@ -113,7 +113,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
     private fun Movie.createFollowButtonMarkup(): InlineKeyboardMarkup {
         val button = createInlineKeyboardButton(
                 "Добавить в отслеживаемые",
-                Callback.MOVIE_INFO.addCallbackPrefix(kinopoiskMovieId.toString())
+                Callback.MOVIE_ID.addCallbackPrefix(kinopoiskMovieId.toString())
         )
         val keyboard = createOneRowButton(button)
         return createInlineKeyboardMarkup(keyboard)

@@ -20,7 +20,7 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                            private val notificationApi: NotificationApi) {
 
     //    @Scheduled(cron = "0 31 18 * * ?", zone = "Europe/Minsk")
-    @Scheduled(fixedDelay = 5000L)
+    @Scheduled(fixedDelay = 10000L)
     fun notifyUsersAboutMoviesInCinema() {
         var userPage = 0
         val pageSize = 50

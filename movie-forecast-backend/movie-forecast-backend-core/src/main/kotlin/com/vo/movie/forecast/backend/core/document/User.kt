@@ -9,12 +9,14 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class User(
         val userId: Long,
         val locality: Locality?,
-        val movies: MutableList<Movie> = ArrayList()
+        val movies: MutableList<Movie> = ArrayList(),
+        val moviesLetters: MutableList<String> = ArrayList()
 ) {
     companion object {
         const val DOCUMENT_USER_NAME = "users"
         const val PROPERTY_USER_USER_ID = "userId"
         const val PROPERTY_USER_LOCALITY = "locality"
         const val PROPERTY_USER_MOVIES = "movies"
+        const val PROPERTY_USER_MOVIES_LETTERS = "moviesLetters"
     }
 }

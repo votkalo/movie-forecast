@@ -17,7 +17,8 @@ class MovieScheduleNotifier(private val userApi: UserApi,
                             private val scheduleProvider: ScheduleProvider,
                             private val notificationApi: NotificationApi) {
 
-    @Scheduled(cron = "0 47 23 * * ?", zone = "Europe/Minsk")
+    //    @Scheduled(cron = "0 47 23 * * ?", zone = "Europe/Minsk")
+    @Scheduled(fixedDelay = 10000L)
     fun notifyUsersAboutMoviesInCinema() {
         var userPage = 0
         val pageSize = 50

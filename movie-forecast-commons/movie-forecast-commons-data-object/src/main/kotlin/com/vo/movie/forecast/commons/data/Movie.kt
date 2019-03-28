@@ -16,6 +16,12 @@ data class Movie(val title: String,
         const val PROPERTY_MOVIE_TITLE = "title"
         const val PROPERTY_MOVIE_ORIGINAL_TITLE = "originalTitle"
         const val PROPERTY_MOVIE_YEAR = "year"
+        const val PROPERTY_MOVIE_GENRES = "genres"
+        const val PROPERTY_MOVIE_COUNTRIES = "countries"
+        const val PROPERTY_MOVIE_KINOPOISK_RATING = "kinopoiskRating"
         const val PROPERTY_MOVIE_KINOPOISK_MOVIE_ID = "kinopoiskMovieId"
+        const val PROPERTY_MOVIE_BIG_POSTER_URL = "bigPosterURL"
+        const val PROPERTY_MOVIE_SMALL_POSTER_URL = "smallPosterURL"
+        const val PROPERTY_MOVIE_SOURCE_URL = "sourceURL"
     }
 }

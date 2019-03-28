@@ -13,7 +13,7 @@ open class OnlineCinemaFeignConfiguration(private val feignBuilderFactory: Feign
                                           private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun onlineCinemaApi(): OnlineCinemaApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun parserOnlineCinemaApi(): OnlineCinemaApi = feignBuilderFactory.jsonFeignBuilder()
             .retryer(Retryer.Default())
             .target(OnlineCinemaApiFeign::class.java, feignProperties.movieForecastParser?.url?.toASCIIString())
 }
