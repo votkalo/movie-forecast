@@ -14,7 +14,15 @@ import org.telegram.telegrambots.meta.api.objects.Update
 class RemoveCommandHandler(private val movieApi: MovieApi) : CommandUpdateHandler(Command.REMOVE) {
 
     override fun handle(update: Update) {
+        //TODO: обёртка в стиле котлина через блок кода, на каждый метод API, при возникновении ошибки выкидывать алерт
         val letters = movieApi.getMoviesLetters(update.userId())
+
+        if (letters.isEmpty()) {
+            val message = createMessage(update.chatId(), "У вас нет отслеживаемых фильмов")
+            getBot().execute(message)
+            return
+        }
+
         val buttons = letters.map {
             createInlineKeyboardButton(it, Callback.MOVIE_FIRST_LETTER.addCallbackPrefix(it))
         }

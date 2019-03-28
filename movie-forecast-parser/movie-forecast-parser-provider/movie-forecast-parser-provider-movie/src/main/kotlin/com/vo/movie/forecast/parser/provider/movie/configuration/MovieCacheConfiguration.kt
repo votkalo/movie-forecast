@@ -14,13 +14,7 @@ import java.time.Duration
 @EnableCaching
 open class MovieCacheConfiguration(private val caffeineCacheProperties: CaffeineCacheProperties) {
 
-    companion object {
-        //CACHE CAFFEINE
-        const val MOVIE_CAFFEINE_CACHE = "movieCaffeineCache"
-    }
-
     @Bean
-    @Qualifier(MOVIE_CAFFEINE_CACHE)
     open fun movieCaffeineCache(): Cache<Long, Movie> {
         val movieCacheProperties = caffeineCacheProperties.movie
         return Caffeine.newBuilder()

@@ -21,6 +21,11 @@
             <artifactId>movie-forecast-parser-feign-schedule</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-commons-cache</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

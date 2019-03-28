@@ -6,5 +6,5 @@ import com.vo.movie.forecast.parser.api.online.cinema.dto.OnlineCinema
 
 interface OnlineCinemaProvider {
 
-    fun getMovieAccessInfo(onlineCinemaName: OnlineCinema, movieInfo: MovieInfo): MovieAccessInfo
+    fun getMovieAccessInfo(onlineCinema: OnlineCinema, movieInfo: MovieInfo): MovieAccessInfo
 }

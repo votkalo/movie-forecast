@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class MovieCacheableProvider(private val movieApi: MovieApi,
-                             @Qualifier(MovieCacheConfiguration.MOVIE_CAFFEINE_CACHE) private val movieCaffeineCache: Cache<Long, Movie>) : MovieProvider {
+                             private val movieCaffeineCache: Cache<Long, Movie>) : MovieProvider {
 
     override fun searchMovie(searchParams: MovieSearchParams): List<Movie> {
         val movies = movieApi.searchMovie(searchParams)

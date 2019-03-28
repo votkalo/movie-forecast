@@ -1,22 +1,17 @@
 package com.vo.movie.forecast.parser.provider.locality.configuration
 
-import org.springframework.beans.factory.annotation.Qualifier
+import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache
-import org.springframework.cache.support.SimpleCacheManager
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 
 @Configuration
 @EnableCaching
-open class LocalityCacheConfiguration {
+open class LocalityCacheConfiguration(extendableSimpleCacheManager: CacheManager) {
 
     companion object {
-        //CACHE MANAGER
-        const val LOCALITY_CACHE_MANAGER = "localityCacheManager"
-
         //CACHE NAME
         const val LOCALITIES_CACHE_NAME: String = "localities"
         const val LOCALITIES_LETTERS_CACHE_NAME: String = "localitiesLetters"
@@ -24,11 +19,11 @@ open class LocalityCacheConfiguration {
         const val LOCALITY_BY_NAME_CACHE_NAME: String = "localityByName"
     }
 
-    @Bean
-    @Qualifier(LOCALITY_CACHE_MANAGER)
-    open fun cacheManager(): CacheManager {
-        val cacheManager = SimpleCacheManager()
-        cacheManager.setCaches(
+    init {
+        if (extendableSimpleCacheManager !is ExtendableSimpleCacheManager) {
+            throw IllegalArgumentException("CacheManager must be ${ExtendableSimpleCacheManager::class.java.name} type")
+        }
+        extendableSimpleCacheManager.registerCaches(
                 arrayListOf(
                         ConcurrentMapCache(LOCALITIES_CACHE_NAME),
                         ConcurrentMapCache(LOCALITIES_LETTERS_CACHE_NAME),
@@ -36,6 +31,6 @@ open class LocalityCacheConfiguration {
                         ConcurrentMapCache(LOCALITY_BY_NAME_CACHE_NAME)
                 )
         )
-        return cacheManager
+        println()
     }
 }
