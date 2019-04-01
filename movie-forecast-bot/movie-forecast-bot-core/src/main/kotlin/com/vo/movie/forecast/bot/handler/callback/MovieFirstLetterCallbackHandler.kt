@@ -1,10 +1,7 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 import com.vo.movie.forecast.backend.api.bot.MovieApi
-import com.vo.movie.forecast.bot.util.addCallbackPrefix
-import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
-import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
-import com.vo.movie.forecast.bot.util.createRowButton
+import com.vo.movie.forecast.bot.util.*
 import com.vo.movie.forecast.commons.data.MovieInfo
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -14,7 +11,7 @@ class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : Callback
 
     override fun handle(update: Update) {
         val firstLetter = update.getCallbackData().single()
-        val movies = movieApi.getMoviesByLetter(update.userId(), firstLetter)
+        val movies = call({ movieApi.getMoviesByLetter(update.userId(), firstLetter) }, update.chatId())
         val moviesInfoStrings = movies.map { it.createCallbackButtonInfo() }
         val keyboard = moviesInfoStrings.map {
             val button = createInlineKeyboardButton(it.text, Callback.MOVIE_INFO.addCallbackPrefix(it.callbackData))

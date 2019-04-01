@@ -13,7 +13,7 @@ abstract class UpdateHandler {
         this.bot = bot
     }
 
-    protected fun getBot(): TelegramLongPollingBot = bot
+    fun getBot(): TelegramLongPollingBot = bot
 
     protected fun Update.chatId(): Long {
         if (hasMessage()) {
@@ -28,6 +28,9 @@ abstract class UpdateHandler {
         if (hasCallbackQuery()) {
             return callbackQuery.from.id.toLong()
         }
+        if (hasInlineQuery()) {
+            return inlineQuery.from.id.toLong()
+        }
         throw NullPointerException("Chat id not found")
     }
 
@@ -37,6 +40,9 @@ abstract class UpdateHandler {
         }
         if (hasCallbackQuery()) {
             return callbackQuery.from.id.toLong()
+        }
+        if (hasInlineQuery()) {
+            return inlineQuery.from.id.toLong()
         }
         throw NullPointerException("User id not found")
     }

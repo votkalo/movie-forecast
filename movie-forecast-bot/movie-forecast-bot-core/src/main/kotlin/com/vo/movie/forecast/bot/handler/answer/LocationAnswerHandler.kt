@@ -8,6 +8,7 @@ import com.google.maps.model.LatLng
 import com.vo.movie.forecast.backend.api.bot.UserApi
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
+import com.vo.movie.forecast.bot.util.call
 import com.vo.movie.forecast.bot.util.createMessage
 import com.vo.movie.forecast.bot.util.createSearchLocalityInlineKeyboardMarkup
 import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
@@ -38,10 +39,10 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
             return
         }
 
-        val isLocalityKnown = localityProvider.getLocalities().any { locality -> locality.name == geolocationLocality }
+        val isLocalityKnown = call({ localityProvider.getLocalities() }, update.chatId()).any { locality -> locality.name == geolocationLocality }
 
         if (isLocalityKnown) {
-            userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(geolocationLocality))
+            call({ userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(geolocationLocality)) }, update.chatId())
             message = createMessage(chatId, "Ваш текущий населённый пункт обновлён на:\n<b>$geolocationLocality</b>")
             getBot().execute(message)
             return

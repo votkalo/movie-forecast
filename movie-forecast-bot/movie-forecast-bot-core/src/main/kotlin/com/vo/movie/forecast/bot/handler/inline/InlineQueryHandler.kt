@@ -2,10 +2,7 @@ package com.vo.movie.forecast.bot.handler.inline
 
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.handler.callback.Callback
-import com.vo.movie.forecast.bot.util.addCallbackPrefix
-import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
-import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
-import com.vo.movie.forecast.bot.util.createOneRowButton
+import com.vo.movie.forecast.bot.util.*
 import com.vo.movie.forecast.commons.data.Movie
 import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParams
 import com.vo.movie.forecast.parser.provider.movie.MovieProvider
@@ -25,7 +22,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-        val movies = movieProvider.searchMovie(MovieSearchParams(inlineQuery.query))
+        val movies = call({ movieProvider.searchMovie(MovieSearchParams(inlineQuery.query)) }, update.chatId())
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
         getBot().execute(answerInlineQuery)

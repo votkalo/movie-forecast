@@ -2,10 +2,7 @@ package com.vo.movie.forecast.bot.handler.command
 
 import com.vo.movie.forecast.backend.api.bot.MovieApi
 import com.vo.movie.forecast.bot.handler.callback.Callback
-import com.vo.movie.forecast.bot.util.addCallbackPrefix
-import com.vo.movie.forecast.bot.util.createInlineKeyboardButton
-import com.vo.movie.forecast.bot.util.createInlineKeyboardMarkup
-import com.vo.movie.forecast.bot.util.createMessage
+import com.vo.movie.forecast.bot.util.*
 import org.apache.commons.collections4.ListUtils
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -14,8 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 class UnsubscribeCommandHandler(private val movieApi: MovieApi) : CommandUpdateHandler(Command.UNSUBSCRIBE) {
 
     override fun handle(update: Update) {
-        //TODO: обёртка в стиле котлина через блок кода, на каждый метод API, при возникновении ошибки выкидывать алерт
-        val letters = movieApi.getMoviesLetters(update.userId())
+        val letters = call({ movieApi.getMoviesLetters(update.userId()) }, update.chatId())
 
         if (letters.isEmpty()) {
             val message = createMessage(update.chatId(), "У вас нет отслеживаемых фильмов")

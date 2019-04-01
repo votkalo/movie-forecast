@@ -1,6 +1,7 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 import com.vo.movie.forecast.backend.api.bot.MovieApi
+import com.vo.movie.forecast.bot.util.call
 import com.vo.movie.forecast.parser.provider.movie.MovieProvider
 import feign.FeignException
 import org.springframework.stereotype.Component
@@ -14,20 +15,15 @@ class MovieIdCallbackHandler(private val movieApi: MovieApi,
     override fun handle(update: Update) {
         val answerCallbackQuery = AnswerCallbackQuery()
         answerCallbackQuery.callbackQueryId = update.callbackQuery.id
-        try {
-            registerMovie(update.userId(), update.getCallbackData().toLong())
-            answerCallbackQuery.text = "Фильм добавлен в отслеживаемые"
-        } catch (e: FeignException) {
-            answerCallbackQuery.showAlert = true
-            answerCallbackQuery.text = "К сожалению данная функция сейчас не доступна"
-        }
+        registerMovie(update.userId(), update.getCallbackData().toLong())
+        answerCallbackQuery.text = "Фильм добавлен в отслеживаемые"
         getBot().execute(answerCallbackQuery)
     }
 
     @Throws(FeignException::class)
     private fun registerMovie(userId: Long, kinopoiskMovieId: Long) {
-        if (!movieApi.existsMovie(userId, kinopoiskMovieId)) {
-            movieApi.registerMovie(movieProvider.getMovie(kinopoiskMovieId), userId)
+        if (!call({ movieApi.existsMovie(userId, kinopoiskMovieId) }, userId)) {
+            call({ movieApi.registerMovie(movieProvider.getMovie(kinopoiskMovieId), userId) }, userId)
         }
     }
 }
