@@ -1,7 +1,6 @@
 package com.vo.movie.forecast.parser.provider.locality.configuration
 
 import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
-import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache
 import org.springframework.context.annotation.Configuration
@@ -9,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableCaching
-open class LocalityCacheConfiguration(extendableSimpleCacheManager: CacheManager) {
+open class LocalityCacheConfiguration(extendableSimpleCacheManager: ExtendableSimpleCacheManager) {
 
     companion object {
         //CACHE NAME
@@ -20,9 +19,6 @@ open class LocalityCacheConfiguration(extendableSimpleCacheManager: CacheManager
     }
 
     init {
-        if (extendableSimpleCacheManager !is ExtendableSimpleCacheManager) {
-            throw IllegalArgumentException("CacheManager must be ${ExtendableSimpleCacheManager::class.java.name} type")
-        }
         extendableSimpleCacheManager.registerCaches(
                 arrayListOf(
                         ConcurrentMapCache(LOCALITIES_CACHE_NAME),

@@ -44,7 +44,6 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
             userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(geolocationLocality))
             message = createMessage(chatId, "Ваш текущий населённый пункт обновлён на:\n<b>$geolocationLocality</b>")
             getBot().execute(message)
-            //TODO: send request for check cinema schedule if city changed
             return
         }
 

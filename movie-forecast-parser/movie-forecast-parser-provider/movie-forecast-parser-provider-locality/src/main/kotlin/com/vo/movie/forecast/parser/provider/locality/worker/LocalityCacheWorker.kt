@@ -1,5 +1,6 @@
 package com.vo.movie.forecast.parser.provider.locality.worker
 
+import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
 import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import com.vo.movie.forecast.parser.provider.locality.configuration.LocalityCacheConfiguration.Companion.LOCALITIES_CACHE_NAME
@@ -9,7 +10,6 @@ import com.vo.movie.forecast.parser.provider.locality.configuration.LocalityCach
 import com.vo.movie.forecast.parser.provider.locality.util.getLocalitiesLetters
 import com.vo.movie.forecast.parser.provider.locality.util.getLocalitiesNamesByLetter
 import com.vo.movie.forecast.parser.provider.locality.util.getLocalityByName
-import org.springframework.cache.CacheManager
 import org.springframework.cache.interceptor.SimpleKey
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -17,12 +17,17 @@ import javax.annotation.PostConstruct
 
 
 @Component
-class LocalityCacheWorker(private val extendableSimpleCacheManager: CacheManager,
+class LocalityCacheWorker(private val extendableSimpleCacheManager: ExtendableSimpleCacheManager,
                           private val localityProvider: LocalityProvider) {
 
     @Scheduled(cron = "0 0 0 1 * ?", zone = "Europe/Minsk")
     fun cleanUpdateCaches() {
-        extendableSimpleCacheManager.cacheNames.forEach { extendableSimpleCacheManager.getCache(it)?.clear() }
+        extendableSimpleCacheManager.clearCaches(
+                LOCALITIES_CACHE_NAME,
+                LOCALITIES_LETTERS_CACHE_NAME,
+                LOCALITIES_NAMES_BY_LETTER_CACHE_NAME,
+                LOCALITY_BY_NAME_CACHE_NAME
+        )
         updateCaches()
     }
 

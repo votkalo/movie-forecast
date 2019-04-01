@@ -1,7 +1,6 @@
 package com.vo.movie.forecast.parser.provider.schedule.configuration
 
 import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
-import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache
 import org.springframework.context.annotation.Configuration
@@ -9,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableCaching
-open class OnlineCinemaCacheConfiguration(extendableSimpleCacheManager: CacheManager) {
+open class OnlineCinemaCacheConfiguration(extendableSimpleCacheManager: ExtendableSimpleCacheManager) {
 
     companion object {
         //CACHE NAME
@@ -17,9 +16,6 @@ open class OnlineCinemaCacheConfiguration(extendableSimpleCacheManager: CacheMan
     }
 
     init {
-        if (extendableSimpleCacheManager !is ExtendableSimpleCacheManager) {
-            throw IllegalArgumentException("CacheManager must be ${ExtendableSimpleCacheManager::class.java.name} type")
-        }
         extendableSimpleCacheManager.registerCache(ConcurrentMapCache(ONLINE_CINEMA_MOVIE_ACCESS_INFO_CACHE_NAME))
     }
 }

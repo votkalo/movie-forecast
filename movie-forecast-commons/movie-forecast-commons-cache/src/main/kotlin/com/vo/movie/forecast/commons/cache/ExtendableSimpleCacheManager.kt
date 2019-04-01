@@ -18,4 +18,8 @@ class ExtendableSimpleCacheManager : SimpleCacheManager() {
         this.setCaches(caches)
         this.initializeCaches()
     }
+
+    fun clearCaches(vararg cacheNames: String) {
+        cacheNames.forEach { getCache(it)?.clear() }
+    }
 }
