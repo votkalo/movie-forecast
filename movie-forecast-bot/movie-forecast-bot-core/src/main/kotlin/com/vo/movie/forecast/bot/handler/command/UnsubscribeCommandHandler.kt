@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class RemoveCommandHandler(private val movieApi: MovieApi) : CommandUpdateHandler(Command.REMOVE) {
+class UnsubscribeCommandHandler(private val movieApi: MovieApi) : CommandUpdateHandler(Command.UNSUBSCRIBE) {
 
     override fun handle(update: Update) {
         //TODO: обёртка в стиле котлина через блок кода, на каждый метод API, при возникновении ошибки выкидывать алерт

@@ -23,6 +23,10 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
         mongoOperation.upsert(queryUser(userId), Update().set(PROPERTY_USER_LOCALITY, locality), User::class)
     }
 
+    override fun removeLocality(userId: Long) {
+        mongoOperation.findAndModify(queryUser(userId), Update().unset(PROPERTY_USER_LOCALITY), User::class.java)
+    }
+
     override fun getUsersInfoWithLocality(page: Int, size: Int): List<UserInfo> {
         val pageRequest = PageRequest.of(page, size)
         val query = Query(Criteria.where(PROPERTY_USER_LOCALITY).exists(true))

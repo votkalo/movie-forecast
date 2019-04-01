@@ -7,6 +7,10 @@ import feign.RequestLine
 
 interface UserApiFeign : UserApi {
 
-    @RequestLine("PUT /users/{userId}/updateLocality")
+    @RequestLine("PUT /users/{userId}/locality")
     override fun updateLocality(@Param("userId") userId: Long, locality: Locality)
+
+    @RequestLine("DELETE /users/{userId}/locality")
+    override fun removeLocality(@Param("userId") userId: Long)
+
 }

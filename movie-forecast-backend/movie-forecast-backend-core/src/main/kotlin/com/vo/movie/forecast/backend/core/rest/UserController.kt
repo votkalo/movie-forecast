@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 class UserController(private val userService: UserService) {
 
-    @PutMapping("/{userId}/updateLocality")
+    @PutMapping("/{userId}/locality")
     fun updateLocality(@PathVariable userId: Long, @RequestBody locality: Locality) = userService.updateLocality(userId, locality)
+
+    @DeleteMapping("/{userId}/locality")
+    fun removeLocality(@PathVariable userId: Long) = userService.removeLocality(userId)
 
     @GetMapping
     fun getUsersInfoWithLocality(@RequestParam page: Int, @RequestParam size: Int): List<UserInfo> = userService.getUsersInfoWithLocality(page, size)
