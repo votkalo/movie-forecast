@@ -16,10 +16,7 @@
     </parent>
 
     <modules>
-        <module>movie-forecast-backend-core</module>
-        <module>movie-forecast-backend-api</module>
-        <module>movie-forecast-backend-feign</module>
-        <module>movie-forecast-backend-data-object</module>
+        <module>user</module>
     </modules>
 
 </project>

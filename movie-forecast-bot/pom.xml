@@ -16,9 +16,9 @@
     </parent>
 
     <modules>
-        <module>movie-forecast-bot-api</module>
-        <module>movie-forecast-bot-feign</module>
-        <module>movie-forecast-bot-core</module>
-        <module>movie-forecast-bot-data-object</module>
+        <module>api</module>
+        <module>feign</module>
+        <module>core</module>
+        <module>data-object</module>
     </modules>
 </project>

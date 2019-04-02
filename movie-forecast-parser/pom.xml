@@ -17,9 +17,9 @@
     </parent>
 
     <modules>
-        <module>movie-forecast-parser-api</module>
-        <module>movie-forecast-parser-feign</module>
-        <module>movie-forecast-parser-provider</module>
+        <module>api</module>
+        <module>feign</module>
+        <module>provider</module>
     </modules>
 
 </project>

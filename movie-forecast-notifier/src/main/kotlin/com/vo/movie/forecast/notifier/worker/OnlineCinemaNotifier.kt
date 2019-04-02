@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.notifier.worker
 
-import com.vo.movie.forecast.backend.api.notifier.MovieApi
-import com.vo.movie.forecast.backend.api.notifier.UserApi
-import com.vo.movie.forecast.backend.data.Notification
+import com.vo.movie.forecast.backend.user.api.notifier.MovieApi
+import com.vo.movie.forecast.backend.user.api.notifier.UserApi
+import com.vo.movie.forecast.bot.data.Notification
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.commons.data.MovieInfo
 import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfo

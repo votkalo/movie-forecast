@@ -16,8 +16,8 @@
     </parent>
 
     <modules>
-        <module>movie-forecast-commons-feign</module>
-        <module>movie-forecast-commons-data-object</module>
-        <module>movie-forecast-commons-cache</module>
+        <module>cache</module>
+        <module>data-object</module>
+        <module>feign</module>
     </modules>
 </project>
