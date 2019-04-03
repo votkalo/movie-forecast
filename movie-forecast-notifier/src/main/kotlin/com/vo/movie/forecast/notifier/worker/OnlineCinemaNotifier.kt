@@ -31,21 +31,20 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
             usersIds = userApi.getUsersIds(userPage++, pageSize)
             usersIds.forEach { userId ->
                 var movies: List<MovieDTO>
-                val onlineCinemaMovieAccessInfoMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfoDTO>> =
-                    HashMap()
+                val onlineCinemaMovieAccessMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfoDTO>> = HashMap()
                 do {
                     movies = movieApi.getUserMovies(userId, moviePage++, pageSize)
                     movies.forEach { movieInfo ->
                         OnlineCinema.values().forEach { onlineCinema ->
-                            if (onlineCinemaMovieAccessInfoMap[onlineCinema] == null) {
-                                onlineCinemaMovieAccessInfoMap[onlineCinema] = ArrayList()
+                            if (onlineCinemaMovieAccessMap[onlineCinema] == null) {
+                                onlineCinemaMovieAccessMap[onlineCinema] = ArrayList()
                             }
                             try {
-                                onlineCinemaMovieAccessInfoMap[onlineCinema]?.add(
-                                    onlineCinemaProvider.getMovieAccessInfo(
-                                        onlineCinema,
-                                        MovieInfoDTO(movieInfo.title, movieInfo.year)
-                                    )
+                                onlineCinemaMovieAccessMap[onlineCinema]?.add(
+                                        onlineCinemaProvider.getMovieAccessInfo(
+                                                onlineCinema,
+                                                MovieInfoDTO(movieInfo.title, movieInfo.year)
+                                        )
                                 )
                             } catch (movieNotFoundException: FeignException) {
                                 //Catch if movie not found in online cinema
@@ -53,22 +52,17 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                         }
                     }
                 } while (movies.size == pageSize)
-                onlineCinemaMovieAccessInfoMap.forEach { (onlineCinema, movieAccessInfoList) ->
+                onlineCinemaMovieAccessMap.forEach { (onlineCinema, movieAccessInfoList) ->
                     notificationApi.sendNotification(
-                        NotificationDTO(
-                            userId,
-                            createMessageText(onlineCinema, movieAccessInfoList)
-                        )
+                            NotificationDTO(userId, createMessageText(onlineCinema, movieAccessInfoList))
                     )
                 }
             }
         } while (usersIds.size == pageSize)
     }
 
-    private fun createMessageText(
-        onlineCinema: OnlineCinema,
-        notificationMovieAccessInfoList: List<MovieAccessInfoDTO>
-    ): String {
+    private fun createMessageText(onlineCinema: OnlineCinema,
+                                  notificationMovieAccessInfoList: List<MovieAccessInfoDTO>): String {
         val stringBuilder = StringBuilder()
         stringBuilder.append("Информация отслеживаемых фильмов в онлайн-кинотеатре <b>${onlineCinema.value}</b>:\n\n")
         notificationMovieAccessInfoList.forEach {

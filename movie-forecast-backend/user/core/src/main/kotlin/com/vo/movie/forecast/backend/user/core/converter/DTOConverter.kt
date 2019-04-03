@@ -10,16 +10,16 @@ import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 // ------------ Movie ------------
 
 fun MovieDTO.toEntity() = Movie(
-    title,
-    originalTitle,
-    year,
-    genres,
-    countries,
-    kinopoiskRating,
-    kinopoiskMovieId,
-    bigPosterURL,
-    smallPosterURL,
-    sourceURL
+        title,
+        originalTitle,
+        year,
+        genres,
+        countries,
+        kinopoiskRating,
+        kinopoiskMovieId,
+        bigPosterURL,
+        smallPosterURL,
+        sourceURL
 )
 
 

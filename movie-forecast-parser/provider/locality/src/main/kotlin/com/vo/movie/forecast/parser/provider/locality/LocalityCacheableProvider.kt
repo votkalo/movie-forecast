@@ -22,7 +22,8 @@ open class LocalityCacheableProvider(private val localityApi: LocalityApi) : Loc
     override fun getLocalitiesLetters(): List<String> = getLocalities().getLocalitiesLetters()
 
     @Cacheable(cacheNames = [LOCALITIES_NAMES_BY_LETTER_CACHE_NAME])
-    override fun getLocalitiesNamesByLetter(letter: Char): List<String> = getLocalities().getLocalitiesNamesByLetter(letter)
+    override fun getLocalitiesNamesByLetter(letter: Char): List<String> =
+        getLocalities().getLocalitiesNamesByLetter(letter)
 
     @Cacheable(cacheNames = [LOCALITY_BY_NAME_CACHE_NAME])
     override fun getLocalityByName(name: String): LocalityDTO = getLocalities().getLocalityByName(name)

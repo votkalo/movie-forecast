@@ -6,10 +6,13 @@ import org.telegram.telegrambots.meta.api.objects.Update
 
 abstract class CommandUpdateHandler(private val command: Command) : UpdateHandler() {
 
-    override fun shouldHandle(update: Update): Boolean = update.isCommandFromMessage() || update.isCommandFromCallbackQuery()
+    override fun shouldHandle(update: Update): Boolean =
+        update.isCommandFromMessage() || update.isCommandFromCallbackQuery()
 
-    private fun Update.isCommandFromMessage(): Boolean = hasMessage() && message.isCommand && command.isCommand(message.text)
+    private fun Update.isCommandFromMessage(): Boolean =
+        hasMessage() && message.isCommand && command.isCommand(message.text)
 
-    private fun Update.isCommandFromCallbackQuery(): Boolean = hasCallbackQuery() && command.isCommand(callbackQuery.data)
+    private fun Update.isCommandFromCallbackQuery(): Boolean =
+        hasCallbackQuery() && command.isCommand(callbackQuery.data)
 
 }

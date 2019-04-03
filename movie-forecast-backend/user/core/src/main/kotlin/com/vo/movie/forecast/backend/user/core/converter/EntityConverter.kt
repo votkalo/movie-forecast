@@ -10,16 +10,16 @@ import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
 // ------------ Movie ------------
 
 fun Movie.toDTO() = MovieDTO(
-    title,
-    originalTitle,
-    year,
-    genres,
-    countries,
-    kinopoiskRating,
-    kinopoiskMovieId,
-    bigPosterURL,
-    smallPosterURL,
-    sourceURL
+        title,
+        originalTitle,
+        year,
+        genres,
+        countries,
+        kinopoiskRating,
+        kinopoiskMovieId,
+        bigPosterURL,
+        smallPosterURL,
+        sourceURL
 )
 
 // ------------ Locality ------------

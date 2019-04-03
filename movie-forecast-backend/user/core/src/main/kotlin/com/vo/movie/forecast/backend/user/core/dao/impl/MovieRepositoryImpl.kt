@@ -34,23 +34,21 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
 
     override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean {
         val query = Query()
-                .addCriteria(criteriaUserId(userId))
-                .addCriteria(kinopoiskMovieIdIdCriteria(kinopoiskMovieId))
+            .addCriteria(criteriaUserId(userId))
+            .addCriteria(kinopoiskMovieIdIdCriteria(kinopoiskMovieId))
         return mongoOperation.exists(query, User::class)
     }
 
     override fun getMovie(userId: Long, kinopoiskMovieId: Long): Movie {
-        val operations = arrayListOf(
-                aggregationMatchUserId(userId),
-                aggregationUnwindMovies(),
-                Aggregation.match(kinopoiskMovieIdIdCriteria(kinopoiskMovieId)),
-            aggregationProjectMovie()
-        )
-        return mongoOperation.aggregate(
-            Aggregation.newAggregation(operations),
-            User::class.java,
-            Movie::class.java
-        ).first()
+        val operations =
+            arrayListOf(
+                    aggregationMatchUserId(userId),
+                    aggregationUnwindMovies(),
+                    Aggregation.match(kinopoiskMovieIdIdCriteria(kinopoiskMovieId)),
+                    aggregationProjectMovie()
+            )
+        return mongoOperation.aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
+            .first()
     }
 
     override fun registerMovie(userId: Long, movie: Movie) {
@@ -58,41 +56,47 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
     }
 
     override fun registerMovieLetter(userId: Long, movieLetter: String) {
-        mongoOperation.upsert(queryUser(userId), Update().addToSet(PROPERTY_USER_MOVIES_LETTERS, movieLetter), User::class)
+        mongoOperation.upsert(
+                queryUser(userId),
+                Update().addToSet(PROPERTY_USER_MOVIES_LETTERS, movieLetter),
+                User::class
+        )
     }
 
     override fun getMovies(userId: Long, page: Int, size: Int): List<Movie> {
         val pageRequest = PageRequest.of(page, size)
-        val operations = arrayListOf(
-            aggregationMatchUserId(userId),
-            aggregationUnwindMovies(),
-            aggregationProjectMovie(),
-            Aggregation.skip(pageRequest.offset),
-            Aggregation.limit(pageRequest.pageSize.toLong())
-        )
-        return mongoOperation.aggregate(
-            Aggregation.newAggregation(operations),
-            User::class.java,
-            Movie::class.java
-        ).mappedResults
+        val operations =
+            arrayListOf(
+                    aggregationMatchUserId(userId),
+                    aggregationUnwindMovies(),
+                    aggregationProjectMovie(),
+                    Aggregation.skip(pageRequest.offset),
+                    Aggregation.limit(pageRequest.pageSize.toLong())
+            )
+        return mongoOperation.aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
+            .mappedResults
     }
 
-    override fun getMoviesLetters(userId: Long): List<String> =
-            mongoOperation.findDistinct(queryUser(userId), PROPERTY_USER_MOVIES_LETTERS, User::class.java, String::class.java)
+    override fun getMoviesLetters(userId: Long): List<String> = mongoOperation.findDistinct(
+            queryUser(userId),
+            PROPERTY_USER_MOVIES_LETTERS,
+            User::class.java,
+            String::class.java
+    )
 
     override fun getMoviesByLetter(userId: Long, letter: Char): List<Movie> {
-        val operations = arrayListOf(
-                aggregationMatchUserId(userId),
-                aggregationUnwindMovies(),
-                Aggregation.match(Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE")
-                        .regex(Pattern.compile("^$letter.*", Pattern.CASE_INSENSITIVE))),
-            aggregationProjectMovie()
-        )
-        return mongoOperation.aggregate(
-            Aggregation.newAggregation(operations),
-            User::class.java,
-            Movie::class.java
-        ).mappedResults
+        val operations =
+            arrayListOf(
+                    aggregationMatchUserId(userId),
+                    aggregationUnwindMovies(),
+                    Aggregation.match(
+                            Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE")
+                                .regex(Pattern.compile("^$letter.*", Pattern.CASE_INSENSITIVE))
+                    ),
+                    aggregationProjectMovie()
+            )
+        return mongoOperation.aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
+            .mappedResults
     }
 
     override fun searchMovies(userId: Long, movieFilter: MovieFilter): List<Movie> {
@@ -101,23 +105,22 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
         operations.add(aggregationUnwindMovies())
         if (movieFilter.title != null) {
             operations.add(
-                Aggregation.match(
-                    Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE").regex(Regex.escape(movieFilter.title))
-                )
+                    Aggregation.match(
+                            Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE").regex(Regex.escape(movieFilter.title))
+                    )
             )
         }
         if (movieFilter.originalTitle != null) {
             operations.add(
-                Aggregation.match(
-                    Criteria
-                        .where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_ORIGINAL_TITLE")
-                        .regex(Regex.escape(movieFilter.originalTitle))
-                )
+                    Aggregation.match(
+                            Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_ORIGINAL_TITLE")
+                                .regex(Regex.escape(movieFilter.originalTitle))
+                    )
             )
         }
         if (movieFilter.year != null) {
             operations.add(
-                Aggregation.match(Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_YEAR").`is`(movieFilter.year))
+                    Aggregation.match(Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_YEAR").`is`(movieFilter.year))
             )
         }
         operations.add(aggregationProjectMovie())
@@ -127,7 +130,8 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
     }
 
     override fun deleteMovie(userId: Long, kinopoiskMovieId: Long) {
-        val update = Update().pull(PROPERTY_USER_MOVIES, BasicDBObject(PROPERTY_MOVIE_KINOPOISK_MOVIE_ID, kinopoiskMovieId))
+        val update =
+            Update().pull(PROPERTY_USER_MOVIES, BasicDBObject(PROPERTY_MOVIE_KINOPOISK_MOVIE_ID, kinopoiskMovieId))
         mongoOperation.findAndModify(queryUser(userId), update, User::class.java)
     }
 
@@ -143,17 +147,24 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
 
     private fun aggregationUnwindMovies() = Aggregation.unwind(PROPERTY_USER_MOVIES)
 
-    private fun aggregationProjectMovie() = Aggregation.project()
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE").`as`(PROPERTY_MOVIE_TITLE)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_ORIGINAL_TITLE").`as`(PROPERTY_MOVIE_ORIGINAL_TITLE)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_YEAR").`as`(PROPERTY_MOVIE_YEAR)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_GENRES").`as`(PROPERTY_MOVIE_GENRES)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_COUNTRIES").`as`(PROPERTY_MOVIE_COUNTRIES)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_RATING").`as`(PROPERTY_MOVIE_KINOPOISK_RATING)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_MOVIE_ID").`as`(
-            PROPERTY_MOVIE_KINOPOISK_MOVIE_ID
+    private fun aggregationProjectMovie() =
+        Aggregation.project().andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE").`as`(PROPERTY_MOVIE_TITLE).andExpression(
+                "$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_ORIGINAL_TITLE"
+        ).`as`(PROPERTY_MOVIE_ORIGINAL_TITLE).andExpression(
+                "$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_YEAR"
+        ).`as`(PROPERTY_MOVIE_YEAR).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_GENRES").`as`(
+                PROPERTY_MOVIE_GENRES
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_COUNTRIES").`as`(
+                PROPERTY_MOVIE_COUNTRIES
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_RATING").`as`(
+                PROPERTY_MOVIE_KINOPOISK_RATING
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_MOVIE_ID").`as`(
+                PROPERTY_MOVIE_KINOPOISK_MOVIE_ID
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_BIG_POSTER_URL").`as`(
+                PROPERTY_MOVIE_BIG_POSTER_URL
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_SMALL_POSTER_URL").`as`(
+                PROPERTY_MOVIE_SMALL_POSTER_URL
+        ).andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_SOURCE_URL").`as`(
+                PROPERTY_MOVIE_SOURCE_URL
         )
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_BIG_POSTER_URL").`as`(PROPERTY_MOVIE_BIG_POSTER_URL)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_SMALL_POSTER_URL").`as`(PROPERTY_MOVIE_SMALL_POSTER_URL)
-        .andExpression("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_SOURCE_URL").`as`(PROPERTY_MOVIE_SOURCE_URL)
 }

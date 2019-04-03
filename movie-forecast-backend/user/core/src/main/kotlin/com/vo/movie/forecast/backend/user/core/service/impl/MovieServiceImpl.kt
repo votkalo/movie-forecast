@@ -24,8 +24,7 @@ open class MovieServiceImpl(private val movieRepository: MovieRepository) : Movi
     override fun getMovies(userId: Long, page: Int, size: Int): List<MovieDTO> =
         movieRepository.getMovies(userId, page, size).map { it.toDTO() }
 
-    override fun getMoviesLetters(userId: Long): List<String> =
-        movieRepository.getMoviesLetters(userId)
+    override fun getMoviesLetters(userId: Long): List<String> = movieRepository.getMoviesLetters(userId)
 
     override fun getMoviesByLetter(userId: Long, letter: Char): List<MovieDTO> =
         movieRepository.getMoviesByLetter(userId, letter).map { it.toDTO() }

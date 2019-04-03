@@ -36,10 +36,7 @@ class MovieScheduleNotifier(private val userApi: UserApi,
 
     private fun sendNotification(user: UserWithLocalityInfoDTO, notificationMoviesSchedule: List<MovieScheduleDTO>) {
         notificationApi.sendNotification(
-            NotificationDTO(
-                user.userId,
-                createMessageText(user.locality.name, notificationMoviesSchedule)
-            )
+                NotificationDTO(user.userId, createMessageText(user.locality.name, notificationMoviesSchedule))
         )
     }
 
@@ -84,8 +81,10 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         movieDTOS.any { it.isEqualsSchedule(this) }
 
     private fun MovieDTO.isEqualsSchedule(movieSchedule: MovieScheduleDTO): Boolean {
-        return removeAllExceptDigitsLetters(title).equals(removeAllExceptDigitsLetters(movieSchedule.title), true)
-                && year == movieSchedule.year
+        return removeAllExceptDigitsLetters(title).equals(
+                removeAllExceptDigitsLetters(movieSchedule.title),
+                true
+        ) && year == movieSchedule.year
     }
 
     private fun removeAllExceptDigitsLetters(value: String?): String? {

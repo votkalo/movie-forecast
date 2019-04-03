@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 abstract class CallbackUpdateHandler(private val callback: Callback) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean =
-            update.hasCallbackQuery() && callback.isCallbackData(update.callbackQuery.data)
+        update.hasCallbackQuery() && callback.isCallbackData(update.callbackQuery.data)
 
     protected fun Update.getCallbackData(): String = callback.removeCallbackPrefix(callbackQuery.data)
 

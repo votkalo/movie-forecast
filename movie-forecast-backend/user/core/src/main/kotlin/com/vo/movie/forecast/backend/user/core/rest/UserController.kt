@@ -14,14 +14,12 @@ class UserController(private val userService: UserService) {
         userService.updateLocality(userId, locality)
 
     @DeleteMapping("/{userId}/locality")
-    fun removeLocality(@PathVariable userId: Long) =
-        userService.removeLocality(userId)
+    fun removeLocality(@PathVariable userId: Long) = userService.removeLocality(userId)
 
     @GetMapping
     fun getUsersInfoWithLocality(@RequestParam page: Int, @RequestParam size: Int): List<UserWithLocalityInfoDTO> =
         userService.getUsersInfoWithLocality(page, size)
 
     @GetMapping("/ids")
-    fun getUsersIds(@RequestParam page: Int, @RequestParam size: Int): List<Long> =
-        userService.getUsersIds(page, size)
+    fun getUsersIds(@RequestParam page: Int, @RequestParam size: Int): List<Long> = userService.getUsersIds(page, size)
 }

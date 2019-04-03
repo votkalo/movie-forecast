@@ -47,7 +47,8 @@ class LocalityCacheWorker(private val extendableSimpleCacheManager: ExtendableSi
 
     private fun updateLocalitiesLettersCache(localities: List<LocalityDTO>): List<String> {
         val localitiesLetters = localities.getLocalitiesLetters()
-        extendableSimpleCacheManager.getCache(LOCALITIES_LETTERS_CACHE_NAME)?.putIfAbsent(SimpleKey.EMPTY, localitiesLetters)
+        extendableSimpleCacheManager.getCache(LOCALITIES_LETTERS_CACHE_NAME)
+            ?.putIfAbsent(SimpleKey.EMPTY, localitiesLetters)
         return localitiesLetters
     }
 

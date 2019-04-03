@@ -11,10 +11,7 @@ class LeaveCommandHandler(private val userApi: UserApi) : CommandUpdateHandler(C
 
     override fun handle(update: Update) {
         call({ userApi.removeLocality(update.userId()) }, update.chatId())
-        val message = createMessage(
-                update.chatId(),
-                "Информация о населённом пункте удалена"
-        )
+        val message = createMessage(update.chatId(), "Информация о населённом пункте удалена")
         getBot().execute(message)
     }
 }

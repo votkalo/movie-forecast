@@ -12,8 +12,12 @@ class LocalityNameCallbackHandler(private val localityProvider: LocalityProvider
 
     override fun handle(update: Update) {
         val localityName = update.getCallbackData()
-        call({ userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(localityName)) }, update.chatId())
-        val editMessageText = update.createEditMessageText("Ваш текущий населённый пункт обновлён на:\n<b>$localityName</b>")
+        call(
+                { userApi.updateLocality(update.userId(), localityProvider.getLocalityByName(localityName)) },
+                update.chatId()
+        )
+        val editMessageText =
+            update.createEditMessageText("Ваш текущий населённый пункт обновлён на:\n<b>$localityName</b>")
         getBot().execute(editMessageText)
     }
 }

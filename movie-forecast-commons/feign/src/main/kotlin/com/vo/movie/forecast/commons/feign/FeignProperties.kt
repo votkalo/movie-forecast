@@ -6,7 +6,8 @@ import java.net.URI
 @ConfigurationProperties(prefix = "feign")
 open class FeignProperties {
     var movieForecastParser: FeignURL? = null
-    var movieForecastBackend: FeignURL? = null
+    var movieForecastBackendUser: FeignURL? = null
+    var movieForecastBackendStorage: FeignURL? = null
     var movieForecastBot: FeignURL? = null
 
     class FeignURL {

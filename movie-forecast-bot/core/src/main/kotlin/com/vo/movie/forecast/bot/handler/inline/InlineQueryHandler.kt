@@ -1,11 +1,11 @@
 package com.vo.movie.forecast.bot.handler.inline
 
+import com.vo.movie.forecast.backend.storage.api.MovieApi
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
+import com.vo.movie.forecast.backend.storage.data.MovieSearchParamsDTO
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.handler.callback.Callback
 import com.vo.movie.forecast.bot.util.*
-import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParamsDTO
-import com.vo.movie.forecast.parser.provider.movie.MovieProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -15,20 +15,22 @@ import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQuery
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 
 @Component
-class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandler() {
+class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean =
-            update.hasInlineQuery() && update.inlineQuery.hasQuery() && update.inlineQuery.query.isNotBlank()
+        update.hasInlineQuery() && update.inlineQuery.hasQuery() && update.inlineQuery.query.isNotBlank()
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-        val movies = call({ movieProvider.searchMovie(MovieSearchParamsDTO(inlineQuery.query)) }, update.chatId())
+        val movies =
+            call({ movieApi.searchMovie(MovieSearchParamsDTO(inlineQuery.query)) }, update.chatId())
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
         getBot().execute(answerInlineQuery)
     }
 
-    private fun createAnswerInlineQuery(inlineQueryId: String, inlineQueryResults: List<InlineQueryResult>): AnswerInlineQuery {
+    private fun createAnswerInlineQuery(inlineQueryId: String,
+                                        inlineQueryResults: List<InlineQueryResult>): AnswerInlineQuery {
         val answerInlineQuery = AnswerInlineQuery()
         answerInlineQuery.inlineQueryId = inlineQueryId
         answerInlineQuery.results = inlineQueryResults

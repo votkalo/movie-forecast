@@ -13,7 +13,9 @@ open class ScheduleFeignConfiguration(private val feignBuilderFactory: FeignBuil
                                       private val feignProperties: FeignProperties) {
 
     @Bean
-    open fun parserScheduleApi(): ScheduleApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun parserScheduleApi(): ScheduleApi =
+        feignBuilderFactory
+            .jsonFeignBuilder()
             .retryer(Retryer.Default())
             .target(ScheduleApiFeign::class.java, feignProperties.movieForecastParser?.url?.toASCIIString())
 }

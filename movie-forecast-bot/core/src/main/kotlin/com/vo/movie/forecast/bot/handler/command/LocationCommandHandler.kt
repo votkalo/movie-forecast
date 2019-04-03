@@ -12,12 +12,12 @@ class LocationCommandHandler : CommandUpdateHandler(Command.LOCATION) {
 
     override fun handle(update: Update) {
         val locationButton = createLocationKeyboardButton()
-        val message = createMessage(
-                update.chatId(),
-                "Укажите ваше местоположение",
-                createSingleButtonReplyKeyboardMarkup(locationButton)
-
-        )
+        val message =
+            createMessage(
+                    update.chatId(),
+                    "Укажите ваше местоположение",
+                    createSingleButtonReplyKeyboardMarkup(locationButton)
+            )
         getBot().execute(message)
     }
 

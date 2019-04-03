@@ -17,8 +17,7 @@ open class MovieCacheConfiguration(private val caffeineCacheProperties: Caffeine
     open fun movieCaffeineCache(): Cache<Long, MovieDTO> {
         val movieCacheProperties = caffeineCacheProperties.movie
         return Caffeine.newBuilder()
-                .expireAfterAccess(Duration.ofDays(movieCacheProperties.days))
-                .maximumSize(movieCacheProperties.maxSize)
-            .build<Long, MovieDTO>()
+            .expireAfterAccess(Duration.ofDays(movieCacheProperties.days))
+            .maximumSize(movieCacheProperties.maxSize).build<Long, MovieDTO>()
     }
 }

@@ -34,5 +34,5 @@ open class FeignConfiguration(private val objectMapper: ObjectMapper) {
                                  feignDecoder: Decoder,
                                  feignEncoder: Encoder,
                                  feignLogger: Logger): FeignBuilderFactory =
-            FeignBuilderFactory(feignClient, feignDecoder, feignEncoder, feignLogger)
+        FeignBuilderFactory(feignClient, feignDecoder, feignEncoder, feignLogger)
 }

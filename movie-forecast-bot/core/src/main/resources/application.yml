@@ -8,13 +8,10 @@ bot:
 geocoding:
   api-key: ${GEOCODING_API_KEY}
 
-caffeine:
-  movie:
-    days: 1
-    max-size: 1000
-
 feign:
   movie-forecast-parser:
     url: http://localhost:8000
-  movie-forecast-backend:
+  movie-forecast-backend-user:
     url: http://localhost:8080
+  movie-forecast-backend-storage:
+    url: http://localhost:8083

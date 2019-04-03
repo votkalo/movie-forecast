@@ -15,7 +15,8 @@ class MovieInfoCallbackHandler(private val movieApi: MovieApi) : CallbackUpdateH
         val movies = call({ movieApi.searchMovies(movieInfo, userId) }, update.chatId())
         val movie = movies[0]
         call({ movieApi.deleteMovie(userId, movie.kinopoiskMovieId) }, update.chatId())
-        val editMessageText = update.createEditMessageText("Фильм <b>${movie.title} (${movie.year})</b> удалён из отслеживаемых")
+        val editMessageText =
+            update.createEditMessageText("Фильм <b>${movie.title} (${movie.year})</b> удалён из отслеживаемых")
         getBot().execute(editMessageText)
     }
 

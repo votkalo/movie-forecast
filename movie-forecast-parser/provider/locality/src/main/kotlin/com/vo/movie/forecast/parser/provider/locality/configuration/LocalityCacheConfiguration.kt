@@ -27,6 +27,5 @@ open class LocalityCacheConfiguration(extendableSimpleCacheManager: ExtendableSi
                         ConcurrentMapCache(LOCALITY_BY_NAME_CACHE_NAME)
                 )
         )
-        println()
     }
 }

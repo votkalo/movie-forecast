@@ -9,3 +9,12 @@ spring:
       database: ${DATABASE_NAME}
       username: ${DATABASE_USER}
       password: ${DATABASE_PASSWORD}
+
+caffeine:
+  movie:
+    days: 1
+    max-size: 1000
+
+feign:
+  movie-forecast-parser:
+    url: http://localhost:8000

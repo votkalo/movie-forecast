@@ -28,14 +28,16 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
 
     override fun getUsersInfoWithLocality(page: Int, size: Int): List<User> {
         val pageRequest = PageRequest.of(page, size)
-        val query = Query(Criteria.where(PROPERTY_USER_LOCALITY).exists(true))
-                .with(pageRequest)
-        query.fields()
-                .include(PROPERTY_USER_USER_ID)
-                .include(PROPERTY_USER_LOCALITY)
+        val query = Query(Criteria.where(PROPERTY_USER_LOCALITY).exists(true)).with(pageRequest)
+        query.fields().include(PROPERTY_USER_USER_ID).include(PROPERTY_USER_LOCALITY)
         return mongoOperation.find(query, DOCUMENT_USER_NAME)
     }
 
     override fun getUsersIds(page: Int, size: Int): List<Long> =
-            mongoOperation.findDistinct(Query().with(PageRequest.of(page, size)), PROPERTY_USER_USER_ID, DOCUMENT_USER_NAME, Long::class.java)
+        mongoOperation.findDistinct(
+                Query().with(PageRequest.of(page, size)),
+                PROPERTY_USER_USER_ID,
+                DOCUMENT_USER_NAME,
+                Long::class.java
+        )
 }

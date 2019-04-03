@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration
 open class LocalityFeignConfiguration(private val feignBuilderFactory: FeignBuilderFactory,
                                       private val feignProperties: FeignProperties) {
     @Bean
-    open fun parserLocalityApi(): LocalityApi = feignBuilderFactory.jsonFeignBuilder()
+    open fun parserLocalityApi(): LocalityApi =
+        feignBuilderFactory
+            .jsonFeignBuilder()
             .target(LocalityApiFeign::class.java, feignProperties.movieForecastParser?.url?.toASCIIString())
 }

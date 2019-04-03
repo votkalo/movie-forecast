@@ -60,7 +60,8 @@ abstract class UpdateHandler {
         throw NullPointerException("Data for edit message not found")
     }
 
-    protected fun Update.createEditMessageText(text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+    protected fun Update.createEditMessageText(text: String,
+                                               inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
         val editMessageText = createEditMessageText(text)
         editMessageText.replyMarkup = inlineKeyboardMarkup
         return editMessageText

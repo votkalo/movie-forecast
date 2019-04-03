@@ -33,7 +33,10 @@ fun createEditMessageText(chatId: Long, messageId: Int, text: String): EditMessa
     return editMessageText
 }
 
-fun createEditMessageText(chatId: Long, messageId: Int, text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+fun createEditMessageText(chatId: Long,
+                          messageId: Int,
+                          text: String,
+                          inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
     val editMessageText = createEditMessageText(chatId, messageId, text)
     editMessageText.replyMarkup = inlineKeyboardMarkup
     return editMessageText
@@ -47,7 +50,9 @@ fun createEditMessageText(inlineMessageId: String, text: String): EditMessageTex
     return editMessageText
 }
 
-fun createEditMessageText(inlineMessageId: String, text: String, inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
+fun createEditMessageText(inlineMessageId: String,
+                          text: String,
+                          inlineKeyboardMarkup: InlineKeyboardMarkup): EditMessageText {
     val editMessageText = createEditMessageText(inlineMessageId, text)
     editMessageText.replyMarkup = inlineKeyboardMarkup
     return editMessageText
@@ -61,7 +66,8 @@ fun createRowButton(button: KeyboardButton): KeyboardRow {
     return keyboardRow
 }
 
-fun createOneRowButton(button: InlineKeyboardButton): List<List<InlineKeyboardButton>> = Collections.singletonList(createRowButton(button))
+fun createOneRowButton(button: InlineKeyboardButton): List<List<InlineKeyboardButton>> =
+    Collections.singletonList(createRowButton(button))
 
 fun createOneRowButton(button: KeyboardButton): List<KeyboardRow> = Collections.singletonList(createRowButton(button))
 

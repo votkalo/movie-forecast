@@ -2,13 +2,9 @@ package com.vo.movie.forecast.parser.provider.locality.util
 
 import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 
-fun List<LocalityDTO>.getLocalitiesLetters(): List<String> = this
-        .map { it.name.first().toString() }
-        .distinct()
-        .sorted()
+fun List<LocalityDTO>.getLocalitiesLetters(): List<String> = this.map { it.name.first().toString() }.distinct().sorted()
 
-fun List<LocalityDTO>.getLocalitiesNamesByLetter(letter: Char): List<String> = this
-        .filter { it.name.first() == letter }
-        .map { it.name }
+fun List<LocalityDTO>.getLocalitiesNamesByLetter(letter: Char): List<String> =
+    this.filter { it.name.first() == letter }.map { it.name }
 
 fun List<LocalityDTO>.getLocalityByName(name: String): LocalityDTO = this.first { it.name == name }

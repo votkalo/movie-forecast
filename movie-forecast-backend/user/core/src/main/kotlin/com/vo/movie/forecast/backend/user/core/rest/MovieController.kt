@@ -22,8 +22,7 @@ class MovieController(private val movieService: MovieService) {
         movieService.getMovies(userId, page, size)
 
     @GetMapping("/letters")
-    fun getMoviesLetters(@PathVariable userId: Long): List<String> =
-        movieService.getMoviesLetters(userId)
+    fun getMoviesLetters(@PathVariable userId: Long): List<String> = movieService.getMoviesLetters(userId)
 
     @GetMapping("/letters/{letter}")
     fun getMoviesByLetter(@PathVariable userId: Long, @PathVariable letter: Char): List<MovieDTO> =
