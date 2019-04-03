@@ -19,6 +19,6 @@
         <module>api</module>
         <module>feign</module>
         <module>core</module>
-        <module>data-object</module>
+        <module>dto</module>
     </modules>
 </project>

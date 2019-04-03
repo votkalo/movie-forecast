@@ -17,6 +17,7 @@
 
     <modules>
         <module>user</module>
+        <module>storage</module>
     </modules>
 
 </project>

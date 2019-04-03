@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.user.core.dao
 
-import com.vo.movie.forecast.commons.data.Movie
-import com.vo.movie.forecast.commons.data.MovieInfo
+import com.vo.movie.forecast.backend.user.core.document.Movie
+import com.vo.movie.forecast.backend.user.core.document.MovieFilter
 
 interface MovieRepository {
 
@@ -11,15 +11,15 @@ interface MovieRepository {
 
     fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean
 
-    fun getMovie(userId: Long, kinopoiskMovieId: Long): MovieInfo
+    fun getMovie(userId: Long, kinopoiskMovieId: Long): Movie
 
-    fun getMovies(userId: Long, page: Int, size: Int): List<MovieInfo>
+    fun getMovies(userId: Long, page: Int, size: Int): List<Movie>
 
     fun getMoviesLetters(userId: Long): List<String>
 
-    fun getMoviesByLetter(userId: Long, letter: Char): List<MovieInfo>
+    fun getMoviesByLetter(userId: Long, letter: Char): List<Movie>
 
-    fun searchMovie(userId: Long, movieInfo: MovieInfo): Movie
+    fun searchMovies(userId: Long, movieFilter: MovieFilter): List<Movie>
 
     fun deleteMovie(userId: Long, kinopoiskMovieId: Long)
 

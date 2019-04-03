@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.bot.rest
 
-import com.vo.movie.forecast.bot.data.Notification
+import com.vo.movie.forecast.bot.data.NotificationDTO
 import com.vo.movie.forecast.bot.service.NotificationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class NotificationController(private val notificationService: NotificationService) {
 
     @PostMapping
-    fun sendNotification(@RequestBody notification: Notification) {
+    fun sendNotification(@RequestBody notification: NotificationDTO) {
         notificationService.sendNotification(notification)
     }
 }

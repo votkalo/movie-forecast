@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.bot.handler.callback
 
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.api.bot.MovieApi
 import com.vo.movie.forecast.bot.util.*
-import com.vo.movie.forecast.commons.data.MovieInfo
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
@@ -22,9 +22,9 @@ class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : Callback
         getBot().execute(editMessageText)
     }
 
-    private fun MovieInfo.createCallbackButtonInfo() = CallbackButtonInfo(getCallbackButtonText(), getCallbackData())
+    private fun MovieDTO.createCallbackButtonInfo() = CallbackButtonInfo(getCallbackButtonText(), getCallbackData())
 
-    private fun MovieInfo.getCallbackButtonText(): String {
+    private fun MovieDTO.getCallbackButtonText(): String {
         val allowTextLength = 38
         val threeDots = "..."
 
@@ -39,7 +39,7 @@ class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : Callback
         return createCallbackButtonText(notFullTitle, year)
     }
 
-    private fun MovieInfo.getCallbackData(): String {
+    private fun MovieDTO.getCallbackData(): String {
         val allowCallbackDataByteLength = 64
 
         val callbackData = createCallbackData(title, year)

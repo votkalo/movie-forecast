@@ -19,7 +19,7 @@
         <module>core</module>
         <module>api</module>
         <module>feign</module>
-        <module>data-object</module>
+        <module>dto</module>
     </modules>
 
 </project>

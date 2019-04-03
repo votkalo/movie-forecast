@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-bot-data-object</artifactId>
+            <artifactId>movie-forecast-bot-dto</artifactId>
             <version>${project.version}</version>
         </dependency>
 

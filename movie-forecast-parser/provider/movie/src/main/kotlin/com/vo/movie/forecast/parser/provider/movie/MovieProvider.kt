@@ -1,11 +1,11 @@
 package com.vo.movie.forecast.parser.provider.movie
 
-import com.vo.movie.forecast.commons.data.Movie
-import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParams
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
+import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParamsDTO
 
 interface MovieProvider {
 
-    fun searchMovie(searchParams: MovieSearchParams): List<Movie>
+    fun searchMovie(searchParams: MovieSearchParamsDTO): List<MovieDTO>
 
-    fun getMovie(kinopoiskMovieId: Long): Movie
+    fun getMovie(kinopoiskMovieId: Long): MovieDTO
 }

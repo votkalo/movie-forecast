@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.backend.user.core.rest
 
+import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 import com.vo.movie.forecast.backend.user.core.service.UserService
-import com.vo.movie.forecast.backend.user.data.UserInfo
-import com.vo.movie.forecast.commons.data.Locality
+import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.*
 class UserController(private val userService: UserService) {
 
     @PutMapping("/{userId}/locality")
-    fun updateLocality(@PathVariable userId: Long, @RequestBody locality: Locality) = userService.updateLocality(userId, locality)
+    fun updateLocality(@PathVariable userId: Long, @RequestBody locality: LocalityDTO) =
+        userService.updateLocality(userId, locality)
 
     @DeleteMapping("/{userId}/locality")
-    fun removeLocality(@PathVariable userId: Long) = userService.removeLocality(userId)
+    fun removeLocality(@PathVariable userId: Long) =
+        userService.removeLocality(userId)
 
     @GetMapping
-    fun getUsersInfoWithLocality(@RequestParam page: Int, @RequestParam size: Int): List<UserInfo> = userService.getUsersInfoWithLocality(page, size)
+    fun getUsersInfoWithLocality(@RequestParam page: Int, @RequestParam size: Int): List<UserWithLocalityInfoDTO> =
+        userService.getUsersInfoWithLocality(page, size)
 
     @GetMapping("/ids")
-    fun getUsersIds(@RequestParam page: Int, @RequestParam size: Int): List<Long> = userService.getUsersIds(page, size)
+    fun getUsersIds(@RequestParam page: Int, @RequestParam size: Int): List<Long> =
+        userService.getUsersIds(page, size)
 }

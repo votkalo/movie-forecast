@@ -1,11 +1,12 @@
 package com.vo.movie.forecast.notifier.worker
 
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.api.notifier.MovieApi
 import com.vo.movie.forecast.backend.user.api.notifier.UserApi
-import com.vo.movie.forecast.bot.data.Notification
 import com.vo.movie.forecast.bot.api.NotificationApi
-import com.vo.movie.forecast.commons.data.MovieInfo
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfo
+import com.vo.movie.forecast.bot.data.NotificationDTO
+import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieInfoDTO
 import com.vo.movie.forecast.parser.api.online.cinema.dto.OnlineCinema
 import com.vo.movie.forecast.parser.provider.schedule.OnlineCinemaProvider
 import feign.FeignException
@@ -29,8 +30,9 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
             var moviePage = 0
             usersIds = userApi.getUsersIds(userPage++, pageSize)
             usersIds.forEach { userId ->
-                var movies: List<MovieInfo>
-                val onlineCinemaMovieAccessInfoMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfo>> = HashMap()
+                var movies: List<MovieDTO>
+                val onlineCinemaMovieAccessInfoMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfoDTO>> =
+                    HashMap()
                 do {
                     movies = movieApi.getUserMovies(userId, moviePage++, pageSize)
                     movies.forEach { movieInfo ->
@@ -39,7 +41,12 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                                 onlineCinemaMovieAccessInfoMap[onlineCinema] = ArrayList()
                             }
                             try {
-                                onlineCinemaMovieAccessInfoMap[onlineCinema]?.add(onlineCinemaProvider.getMovieAccessInfo(onlineCinema, movieInfo))
+                                onlineCinemaMovieAccessInfoMap[onlineCinema]?.add(
+                                    onlineCinemaProvider.getMovieAccessInfo(
+                                        onlineCinema,
+                                        MovieInfoDTO(movieInfo.title, movieInfo.year)
+                                    )
+                                )
                             } catch (movieNotFoundException: FeignException) {
                                 //Catch if movie not found in online cinema
                             }
@@ -47,13 +54,21 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                     }
                 } while (movies.size == pageSize)
                 onlineCinemaMovieAccessInfoMap.forEach { (onlineCinema, movieAccessInfoList) ->
-                    notificationApi.sendNotification(Notification(userId, createMessageText(onlineCinema, movieAccessInfoList)))
+                    notificationApi.sendNotification(
+                        NotificationDTO(
+                            userId,
+                            createMessageText(onlineCinema, movieAccessInfoList)
+                        )
+                    )
                 }
             }
         } while (usersIds.size == pageSize)
     }
 
-    private fun createMessageText(onlineCinema: OnlineCinema, notificationMovieAccessInfoList: List<MovieAccessInfo>): String {
+    private fun createMessageText(
+        onlineCinema: OnlineCinema,
+        notificationMovieAccessInfoList: List<MovieAccessInfoDTO>
+    ): String {
         val stringBuilder = StringBuilder()
         stringBuilder.append("Информация отслеживаемых фильмов в онлайн-кинотеатре <b>${onlineCinema.value}</b>:\n\n")
         notificationMovieAccessInfoList.forEach {

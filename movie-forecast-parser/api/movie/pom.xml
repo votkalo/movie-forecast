@@ -18,7 +18,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-data-object</artifactId>
+            <artifactId>movie-forecast-backend-storage-dto</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

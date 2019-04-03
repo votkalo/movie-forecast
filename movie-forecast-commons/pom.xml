@@ -17,7 +17,6 @@
 
     <modules>
         <module>cache</module>
-        <module>data-object</module>
         <module>feign</module>
     </modules>
 </project>

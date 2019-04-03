@@ -1,12 +1,12 @@
 package com.vo.movie.forecast.notifier.worker
 
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.api.notifier.MovieApi
 import com.vo.movie.forecast.backend.user.api.notifier.UserApi
-import com.vo.movie.forecast.bot.data.Notification
-import com.vo.movie.forecast.backend.user.data.UserInfo
+import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
 import com.vo.movie.forecast.bot.api.NotificationApi
-import com.vo.movie.forecast.commons.data.MovieInfo
-import com.vo.movie.forecast.parser.api.schedule.dto.MovieSchedule
+import com.vo.movie.forecast.bot.data.NotificationDTO
+import com.vo.movie.forecast.parser.api.schedule.dto.MovieScheduleDTO
 import com.vo.movie.forecast.parser.provider.schedule.ScheduleProvider
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -22,7 +22,7 @@ class MovieScheduleNotifier(private val userApi: UserApi,
     fun notifyUsersAboutMoviesInCinema() {
         var userPage = 0
         val pageSize = 50
-        var users: List<UserInfo>
+        var users: List<UserWithLocalityInfoDTO>
         do {
             users = userApi.getUsersInfoWithLocality(userPage++, pageSize)
             users.forEach {
@@ -34,11 +34,16 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         } while (users.size == pageSize)
     }
 
-    private fun sendNotification(user: UserInfo, notificationMoviesSchedule: List<MovieSchedule>) {
-        notificationApi.sendNotification(Notification(user.userId, createMessageText(user.locality.name, notificationMoviesSchedule)))
+    private fun sendNotification(user: UserWithLocalityInfoDTO, notificationMoviesSchedule: List<MovieScheduleDTO>) {
+        notificationApi.sendNotification(
+            NotificationDTO(
+                user.userId,
+                createMessageText(user.locality.name, notificationMoviesSchedule)
+            )
+        )
     }
 
-    private fun createMessageText(localityName: String, notificationMoviesSchedule: List<MovieSchedule>): String {
+    private fun createMessageText(localityName: String, notificationMoviesSchedule: List<MovieScheduleDTO>): String {
         val stringBuilder = StringBuilder()
         stringBuilder.append("Расписание отслеживаемых фильмов на сегодня в <b>$localityName</b>:\n\n")
         notificationMoviesSchedule.forEach {
@@ -62,12 +67,12 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         return stringBuilder.toString()
     }
 
-    private fun collectNotificationMoviesSchedule(user: UserInfo): List<MovieSchedule> {
+    private fun collectNotificationMoviesSchedule(user: UserWithLocalityInfoDTO): List<MovieScheduleDTO> {
         var moviePage = 0
         val pageSize = 50
-        val notificationMoviesSchedule = ArrayList<MovieSchedule>()
+        val notificationMoviesSchedule = ArrayList<MovieScheduleDTO>()
         val moviesSchedule = scheduleProvider.getMovieSchedule(user.locality.alternativeName)
-        var movies: List<MovieInfo>
+        var movies: List<MovieDTO>
         do {
             movies = movieApi.getUserMovies(user.userId, moviePage++, pageSize)
             notificationMoviesSchedule.addAll(moviesSchedule.filter { it.isScheduleMatch(movies) })
@@ -75,9 +80,10 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         return notificationMoviesSchedule
     }
 
-    private fun MovieSchedule.isScheduleMatch(movies: List<MovieInfo>): Boolean = movies.any { it.isEqualsSchedule(this) }
+    private fun MovieScheduleDTO.isScheduleMatch(movieDTOS: List<MovieDTO>): Boolean =
+        movieDTOS.any { it.isEqualsSchedule(this) }
 
-    private fun MovieInfo.isEqualsSchedule(movieSchedule: MovieSchedule): Boolean {
+    private fun MovieDTO.isEqualsSchedule(movieSchedule: MovieScheduleDTO): Boolean {
         return removeAllExceptDigitsLetters(title).equals(removeAllExceptDigitsLetters(movieSchedule.title), true)
                 && year == movieSchedule.year
     }

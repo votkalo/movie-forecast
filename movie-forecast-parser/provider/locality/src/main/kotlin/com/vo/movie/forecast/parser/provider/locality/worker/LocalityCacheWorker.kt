@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.parser.provider.locality.worker
 
+import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
-import com.vo.movie.forecast.commons.data.Locality
 import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import com.vo.movie.forecast.parser.provider.locality.configuration.LocalityCacheConfiguration.Companion.LOCALITIES_CACHE_NAME
 import com.vo.movie.forecast.parser.provider.locality.configuration.LocalityCacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
@@ -39,19 +39,19 @@ class LocalityCacheWorker(private val extendableSimpleCacheManager: ExtendableSi
         updateLocalityByNameCache(localities)
     }
 
-    private fun updateLocalitiesCache(): List<Locality> {
+    private fun updateLocalitiesCache(): List<LocalityDTO> {
         val localities = localityProvider.getLocalities()
         extendableSimpleCacheManager.getCache(LOCALITIES_CACHE_NAME)?.putIfAbsent(SimpleKey.EMPTY, localities)
         return localities
     }
 
-    private fun updateLocalitiesLettersCache(localities: List<Locality>): List<String> {
+    private fun updateLocalitiesLettersCache(localities: List<LocalityDTO>): List<String> {
         val localitiesLetters = localities.getLocalitiesLetters()
         extendableSimpleCacheManager.getCache(LOCALITIES_LETTERS_CACHE_NAME)?.putIfAbsent(SimpleKey.EMPTY, localitiesLetters)
         return localitiesLetters
     }
 
-    private fun updateLocalitiesNamesByLetterCache(localities: List<Locality>, localitiesLetters: List<String>) {
+    private fun updateLocalitiesNamesByLetterCache(localities: List<LocalityDTO>, localitiesLetters: List<String>) {
         val localitiesNamesByLetterCache = extendableSimpleCacheManager.getCache(LOCALITIES_NAMES_BY_LETTER_CACHE_NAME)
         localitiesLetters.forEach {
             val localityLetter = it.first()
@@ -60,7 +60,7 @@ class LocalityCacheWorker(private val extendableSimpleCacheManager: ExtendableSi
         }
     }
 
-    private fun updateLocalityByNameCache(localities: List<Locality>) {
+    private fun updateLocalityByNameCache(localities: List<LocalityDTO>) {
         val localityByNameCache = extendableSimpleCacheManager.getCache(LOCALITY_BY_NAME_CACHE_NAME)
         localities.forEach {
             val localityName = it.name

@@ -1,16 +1,14 @@
 package com.vo.movie.forecast.backend.user.core.document
 
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.DOCUMENT_USER_NAME
-import com.vo.movie.forecast.commons.data.Locality
-import com.vo.movie.forecast.commons.data.Movie
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(DOCUMENT_USER_NAME)
 data class User(
-        val userId: Long,
-        val locality: Locality?,
-        val movies: MutableList<Movie> = ArrayList(),
-        val moviesLetters: MutableList<String> = ArrayList()
+    val userId: Long,
+    val locality: Locality?,
+    val movies: MutableList<Movie> = ArrayList(),
+    val moviesLetters: MutableList<String> = ArrayList()
 ) {
     companion object {
         const val DOCUMENT_USER_NAME = "users"

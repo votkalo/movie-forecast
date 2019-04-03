@@ -1,12 +1,11 @@
 package com.vo.movie.forecast.backend.user.core.dao.impl
 
 import com.vo.movie.forecast.backend.user.core.dao.UserRepository
+import com.vo.movie.forecast.backend.user.core.document.Locality
 import com.vo.movie.forecast.backend.user.core.document.User
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.DOCUMENT_USER_NAME
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.PROPERTY_USER_LOCALITY
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.PROPERTY_USER_USER_ID
-import com.vo.movie.forecast.backend.user.data.UserInfo
-import com.vo.movie.forecast.commons.data.Locality
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.find
@@ -27,7 +26,7 @@ open class UserRepositoryImpl(private val mongoOperation: MongoOperations) : Use
         mongoOperation.findAndModify(queryUser(userId), Update().unset(PROPERTY_USER_LOCALITY), User::class.java)
     }
 
-    override fun getUsersInfoWithLocality(page: Int, size: Int): List<UserInfo> {
+    override fun getUsersInfoWithLocality(page: Int, size: Int): List<User> {
         val pageRequest = PageRequest.of(page, size)
         val query = Query(Criteria.where(PROPERTY_USER_LOCALITY).exists(true))
                 .with(pageRequest)

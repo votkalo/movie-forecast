@@ -1,10 +1,10 @@
 package com.vo.movie.forecast.bot.handler.inline
 
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.handler.callback.Callback
 import com.vo.movie.forecast.bot.util.*
-import com.vo.movie.forecast.commons.data.Movie
-import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParams
+import com.vo.movie.forecast.parser.api.movie.dto.MovieSearchParamsDTO
 import com.vo.movie.forecast.parser.provider.movie.MovieProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
@@ -22,7 +22,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
 
     override fun handle(update: Update) {
         val inlineQuery = update.inlineQuery
-        val movies = call({ movieProvider.searchMovie(MovieSearchParams(inlineQuery.query)) }, update.chatId())
+        val movies = call({ movieProvider.searchMovie(MovieSearchParamsDTO(inlineQuery.query)) }, update.chatId())
         val inlineQueryResults = movies.toInlineQueryResults()
         val answerInlineQuery = createAnswerInlineQuery(inlineQuery.id, inlineQueryResults)
         getBot().execute(answerInlineQuery)
@@ -35,9 +35,10 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return answerInlineQuery
     }
 
-    private fun List<Movie>.toInlineQueryResults(): List<InlineQueryResult> = this.map { it.toInlineQueryResultArticle() }
+    private fun List<MovieDTO>.toInlineQueryResults(): List<InlineQueryResult> =
+        this.map { it.toInlineQueryResultArticle() }
 
-    private fun Movie.toInlineQueryResultArticle(): InlineQueryResultArticle {
+    private fun MovieDTO.toInlineQueryResultArticle(): InlineQueryResultArticle {
         val article = InlineQueryResultArticle()
         article.inputMessageContent = toInputTextMessageContent()
         article.id = kinopoiskMovieId.toString()
@@ -48,7 +49,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return article
     }
 
-    private fun Movie.createArticleTitle(): String {
+    private fun MovieDTO.createArticleTitle(): String {
         val titleBuilder = StringBuilder()
         titleBuilder.append(title)
         if (year != null) {
@@ -57,7 +58,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return titleBuilder.toString()
     }
 
-    private fun Movie.createArticleDescription(): String {
+    private fun MovieDTO.createArticleDescription(): String {
         val descriptionBuilder = StringBuilder()
         if (originalTitle != null) {
             descriptionBuilder.append("$originalTitle ")
@@ -74,7 +75,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return descriptionBuilder.toString()
     }
 
-    private fun Movie.toInputTextMessageContent(): InputTextMessageContent {
+    private fun MovieDTO.toInputTextMessageContent(): InputTextMessageContent {
         val messageContent = InputTextMessageContent()
         messageContent.enableWebPagePreview()
         messageContent.enableHtml(true)
@@ -82,7 +83,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return messageContent
     }
 
-    private fun Movie.createMessageText(): String {
+    private fun MovieDTO.createMessageText(): String {
         val messageBuilder = StringBuilder()
         messageBuilder.append("<b>")
         messageBuilder.append(title)
@@ -107,7 +108,7 @@ class InlineQueryHandler(private val movieProvider: MovieProvider) : UpdateHandl
         return messageBuilder.toString()
     }
 
-    private fun Movie.createFollowButtonMarkup(): InlineKeyboardMarkup {
+    private fun MovieDTO.createFollowButtonMarkup(): InlineKeyboardMarkup {
         val button = createInlineKeyboardButton(
                 "Добавить в отслеживаемые",
                 Callback.MOVIE_ID.addCallbackPrefix(kinopoiskMovieId.toString())

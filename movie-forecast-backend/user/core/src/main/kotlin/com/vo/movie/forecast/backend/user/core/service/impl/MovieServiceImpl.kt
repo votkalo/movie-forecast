@@ -1,9 +1,11 @@
 package com.vo.movie.forecast.backend.user.core.service.impl
 
+import com.vo.movie.forecast.backend.storage.data.MovieDTO
+import com.vo.movie.forecast.backend.user.core.converter.toDTO
+import com.vo.movie.forecast.backend.user.core.converter.toEntity
 import com.vo.movie.forecast.backend.user.core.dao.MovieRepository
 import com.vo.movie.forecast.backend.user.core.service.MovieService
-import com.vo.movie.forecast.commons.data.Movie
-import com.vo.movie.forecast.commons.data.MovieInfo
+import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,20 +13,25 @@ import org.springframework.transaction.annotation.Transactional
 open class MovieServiceImpl(private val movieRepository: MovieRepository) : MovieService {
 
     @Transactional
-    override fun registerMovie(userId: Long, movie: Movie) {
-        movieRepository.registerMovie(userId, movie)
+    override fun registerMovie(userId: Long, movie: MovieDTO) {
+        movieRepository.registerMovie(userId, movie.toEntity())
         movieRepository.registerMovieLetter(userId, movie.title.toUpperCase().first().toString())
     }
 
-    override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean = movieRepository.existsMovie(userId, kinopoiskMovieId)
+    override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean =
+        movieRepository.existsMovie(userId, kinopoiskMovieId)
 
-    override fun getMovies(userId: Long, page: Int, size: Int): List<MovieInfo> = movieRepository.getMovies(userId, page, size)
+    override fun getMovies(userId: Long, page: Int, size: Int): List<MovieDTO> =
+        movieRepository.getMovies(userId, page, size).map { it.toDTO() }
 
-    override fun getMoviesLetters(userId: Long): List<String> = movieRepository.getMoviesLetters(userId)
+    override fun getMoviesLetters(userId: Long): List<String> =
+        movieRepository.getMoviesLetters(userId)
 
-    override fun getMoviesByLetter(userId: Long, letter: Char): List<MovieInfo> = movieRepository.getMoviesByLetter(userId, letter)
+    override fun getMoviesByLetter(userId: Long, letter: Char): List<MovieDTO> =
+        movieRepository.getMoviesByLetter(userId, letter).map { it.toDTO() }
 
-    override fun searchMovie(userId: Long, movieInfo: MovieInfo): Movie = movieRepository.searchMovie(userId, movieInfo)
+    override fun searchMovies(userId: Long, movieFilter: MovieFilterDTO): List<MovieDTO> =
+        movieRepository.searchMovies(userId, movieFilter.toEntity()).map { it.toDTO() }
 
     override fun deleteMovie(userId: Long, kinopoiskMovieId: Long) {
         val movie = movieRepository.getMovie(userId, kinopoiskMovieId)
