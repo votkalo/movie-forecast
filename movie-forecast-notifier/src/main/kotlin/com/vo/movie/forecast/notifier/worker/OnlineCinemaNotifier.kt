@@ -41,10 +41,7 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                             }
                             try {
                                 onlineCinemaMovieAccessMap[onlineCinema]?.add(
-                                        onlineCinemaProvider.getMovieAccessInfo(
-                                                onlineCinema,
-                                                MovieInfoDTO(movieInfo.title, movieInfo.year)
-                                        )
+                                        onlineCinemaProvider.getMovieAccessInfo(onlineCinema, MovieInfoDTO(movieInfo.title, movieInfo.year))
                                 )
                             } catch (movieNotFoundException: FeignException) {
                                 //Catch if movie not found in online cinema
