@@ -22,7 +22,6 @@ import org.springframework.stereotype.Repository
 open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : MovieRepository {
 
     override fun saveMovie(movie: Movie) {
-        val query = Query().addCriteria(Criteria.where(PROPERTY_MOVIE_KINOPOISK_MOVIE_ID).`is`(movie.kinopoiskMovieId))
         val update = Update()
         update.set(PROPERTY_MOVIE_TITLE, movie.title)
         if (movie.originalTitle != null) update.set(PROPERTY_MOVIE_ORIGINAL_TITLE, movie.originalTitle)
@@ -33,6 +32,13 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
         update.set(PROPERTY_MOVIE_BIG_POSTER_URL, movie.bigPosterURL)
         update.set(PROPERTY_MOVIE_SMALL_POSTER_URL, movie.smallPosterURL)
         update.set(PROPERTY_MOVIE_SOURCE_URL, movie.sourceURL)
-        mongoOperation.upsert(query, update, Movie::class.java)
+        mongoOperation.upsert(queryKinopoiskMovieId(movie.kinopoiskMovieId), update, Movie::class.java)
     }
+
+    override fun getMovie(kinopoiskMovieId: Long): Movie? {
+        return mongoOperation.findOne(queryKinopoiskMovieId(kinopoiskMovieId), Movie::class.java)
+    }
+
+    private fun queryKinopoiskMovieId(kinopoiskMovieId: Long): Query =
+        Query(Criteria.where(PROPERTY_MOVIE_KINOPOISK_MOVIE_ID).`is`(kinopoiskMovieId))
 }

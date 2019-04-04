@@ -5,4 +5,6 @@ import com.vo.movie.forecast.backend.storage.core.document.Movie
 interface MovieRepository {
 
     fun saveMovie(movie: Movie)
+
+    fun getMovie(kinopoiskMovieId: Long): Movie?
 }

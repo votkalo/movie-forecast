@@ -19,16 +19,6 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider-locality</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider-movie</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-backend-user-feign-bot</artifactId>
             <version>${project.version}</version>
         </dependency>

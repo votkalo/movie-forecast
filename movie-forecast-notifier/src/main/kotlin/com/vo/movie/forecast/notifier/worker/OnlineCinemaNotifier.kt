@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.notifier.worker
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.notifier.MovieApi
 import com.vo.movie.forecast.backend.user.api.notifier.UserApi
+import com.vo.movie.forecast.backend.user.api.notifier.UserMovieApi
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
 import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfoDTO
@@ -16,7 +16,7 @@ import java.math.BigDecimal
 
 @Component
 class OnlineCinemaNotifier(private val userApi: UserApi,
-                           private val movieApi: MovieApi,
+                           private val userMovieApi: UserMovieApi,
                            private val onlineCinemaProvider: OnlineCinemaProvider,
                            private val notificationApi: NotificationApi) {
 
@@ -33,7 +33,7 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                 var movies: List<MovieDTO>
                 val onlineCinemaMovieAccessMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfoDTO>> = HashMap()
                 do {
-                    movies = movieApi.getUserMovies(userId, moviePage++, pageSize)
+                    movies = userMovieApi.getUserMovies(userId, moviePage++, pageSize)
                     movies.forEach { movieInfo ->
                         OnlineCinema.values().forEach { onlineCinema ->
                             if (onlineCinemaMovieAccessMap[onlineCinema] == null) {

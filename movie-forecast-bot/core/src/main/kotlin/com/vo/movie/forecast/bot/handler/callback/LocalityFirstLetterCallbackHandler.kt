@@ -1,16 +1,16 @@
 package com.vo.movie.forecast.bot.handler.callback
 
+import com.vo.movie.forecast.backend.storage.api.LocalityApi
 import com.vo.movie.forecast.bot.util.*
-import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class LocalityFirstLetterCallbackHandler(private val localityProvider: LocalityProvider) : CallbackUpdateHandler(Callback.LOCALITY_FIRST_LETTER) {
+class LocalityFirstLetterCallbackHandler(private val localityApi: LocalityApi) : CallbackUpdateHandler(Callback.LOCALITY_FIRST_LETTER) {
 
     override fun handle(update: Update) {
         val firstLetter = update.getCallbackData().single()
-        val localitiesNames = call({ localityProvider.getLocalitiesNamesByLetter(firstLetter) }, update.chatId())
+        val localitiesNames = call({ localityApi.getLocalitiesNamesByLetter(firstLetter) }, update.chatId())
         val keyboard = localitiesNames.map {
             val button = createInlineKeyboardButton(it, Callback.LOCALITY_NAME.addCallbackPrefix(it))
             createRowButton(button)

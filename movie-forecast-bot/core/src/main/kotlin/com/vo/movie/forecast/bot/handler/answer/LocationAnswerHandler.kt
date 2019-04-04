@@ -5,20 +5,20 @@ import com.google.maps.GeocodingApi
 import com.google.maps.model.AddressComponentType
 import com.google.maps.model.AddressType
 import com.google.maps.model.LatLng
+import com.vo.movie.forecast.backend.storage.api.LocalityApi
 import com.vo.movie.forecast.backend.user.api.bot.UserApi
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.util.call
 import com.vo.movie.forecast.bot.util.createMessage
 import com.vo.movie.forecast.bot.util.createSearchLocalityInlineKeyboardMarkup
-import com.vo.movie.forecast.parser.provider.locality.LocalityProvider
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove
 
 @Component
 class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties,
-                            private val localityProvider: LocalityProvider,
+                            private val localityApi: LocalityApi,
                             private val userApi: UserApi) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean = update.hasMessage() && update.message.hasLocation()
@@ -41,7 +41,7 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
         }
 
         val isLocalityKnown = call(
-                { localityProvider.getLocalities() },
+                { localityApi.getLocalities() },
                 update.chatId()
         ).any { locality -> locality.name == geolocationLocality }
 
@@ -50,7 +50,7 @@ class LocationAnswerHandler(private val geocodingProperties: GeocodingProperties
                     {
                         userApi.updateLocality(
                                 update.userId(),
-                                localityProvider.getLocalityByName(geolocationLocality)
+                                localityApi.getLocalityByName(geolocationLocality)
                         )
                     },
                     update.chatId()

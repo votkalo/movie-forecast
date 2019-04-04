@@ -2,7 +2,6 @@ package com.vo.movie.forecast.backend.user.core.rest
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.core.service.MovieService
-import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -27,10 +26,6 @@ class MovieController(private val movieService: MovieService) {
     @GetMapping("/letters/{letter}")
     fun getMoviesByLetter(@PathVariable userId: Long, @PathVariable letter: Char): List<MovieDTO> =
         movieService.getMoviesByLetter(userId, letter)
-
-    @PostMapping("/search")
-    fun searchMovies(@PathVariable userId: Long, @RequestBody movieFilter: MovieFilterDTO): List<MovieDTO> =
-        movieService.searchMovies(userId, movieFilter)
 
     @DeleteMapping("/{kinopoiskMovieId}")
     fun deleteMovie(@PathVariable userId: Long, @PathVariable kinopoiskMovieId: Long) =

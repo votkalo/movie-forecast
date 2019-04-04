@@ -17,8 +17,6 @@
     </parent>
 
     <modules>
-        <module>locality</module>
-        <module>movie</module>
         <module>schedule</module>
         <module>online-cinema</module>
     </modules>

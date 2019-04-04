@@ -1,9 +1,8 @@
 package com.vo.movie.forecast.backend.user.api.bot
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 
-interface MovieApi {
+interface UserMovieApi {
 
     fun registerMovie(movie: MovieDTO, userId: Long)
 
@@ -12,8 +11,6 @@ interface MovieApi {
     fun getMoviesLetters(userId: Long): List<String>
 
     fun getMoviesByLetter(userId: Long, letter: Char): List<MovieDTO>
-
-    fun searchMovies(movieFilter: MovieFilterDTO, userId: Long): List<MovieDTO>
 
     fun deleteMovie(userId: Long, kinopoiskMovieId: Long)
 }

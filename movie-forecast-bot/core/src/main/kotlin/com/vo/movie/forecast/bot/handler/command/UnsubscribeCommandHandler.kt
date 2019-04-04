@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.bot.handler.command
 
-import com.vo.movie.forecast.backend.user.api.bot.MovieApi
+import com.vo.movie.forecast.backend.user.api.bot.UserMovieApi
 import com.vo.movie.forecast.bot.handler.callback.Callback
 import com.vo.movie.forecast.bot.util.*
 import org.apache.commons.collections4.ListUtils
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class UnsubscribeCommandHandler(private val movieApi: MovieApi) : CommandUpdateHandler(Command.UNSUBSCRIBE) {
+class UnsubscribeCommandHandler(private val userMovieApi: UserMovieApi) : CommandUpdateHandler(Command.UNSUBSCRIBE) {
 
     override fun handle(update: Update) {
-        val letters = call({ movieApi.getMoviesLetters(update.userId()) }, update.chatId())
+        val letters = call({ userMovieApi.getMoviesLetters(update.userId()) }, update.chatId())
 
         if (letters.isEmpty()) {
             val message = createMessage(update.chatId(), "У вас нет отслеживаемых фильмов")

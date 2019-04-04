@@ -1,7 +1,6 @@
 package com.vo.movie.forecast.backend.user.core.service
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 
 interface MovieService {
 
@@ -14,8 +13,6 @@ interface MovieService {
     fun getMoviesLetters(userId: Long): List<String>
 
     fun getMoviesByLetter(userId: Long, letter: Char): List<MovieDTO>
-
-    fun searchMovies(userId: Long, movieFilter: MovieFilterDTO): List<MovieDTO>
 
     fun deleteMovie(userId: Long, kinopoiskMovieId: Long)
 }

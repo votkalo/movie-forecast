@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.parser.provider.movie.configuration
+package com.vo.movie.forecast.backend.storage.core.configuration
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "caffeine")
 class CaffeineCacheProperties {
-    var movie: CacheProperties = CacheProperties()
+    var movie: CacheProperties =
+        CacheProperties()
 
     class CacheProperties {
         var maxSize: Long = 100

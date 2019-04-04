@@ -1,17 +1,18 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.bot.MovieApi
+import com.vo.movie.forecast.backend.user.api.bot.UserMovieApi
 import com.vo.movie.forecast.bot.util.*
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : CallbackUpdateHandler(Callback.MOVIE_FIRST_LETTER) {
+class MovieFirstLetterCallbackHandler(private val userMovieApi: UserMovieApi) :
+        CallbackUpdateHandler(Callback.MOVIE_FIRST_LETTER) {
 
     override fun handle(update: Update) {
         val firstLetter = update.getCallbackData().single()
-        val movies = call({ movieApi.getMoviesByLetter(update.userId(), firstLetter) }, update.chatId())
+        val movies = call({ userMovieApi.getMoviesByLetter(update.userId(), firstLetter) }, update.chatId())
         val moviesInfoStrings = movies.map { it.createCallbackButtonInfo() }
         val keyboard = moviesInfoStrings.map {
             val button = createInlineKeyboardButton(it.text, Callback.MOVIE_INFO.addCallbackPrefix(it.callbackData))
@@ -22,7 +23,7 @@ class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : Callback
         getBot().execute(editMessageText)
     }
 
-    private fun MovieDTO.createCallbackButtonInfo() = CallbackButtonInfo(getCallbackButtonText(), getCallbackData())
+    private fun MovieDTO.createCallbackButtonInfo() = CallbackButtonInfo(getCallbackButtonText(), kinopoiskMovieId.toString())
 
     private fun MovieDTO.getCallbackButtonText(): String {
         val allowTextLength = 38
@@ -39,36 +40,11 @@ class MovieFirstLetterCallbackHandler(private val movieApi: MovieApi) : Callback
         return createCallbackButtonText(notFullTitle, year)
     }
 
-    private fun MovieDTO.getCallbackData(): String {
-        val allowCallbackDataByteLength = 64
-
-        val callbackData = createCallbackData(title, year)
-        val callbackDataWithPrefixLength = getCallback().addCallbackPrefix(callbackData).toByteArray().size
-
-        if (callbackDataWithPrefixLength <= allowCallbackDataByteLength) {
-            return callbackData
-        }
-
-        val extraTitleLength = callbackDataWithPrefixLength - allowCallbackDataByteLength
-        val notFullTitle = title.toByteArray().dropLast(extraTitleLength).toByteArray()
-        return createCallbackData(String(notFullTitle), year)
-    }
-
-    //TODO: Combine methods. Add 3 argument: template
     private fun createCallbackButtonText(title: String, year: String?): String {
         val messageBuilder = StringBuilder()
         messageBuilder.append(title)
         if (year != null) {
             messageBuilder.append(" ($year)")
-        }
-        return messageBuilder.toString()
-    }
-
-    private fun createCallbackData(title: String, year: String?): String {
-        val messageBuilder = StringBuilder()
-        messageBuilder.append(title)
-        if (year != null) {
-            messageBuilder.append("∫$year")
         }
         return messageBuilder.toString()
     }

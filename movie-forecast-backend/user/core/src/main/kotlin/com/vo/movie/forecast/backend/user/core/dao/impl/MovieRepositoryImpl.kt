@@ -13,14 +13,12 @@ import com.vo.movie.forecast.backend.user.core.document.Movie.Companion.PROPERTY
 import com.vo.movie.forecast.backend.user.core.document.Movie.Companion.PROPERTY_MOVIE_SOURCE_URL
 import com.vo.movie.forecast.backend.user.core.document.Movie.Companion.PROPERTY_MOVIE_TITLE
 import com.vo.movie.forecast.backend.user.core.document.Movie.Companion.PROPERTY_MOVIE_YEAR
-import com.vo.movie.forecast.backend.user.core.document.MovieFilter
 import com.vo.movie.forecast.backend.user.core.document.User
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.PROPERTY_USER_MOVIES
 import com.vo.movie.forecast.backend.user.core.document.User.Companion.PROPERTY_USER_MOVIES_LETTERS
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.aggregation.Aggregation
-import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 import org.springframework.data.mongodb.core.exists
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
@@ -96,36 +94,6 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
                     aggregationProjectMovie()
             )
         return mongoOperation.aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
-            .mappedResults
-    }
-
-    override fun searchMovies(userId: Long, movieFilter: MovieFilter): List<Movie> {
-        val operations = ArrayList<AggregationOperation>()
-        operations.add(aggregationMatchUserId(userId))
-        operations.add(aggregationUnwindMovies())
-        if (movieFilter.title != null) {
-            operations.add(
-                    Aggregation.match(
-                            Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_TITLE").regex(Regex.escape(movieFilter.title))
-                    )
-            )
-        }
-        if (movieFilter.originalTitle != null) {
-            operations.add(
-                    Aggregation.match(
-                            Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_ORIGINAL_TITLE")
-                                .regex(Regex.escape(movieFilter.originalTitle))
-                    )
-            )
-        }
-        if (movieFilter.year != null) {
-            operations.add(
-                    Aggregation.match(Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_YEAR").`is`(movieFilter.year))
-            )
-        }
-        operations.add(aggregationProjectMovie())
-        return mongoOperation
-            .aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
             .mappedResults
     }
 

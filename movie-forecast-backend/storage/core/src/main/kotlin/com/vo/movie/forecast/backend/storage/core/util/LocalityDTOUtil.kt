@@ -1,4 +1,4 @@
-package com.vo.movie.forecast.parser.provider.locality.util
+package com.vo.movie.forecast.backend.storage.core.util
 
 import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 

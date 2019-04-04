@@ -24,7 +24,17 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider-movie</artifactId>
+            <artifactId>movie-forecast-parser-feign-movie</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-feign-locality</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-commons-cache</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -38,6 +48,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!--Caffeine-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
     </dependencies>
 

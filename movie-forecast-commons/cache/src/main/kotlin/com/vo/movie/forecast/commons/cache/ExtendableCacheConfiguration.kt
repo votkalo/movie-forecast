@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Configuration
 open class ExtendableCacheConfiguration {
 
     @Bean
-    open fun extendableSimpleCacheManager(): ExtendableSimpleCacheManager = ExtendableSimpleCacheManager()
+    open fun cacheManager(): ExtendableSimpleCacheManager = ExtendableSimpleCacheManager()
 }

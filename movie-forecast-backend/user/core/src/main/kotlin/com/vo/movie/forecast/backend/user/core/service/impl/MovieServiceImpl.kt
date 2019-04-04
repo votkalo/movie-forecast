@@ -5,7 +5,6 @@ import com.vo.movie.forecast.backend.user.core.converter.toDTO
 import com.vo.movie.forecast.backend.user.core.converter.toEntity
 import com.vo.movie.forecast.backend.user.core.dao.MovieRepository
 import com.vo.movie.forecast.backend.user.core.service.MovieService
-import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -28,9 +27,6 @@ open class MovieServiceImpl(private val movieRepository: MovieRepository) : Movi
 
     override fun getMoviesByLetter(userId: Long, letter: Char): List<MovieDTO> =
         movieRepository.getMoviesByLetter(userId, letter).map { it.toDTO() }
-
-    override fun searchMovies(userId: Long, movieFilter: MovieFilterDTO): List<MovieDTO> =
-        movieRepository.searchMovies(userId, movieFilter.toEntity()).map { it.toDTO() }
 
     override fun deleteMovie(userId: Long, kinopoiskMovieId: Long) {
         val movie = movieRepository.getMovie(userId, kinopoiskMovieId)

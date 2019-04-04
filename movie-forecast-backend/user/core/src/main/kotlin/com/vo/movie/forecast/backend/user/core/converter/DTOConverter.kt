@@ -4,8 +4,6 @@ import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.core.document.Locality
 import com.vo.movie.forecast.backend.user.core.document.Movie
-import com.vo.movie.forecast.backend.user.core.document.MovieFilter
-import com.vo.movie.forecast.backend.user.data.MovieFilterDTO
 
 // ------------ Movie ------------
 
@@ -21,9 +19,6 @@ fun MovieDTO.toEntity() = Movie(
         smallPosterURL,
         sourceURL
 )
-
-
-fun MovieFilterDTO.toEntity() = MovieFilter(title, originalTitle, year)
 
 // ------------ Locality ------------
 

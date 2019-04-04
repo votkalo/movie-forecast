@@ -1,8 +1,8 @@
-package com.vo.movie.forecast.parser.provider.locality
+package com.vo.movie.forecast.backend.storage.core.service
 
 import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 
-interface LocalityProvider {
+interface LocalityService {
 
     fun getLocalities(): List<LocalityDTO>
 

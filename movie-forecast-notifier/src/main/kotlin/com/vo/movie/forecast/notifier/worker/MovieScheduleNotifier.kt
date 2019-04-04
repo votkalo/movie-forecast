@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.notifier.worker
 
 import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.notifier.MovieApi
 import com.vo.movie.forecast.backend.user.api.notifier.UserApi
+import com.vo.movie.forecast.backend.user.api.notifier.UserMovieApi
 import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class MovieScheduleNotifier(private val userApi: UserApi,
-                            private val movieApi: MovieApi,
+                            private val userMovieApi: UserMovieApi,
                             private val scheduleProvider: ScheduleProvider,
                             private val notificationApi: NotificationApi) {
 
@@ -71,7 +71,7 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         val moviesSchedule = scheduleProvider.getMovieSchedule(user.locality.alternativeName)
         var movies: List<MovieDTO>
         do {
-            movies = movieApi.getUserMovies(user.userId, moviePage++, pageSize)
+            movies = userMovieApi.getUserMovies(user.userId, moviePage++, pageSize)
             notificationMoviesSchedule.addAll(moviesSchedule.filter { it.isScheduleMatch(movies) })
         } while (movies.size == pageSize)
         return notificationMoviesSchedule

@@ -1,8 +1,8 @@
-package com.vo.movie.forecast.parser.provider.locality.configuration
+package com.vo.movie.forecast.backend.storage.core.configuration
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @Configuration
 @EnableScheduling
-open class LocalitySchedulingConfiguration
+open class BackendStorageSchedulingConfiguration
