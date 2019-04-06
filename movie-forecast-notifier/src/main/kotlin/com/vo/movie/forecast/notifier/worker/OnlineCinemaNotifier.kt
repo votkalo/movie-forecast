@@ -1,13 +1,13 @@
 package com.vo.movie.forecast.notifier.worker
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.notifier.UserApi
-import com.vo.movie.forecast.backend.user.api.notifier.UserMovieApi
+import com.vo.movie.forecast.backend.user.api.UserApi
+import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.OnlineCinema
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinema
 import com.vo.movie.forecast.parser.provider.schedule.OnlineCinemaProvider
 import feign.FeignException
 import org.springframework.scheduling.annotation.Scheduled
@@ -41,7 +41,10 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                             }
                             try {
                                 onlineCinemaMovieAccessMap[onlineCinema]?.add(
-                                        onlineCinemaProvider.getMovieAccessInfo(onlineCinema, MovieInfoDTO(movieInfo.title, movieInfo.year))
+                                        onlineCinemaProvider.getMovieAccessInfo(
+                                                onlineCinema,
+                                                MovieInfoDTO(movieInfo.title, movieInfo.originalTitle, movieInfo.year)
+                                        )
                                 )
                             } catch (movieNotFoundException: FeignException) {
                                 //Catch if movie not found in online cinema

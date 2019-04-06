@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.storage.feign
 
 import com.vo.movie.forecast.backend.storage.api.LocalityApi
-import com.vo.movie.forecast.backend.storage.data.LocalityDTO
+import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import feign.Param
 import feign.RequestLine
 

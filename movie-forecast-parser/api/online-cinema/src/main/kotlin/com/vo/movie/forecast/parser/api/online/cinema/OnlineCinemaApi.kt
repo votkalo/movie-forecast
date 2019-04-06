@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.parser.api.online.cinema
 
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.OnlineCinema
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinema
 
 interface OnlineCinemaApi {
 

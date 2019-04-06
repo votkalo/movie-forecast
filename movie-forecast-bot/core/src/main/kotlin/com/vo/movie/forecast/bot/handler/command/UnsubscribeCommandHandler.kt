@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.bot.handler.command
 
-import com.vo.movie.forecast.backend.user.api.bot.UserMovieApi
+import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.bot.handler.callback.Callback
 import com.vo.movie.forecast.bot.util.*
 import org.apache.commons.collections4.ListUtils

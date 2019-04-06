@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.bot.handler.callback
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.bot.UserMovieApi
+import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.bot.util.*
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 

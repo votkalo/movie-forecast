@@ -14,6 +14,19 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-dto-locality</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-dto-movie</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
 

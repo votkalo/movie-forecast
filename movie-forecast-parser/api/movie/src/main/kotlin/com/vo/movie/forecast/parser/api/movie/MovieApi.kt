@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.parser.api.movie
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.storage.data.MovieSearchParamsDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieSearchParamsDTO
 
 interface MovieApi {
 

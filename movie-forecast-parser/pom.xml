@@ -20,6 +20,7 @@
         <module>api</module>
         <module>feign</module>
         <module>provider</module>
+        <module>dto</module>
     </modules>
 
 </project>

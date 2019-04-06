@@ -2,8 +2,10 @@ package com.vo.movie.forecast.backend.storage.feign.configuration
 
 import com.vo.movie.forecast.backend.storage.api.LocalityApi
 import com.vo.movie.forecast.backend.storage.api.MovieApi
+import com.vo.movie.forecast.backend.storage.api.ScheduleApi
 import com.vo.movie.forecast.backend.storage.feign.LocalityApiFeign
 import com.vo.movie.forecast.backend.storage.feign.MovieApiFeign
+import com.vo.movie.forecast.backend.storage.feign.ScheduleApiFeign
 import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
 import com.vo.movie.forecast.commons.feign.FeignProperties
 import org.springframework.context.annotation.Bean
@@ -23,4 +25,10 @@ open class StorageBackendFeignConfiguration(private val feignBuilderFactory: Fei
         feignBuilderFactory
             .jsonFeignBuilder()
             .target(LocalityApiFeign::class.java, feignProperties.movieForecastBackendStorage?.url?.toASCIIString())
+
+    @Bean
+    open fun storageBackendScheduleApi(): ScheduleApi =
+        feignBuilderFactory
+            .jsonFeignBuilder()
+            .target(ScheduleApiFeign::class.java, feignProperties.movieForecastBackendStorage?.url?.toASCIIString())
 }

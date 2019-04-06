@@ -1,11 +1,11 @@
 package com.vo.movie.forecast.bot.handler.inline
 
 import com.vo.movie.forecast.backend.storage.api.MovieApi
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.storage.data.MovieSearchParamsDTO
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.handler.callback.Callback
 import com.vo.movie.forecast.bot.util.*
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieSearchParamsDTO
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.AnswerInlineQuery
 import org.telegram.telegrambots.meta.api.objects.Update

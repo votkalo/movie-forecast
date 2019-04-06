@@ -4,15 +4,15 @@ import com.vo.movie.forecast.backend.storage.core.configuration.BackendStorageCa
 import com.vo.movie.forecast.backend.storage.core.configuration.BackendStorageCacheConfiguration.Companion.LOCALITIES_LETTERS_CACHE_NAME
 import com.vo.movie.forecast.backend.storage.core.configuration.BackendStorageCacheConfiguration.Companion.LOCALITIES_NAMES_BY_LETTER_CACHE_NAME
 import com.vo.movie.forecast.backend.storage.core.configuration.BackendStorageCacheConfiguration.Companion.LOCALITY_BY_NAME_CACHE_NAME
+import com.vo.movie.forecast.backend.storage.core.converter.toDTO
 import com.vo.movie.forecast.backend.storage.core.dao.LocalityRepository
 import com.vo.movie.forecast.backend.storage.core.service.LocalityService
 import com.vo.movie.forecast.backend.storage.core.updater.LocalityUpdater
 import com.vo.movie.forecast.backend.storage.core.util.getLocalitiesLetters
 import com.vo.movie.forecast.backend.storage.core.util.getLocalitiesNamesByLetter
 import com.vo.movie.forecast.backend.storage.core.util.getLocalityByName
-import com.vo.movie.forecast.backend.storage.data.LocalityDTO
-import com.vo.movie.forecast.backend.user.core.converter.toDTO
 import com.vo.movie.forecast.parser.api.locality.LocalityApi
+import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 

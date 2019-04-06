@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.backend.storage.feign
 
 import com.vo.movie.forecast.backend.storage.api.MovieApi
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.storage.data.MovieSearchParamsDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieSearchParamsDTO
 import feign.Param
 import feign.RequestLine
 

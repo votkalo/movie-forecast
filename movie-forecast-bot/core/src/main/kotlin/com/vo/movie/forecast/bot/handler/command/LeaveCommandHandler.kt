@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.bot.handler.command
 
-import com.vo.movie.forecast.backend.user.api.bot.UserApi
+import com.vo.movie.forecast.backend.user.api.UserApi
 import com.vo.movie.forecast.bot.util.call
 import com.vo.movie.forecast.bot.util.createMessage
 import org.springframework.stereotype.Component

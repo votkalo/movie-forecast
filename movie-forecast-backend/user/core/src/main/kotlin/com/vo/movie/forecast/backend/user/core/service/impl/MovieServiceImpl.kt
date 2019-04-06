@@ -1,10 +1,10 @@
 package com.vo.movie.forecast.backend.user.core.service.impl
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.backend.user.core.converter.toDTO
 import com.vo.movie.forecast.backend.user.core.converter.toEntity
 import com.vo.movie.forecast.backend.user.core.dao.MovieRepository
 import com.vo.movie.forecast.backend.user.core.service.MovieService
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

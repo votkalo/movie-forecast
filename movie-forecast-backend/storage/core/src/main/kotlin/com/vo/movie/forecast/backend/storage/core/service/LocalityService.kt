@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.backend.storage.core.service
 
-import com.vo.movie.forecast.backend.storage.data.LocalityDTO
+import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 
 interface LocalityService {
 

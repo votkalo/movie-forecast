@@ -2,8 +2,8 @@ package com.vo.movie.forecast.backend.storage.core.configuration
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
 import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.concurrent.ConcurrentMapCache
 import org.springframework.context.annotation.Bean

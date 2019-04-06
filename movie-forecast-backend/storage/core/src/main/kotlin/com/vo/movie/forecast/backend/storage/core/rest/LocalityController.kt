@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.storage.core.rest
 
 import com.vo.movie.forecast.backend.storage.core.service.LocalityService
-import com.vo.movie.forecast.backend.storage.data.LocalityDTO
+import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping

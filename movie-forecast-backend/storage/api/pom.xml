@@ -15,9 +15,25 @@
     </parent>
 
     <dependencies>
+        <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-backend-storage-dto</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-dto-movie</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-dto-locality</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-parser-dto-schedule</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

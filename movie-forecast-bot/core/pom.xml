@@ -19,7 +19,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-user-feign-bot</artifactId>
+            <artifactId>movie-forecast-backend-user-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

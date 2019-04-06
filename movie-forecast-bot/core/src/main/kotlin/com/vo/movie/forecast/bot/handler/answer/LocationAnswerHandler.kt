@@ -6,7 +6,7 @@ import com.google.maps.model.AddressComponentType
 import com.google.maps.model.AddressType
 import com.google.maps.model.LatLng
 import com.vo.movie.forecast.backend.storage.api.LocalityApi
-import com.vo.movie.forecast.backend.user.api.bot.UserApi
+import com.vo.movie.forecast.backend.user.api.UserApi
 import com.vo.movie.forecast.bot.configuration.GeocodingProperties
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.util.call

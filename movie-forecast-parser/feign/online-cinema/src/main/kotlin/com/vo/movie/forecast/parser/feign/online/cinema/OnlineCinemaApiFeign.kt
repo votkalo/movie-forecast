@@ -1,9 +1,9 @@
 package com.vo.movie.forecast.parser.feign.online.cinema
 
 import com.vo.movie.forecast.parser.api.online.cinema.OnlineCinemaApi
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieAccessInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.MovieInfoDTO
-import com.vo.movie.forecast.parser.api.online.cinema.dto.OnlineCinema
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinema
 import feign.Param
 import feign.RequestLine
 

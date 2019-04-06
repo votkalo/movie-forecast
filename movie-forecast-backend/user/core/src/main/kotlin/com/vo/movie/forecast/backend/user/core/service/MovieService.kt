@@ -1,6 +1,6 @@
 package com.vo.movie.forecast.backend.user.core.service
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 
 interface MovieService {
 

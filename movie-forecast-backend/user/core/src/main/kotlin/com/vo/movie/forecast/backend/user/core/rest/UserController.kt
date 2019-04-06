@@ -1,8 +1,8 @@
 package com.vo.movie.forecast.backend.user.core.rest
 
-import com.vo.movie.forecast.backend.storage.data.LocalityDTO
 import com.vo.movie.forecast.backend.user.core.service.UserService
 import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
+import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import org.springframework.web.bind.annotation.*
 
 @RestController

@@ -19,17 +19,17 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-backend-user-feign-notifier</artifactId>
+            <artifactId>movie-forecast-backend-user-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-backend-storage-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
             <artifactId>movie-forecast-bot-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-parser-provider-schedule</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

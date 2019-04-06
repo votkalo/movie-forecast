@@ -17,7 +17,6 @@
     </parent>
 
     <modules>
-        <module>schedule</module>
         <module>online-cinema</module>
     </modules>
 

@@ -1,20 +1,21 @@
 package com.vo.movie.forecast.notifier.worker
 
-import com.vo.movie.forecast.backend.storage.data.MovieDTO
-import com.vo.movie.forecast.backend.user.api.notifier.UserApi
-import com.vo.movie.forecast.backend.user.api.notifier.UserMovieApi
+import com.vo.movie.forecast.backend.storage.api.ScheduleApi
+import com.vo.movie.forecast.backend.storage.data.ScheduleSearchParamsDTO
+import com.vo.movie.forecast.backend.user.api.UserApi
+import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.backend.user.data.UserWithLocalityInfoDTO
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
-import com.vo.movie.forecast.parser.api.schedule.dto.MovieScheduleDTO
-import com.vo.movie.forecast.parser.provider.schedule.ScheduleProvider
+import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.schedule.MovieScheduleDTO
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
 class MovieScheduleNotifier(private val userApi: UserApi,
                             private val userMovieApi: UserMovieApi,
-                            private val scheduleProvider: ScheduleProvider,
+                            private val scheduleApi: ScheduleApi,
                             private val notificationApi: NotificationApi) {
 
     //    @Scheduled(cron = "0 47 23 * * ?", zone = "Europe/Minsk")
@@ -68,26 +69,13 @@ class MovieScheduleNotifier(private val userApi: UserApi,
         var moviePage = 0
         val pageSize = 50
         val notificationMoviesSchedule = ArrayList<MovieScheduleDTO>()
-        val moviesSchedule = scheduleProvider.getMovieSchedule(user.locality.alternativeName)
         var movies: List<MovieDTO>
         do {
             movies = userMovieApi.getUserMovies(user.userId, moviePage++, pageSize)
-            notificationMoviesSchedule.addAll(moviesSchedule.filter { it.isScheduleMatch(movies) })
+            notificationMoviesSchedule.addAll(
+                    scheduleApi.getMoviesSchedule(ScheduleSearchParamsDTO(user.locality, movies))
+            )
         } while (movies.size == pageSize)
         return notificationMoviesSchedule
-    }
-
-    private fun MovieScheduleDTO.isScheduleMatch(movieDTOS: List<MovieDTO>): Boolean =
-        movieDTOS.any { it.isEqualsSchedule(this) }
-
-    private fun MovieDTO.isEqualsSchedule(movieSchedule: MovieScheduleDTO): Boolean {
-        return removeAllExceptDigitsLetters(title).equals(
-                removeAllExceptDigitsLetters(movieSchedule.title),
-                true
-        ) && year == movieSchedule.year
-    }
-
-    private fun removeAllExceptDigitsLetters(value: String?): String? {
-        return value?.replace(Regex("[\\s\\\\\\-'\"@#\$%^&*()+=<>/`~!?;:.,_]"), "")
     }
 }
