@@ -33,7 +33,7 @@ fun LocalityDTO.toEntity() = Locality(name, alternativeName, moviesScheduleURL)
 // ------------ Schedule ------------
 
 fun MovieScheduleDTO.toEntity(locality: Locality) =
-    MovieSchedule(title, originalTitle, year, scheduleURL, cinemas.map { it.toEntity() }, locality)
+    MovieSchedule(title, originalTitle, year, scheduleURL, cinemas.map { it.toEntity() }, locality, date)
 
 fun CinemaScheduleDTO.toEntity() = CinemaSchedule(name, scheduleURL, sessions.map { it.toEntity() })
 

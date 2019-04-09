@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component
 class LocalityUpdater(private val cacheManager: ExtendableSimpleCacheManager,
                       private val localityRepository: LocalityRepository) {
 
-    fun update(localities: List<LocalityDTO>) {
-        updateLocalities(localities)
+    fun update(items: List<LocalityDTO>) {
+        updateLocalities(items)
         clearCaches()
     }
 

@@ -5,9 +5,11 @@ import com.vo.movie.forecast.backend.storage.core.document.MovieSchedule
 
 interface ScheduleRepository {
 
-    fun existsSchedule(): Boolean
-
     fun getMoviesSchedule(locality: Locality): List<MovieSchedule>
 
     fun save(movieSchedule: MovieSchedule)
+
+    fun clearNotTodaySchedule()
+
+    fun existsTodaySchedule(locality: Locality): Boolean
 }

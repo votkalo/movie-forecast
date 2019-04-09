@@ -32,7 +32,7 @@ fun Locality.toDTO() = LocalityDTO(name, alternativeName, moviesScheduleURL)
 
 // ------------ Schedule ------------
 
-fun MovieSchedule.toDTO() = MovieScheduleDTO(title, originalTitle, year, scheduleURL, cinemas.map { it.toDTO() })
+fun MovieSchedule.toDTO() = MovieScheduleDTO(title, originalTitle, year, scheduleURL, cinemas.map { it.toDTO() }, date)
 
 fun CinemaSchedule.toDTO() = CinemaScheduleDTO(name, scheduleURL, sessions.map { it.toDTO() })
 
