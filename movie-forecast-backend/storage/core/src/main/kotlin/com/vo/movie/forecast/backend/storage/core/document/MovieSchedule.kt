@@ -13,7 +13,7 @@ data class MovieSchedule(val title: String,
                          val locality: Locality,
                          val date: LocalDate) {
     companion object {
-        const val DOCUMENT_SCHEDULE_NAME = "movies"
+        const val DOCUMENT_SCHEDULE_NAME = "schedules"
         const val PROPERTY_SCHEDULE_LOCALITY = "locality"
         const val PROPERTY_SCHEDULE_DATE = "date"
     }

@@ -1,3 +1,6 @@
 package com.vo.movie.forecast.parser.dto.schedule
 
-data class SessionScheduleDTO(val time: String, val is3D: Boolean)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class SessionScheduleDTO(val time: String,
+                              @get:JsonProperty("is3D") val is3D: Boolean)

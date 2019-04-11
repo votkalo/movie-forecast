@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.parser.feign.online.cinema.configuration
 
-import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
-import com.vo.movie.forecast.commons.feign.FeignProperties
+import com.vo.movie.forecast.common.feign.FeignBuilderFactory
+import com.vo.movie.forecast.common.feign.FeignProperties
 import com.vo.movie.forecast.parser.api.online.cinema.OnlineCinemaApi
 import com.vo.movie.forecast.parser.feign.online.cinema.OnlineCinemaApiFeign
 import feign.Retryer

@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.backend.storage.core.service.impl
 
 import com.vo.movie.forecast.backend.storage.core.converter.toDTO
-import com.vo.movie.forecast.backend.storage.core.converter.toEntity
+import com.vo.movie.forecast.backend.storage.core.converter.toDocument
 import com.vo.movie.forecast.backend.storage.core.dao.ScheduleRepository
 import com.vo.movie.forecast.backend.storage.core.service.ScheduleService
 import com.vo.movie.forecast.backend.storage.core.updater.ScheduleUpdater
@@ -24,7 +24,7 @@ class ScheduleServiceImpl(private val scheduleRepository: ScheduleRepository,
             scheduleUpdater.update(moviesSchedule, locality)
             return getMoviesSchedule(movies, moviesSchedule)
         }
-        return getMoviesSchedule(movies, scheduleRepository.getMoviesSchedule(locality.toEntity()).map { it.toDTO() })
+        return getMoviesSchedule(movies, scheduleRepository.getMoviesSchedule(locality.toDocument()).map { it.toDTO() })
     }
 
     private fun getMoviesSchedule(movies: List<MovieDTO>,

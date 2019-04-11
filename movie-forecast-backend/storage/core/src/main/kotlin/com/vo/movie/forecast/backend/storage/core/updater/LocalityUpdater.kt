@@ -1,9 +1,9 @@
 package com.vo.movie.forecast.backend.storage.core.updater
 
 import com.vo.movie.forecast.backend.storage.core.configuration.BackendStorageCacheConfiguration
-import com.vo.movie.forecast.backend.storage.core.converter.toEntity
+import com.vo.movie.forecast.backend.storage.core.converter.toDocument
 import com.vo.movie.forecast.backend.storage.core.dao.LocalityRepository
-import com.vo.movie.forecast.commons.cache.ExtendableSimpleCacheManager
+import com.vo.movie.forecast.common.cache.ExtendableSimpleCacheManager
 import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import org.springframework.stereotype.Component
 
@@ -26,6 +26,6 @@ class LocalityUpdater(private val cacheManager: ExtendableSimpleCacheManager,
     }
 
     private fun updateLocalities(localities: List<LocalityDTO>) {
-        localities.forEach { localityRepository.saveLocality(it.toEntity()) }
+        localities.forEach { localityRepository.saveLocality(it.toDocument()) }
     }
 }

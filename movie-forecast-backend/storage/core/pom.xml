@@ -39,7 +39,12 @@
         </dependency>
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-cache</artifactId>
+            <artifactId>movie-forecast-parser-feign-online-cinema</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-common-cache</artifactId>
             <version>${project.version}</version>
         </dependency>
 

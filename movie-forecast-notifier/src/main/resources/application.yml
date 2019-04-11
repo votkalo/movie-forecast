@@ -1,7 +1,12 @@
+server:
+  port: 8082
+
 feign:
   movie-forecast-parser:
     url: http://localhost:8000
   movie-forecast-backend-user:
     url: http://localhost:8080
+  movie-forecast-backend-storage:
+    url: http://localhost:8083
   movie-forecast-bot:
     url: http://localhost:8081

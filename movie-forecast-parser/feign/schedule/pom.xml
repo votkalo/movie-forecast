@@ -18,7 +18,7 @@
         <!--Project-->
         <dependency>
             <groupId>com.vo.movie</groupId>
-            <artifactId>movie-forecast-commons-feign</artifactId>
+            <artifactId>movie-forecast-common-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

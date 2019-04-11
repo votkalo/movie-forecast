@@ -2,8 +2,8 @@ package com.vo.movie.forecast.bot.feign.configuration
 
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.feign.NotificationApiFeign
-import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
-import com.vo.movie.forecast.commons.feign.FeignProperties
+import com.vo.movie.forecast.common.feign.FeignBuilderFactory
+import com.vo.movie.forecast.common.feign.FeignProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

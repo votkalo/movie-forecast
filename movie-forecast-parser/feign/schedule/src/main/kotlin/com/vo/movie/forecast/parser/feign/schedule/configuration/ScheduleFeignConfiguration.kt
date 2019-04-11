@@ -1,7 +1,7 @@
 package com.vo.movie.forecast.parser.feign.schedule.configuration
 
-import com.vo.movie.forecast.commons.feign.FeignBuilderFactory
-import com.vo.movie.forecast.commons.feign.FeignProperties
+import com.vo.movie.forecast.common.feign.FeignBuilderFactory
+import com.vo.movie.forecast.common.feign.FeignProperties
 import com.vo.movie.forecast.parser.api.schedule.ScheduleApi
 import com.vo.movie.forecast.parser.feign.schedule.ScheduleApiFeign
 import feign.Retryer

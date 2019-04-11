@@ -1,14 +1,14 @@
 package com.vo.movie.forecast.notifier.worker
 
+import com.vo.movie.forecast.backend.storage.api.OnlineCinemaApi
 import com.vo.movie.forecast.backend.user.api.UserApi
 import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
 import com.vo.movie.forecast.parser.dto.movie.MovieDTO
-import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
-import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinema
-import com.vo.movie.forecast.parser.provider.schedule.OnlineCinemaProvider
+import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinemaDTO
 import feign.FeignException
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -17,7 +17,7 @@ import java.math.BigDecimal
 @Component
 class OnlineCinemaNotifier(private val userApi: UserApi,
                            private val userMovieApi: UserMovieApi,
-                           private val onlineCinemaProvider: OnlineCinemaProvider,
+                           private val onlineCinemaApi: OnlineCinemaApi,
                            private val notificationApi: NotificationApi) {
 
     //    @Scheduled(cron = "0 31 18 * * ?", zone = "Europe/Minsk")
@@ -31,20 +31,21 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
             usersIds = userApi.getUsersIds(userPage++, pageSize)
             usersIds.forEach { userId ->
                 var movies: List<MovieDTO>
-                val onlineCinemaMovieAccessMap: MutableMap<OnlineCinema, MutableList<MovieAccessInfoDTO>> = HashMap()
+                val onlineCinemaMovieAccessMap: MutableMap<OnlineCinemaDTO, MutableList<MovieAccessDTO>> = HashMap()
                 do {
                     movies = userMovieApi.getUserMovies(userId, moviePage++, pageSize)
                     movies.forEach { movieInfo ->
-                        OnlineCinema.values().forEach { onlineCinema ->
+                        OnlineCinemaDTO.values().forEach { onlineCinema ->
                             if (onlineCinemaMovieAccessMap[onlineCinema] == null) {
                                 onlineCinemaMovieAccessMap[onlineCinema] = ArrayList()
                             }
                             try {
                                 onlineCinemaMovieAccessMap[onlineCinema]?.add(
-                                        onlineCinemaProvider.getMovieAccessInfo(
-                                                onlineCinema,
-                                                MovieInfoDTO(movieInfo.title, movieInfo.originalTitle, movieInfo.year)
+                                        onlineCinemaApi.getMovieAccessInfo(
+                                                MovieInfoDTO(movieInfo.title, movieInfo.originalTitle, movieInfo.year),
+                                                onlineCinema
                                         )
+
                                 )
                             } catch (movieNotFoundException: FeignException) {
                                 //Catch if movie not found in online cinema
@@ -61,10 +62,10 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
         } while (usersIds.size == pageSize)
     }
 
-    private fun createMessageText(onlineCinema: OnlineCinema,
-                                  notificationMovieAccessInfoList: List<MovieAccessInfoDTO>): String {
+    private fun createMessageText(onlineCinema: OnlineCinemaDTO,
+                                  notificationMovieAccessInfoList: List<MovieAccessDTO>): String {
         val stringBuilder = StringBuilder()
-        stringBuilder.append("Информация отслеживаемых фильмов в онлайн-кинотеатре <b>${onlineCinema.value}</b>:\n\n")
+        stringBuilder.append("Информация отслеживаемых фильмов в онлайн-кинотеатре <b>$onlineCinema</b>:\n\n")
         notificationMovieAccessInfoList.forEach {
             val title = it.title
             val year = it.year

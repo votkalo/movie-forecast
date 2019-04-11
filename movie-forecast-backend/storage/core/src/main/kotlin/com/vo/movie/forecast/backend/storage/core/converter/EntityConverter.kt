@@ -1,14 +1,11 @@
 package com.vo.movie.forecast.backend.storage.core.converter
 
-import com.vo.movie.forecast.backend.storage.core.document.CinemaSchedule
-import com.vo.movie.forecast.backend.storage.core.document.Locality
-import com.vo.movie.forecast.backend.storage.core.document.Movie
-import com.vo.movie.forecast.backend.storage.core.document.MovieSchedule
+import com.vo.movie.forecast.backend.storage.core.document.*
 import com.vo.movie.forecast.parser.dto.locality.LocalityDTO
 import com.vo.movie.forecast.parser.dto.movie.MovieDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessDTO
 import com.vo.movie.forecast.parser.dto.schedule.CinemaScheduleDTO
 import com.vo.movie.forecast.parser.dto.schedule.MovieScheduleDTO
-import com.vo.movie.forecast.backend.storage.core.document.SessionSchedule
 import com.vo.movie.forecast.parser.dto.schedule.SessionScheduleDTO
 
 // ------------ Movie ------------
@@ -37,3 +34,7 @@ fun MovieSchedule.toDTO() = MovieScheduleDTO(title, originalTitle, year, schedul
 fun CinemaSchedule.toDTO() = CinemaScheduleDTO(name, scheduleURL, sessions.map { it.toDTO() })
 
 fun SessionSchedule.toDTO() = SessionScheduleDTO(time, is3D)
+
+// ------------ Online Cinema ------------
+
+fun MovieAccess.toDTO() = MovieAccessDTO(title, originalTitle, year, price, currency, isAllowBySubscription, isPreOrder)

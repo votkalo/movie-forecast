@@ -1,10 +1,10 @@
 package com.vo.movie.forecast.parser.api.online.cinema
 
-import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessInfoDTO
+import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
-import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinema
+import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinemaDTO
 
 interface OnlineCinemaApi {
 
-    fun getMovieAccessInfo(onlineCinemaName: OnlineCinema, movieInfo: MovieInfoDTO): MovieAccessInfoDTO
+    fun getMovieAccessInfo(movieInfo: MovieInfoDTO, onlineCinema: OnlineCinemaDTO): MovieAccessDTO?
 }
