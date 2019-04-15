@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class UnsubscribeCommandHandler(private val userMovieApi: UserMovieApi) : CommandUpdateHandler(Command.UNSUBSCRIBE) {
+class MoviesCommandHandler(private val userMovieApi: UserMovieApi) : CommandUpdateHandler(Command.MOVIES) {
 
     override fun handle(update: Update) {
         val letters = call({ userMovieApi.getMoviesLetters(update.userId()) }, update.chatId())

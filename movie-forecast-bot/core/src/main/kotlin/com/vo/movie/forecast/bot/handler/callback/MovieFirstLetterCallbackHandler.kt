@@ -15,7 +15,7 @@ class MovieFirstLetterCallbackHandler(private val userMovieApi: UserMovieApi) :
         val movies = call({ userMovieApi.getMoviesByLetter(update.userId(), firstLetter) }, update.chatId())
         val moviesInfoStrings = movies.map { it.createCallbackButtonInfo() }
         val keyboard = moviesInfoStrings.map {
-            val button = createInlineKeyboardButton(it.text, Callback.MOVIE_INFO.addCallbackPrefix(it.callbackData))
+            val button = createInlineKeyboardButton(it.text, Callback.MOVIE.addCallbackPrefix(it.callbackData))
             createRowButton(button)
         }
         val inlineKeyboardMarkup = createInlineKeyboardMarkup(keyboard)

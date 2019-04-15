@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class MovieInfoCallbackHandler(private val userMovieApi: UserMovieApi,
-                               private val movieApi: MovieApi) : CallbackUpdateHandler(Callback.MOVIE_INFO) {
+class MovieUnsubscribeCallbackHandler(private val userMovieApi: UserMovieApi,
+                                      private val movieApi: MovieApi) : CallbackUpdateHandler(Callback.MOVIE_UNSUBSCRIBE) {
 
     override fun handle(update: Update) {
         val userId = update.userId()
