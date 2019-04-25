@@ -1,14 +1,15 @@
 package com.vo.movie.forecast.bot.handler.callback
 
 import com.vo.movie.forecast.backend.user.api.UserMovieApi
+import com.vo.movie.forecast.bot.message.movie.MovieMessageCreator
 import com.vo.movie.forecast.bot.util.*
 import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class MovieFirstLetterCallbackHandler(private val userMovieApi: UserMovieApi) :
-        CallbackUpdateHandler(Callback.MOVIE_FIRST_LETTER) {
+class MovieFirstLetterCallbackHandler(private val userMovieApi: UserMovieApi,
+                                      private val movieMessageCreator: MovieMessageCreator) : CallbackUpdateHandler(Callback.MOVIE_FIRST_LETTER) {
 
     override fun handle(update: Update) {
         val firstLetter = update.getCallbackData().single()
@@ -23,31 +24,8 @@ class MovieFirstLetterCallbackHandler(private val userMovieApi: UserMovieApi) :
         getBot().execute(editMessageText)
     }
 
-    private fun MovieDTO.createCallbackButtonInfo() = CallbackButtonInfo(getCallbackButtonText(), kinopoiskMovieId.toString())
-
-    private fun MovieDTO.getCallbackButtonText(): String {
-        val allowTextLength = 38
-        val threeDots = "..."
-
-        val callbackButtonText = createCallbackButtonText(title, year)
-
-        if (callbackButtonText.length <= allowTextLength) {
-            return callbackButtonText
-        }
-
-        val extraTitleLength = callbackButtonText.length + threeDots.length - allowTextLength
-        val notFullTitle = title.dropLast(extraTitleLength) + threeDots
-        return createCallbackButtonText(notFullTitle, year)
-    }
-
-    private fun createCallbackButtonText(title: String, year: String?): String {
-        val messageBuilder = StringBuilder()
-        messageBuilder.append(title)
-        if (year != null) {
-            messageBuilder.append(" ($year)")
-        }
-        return messageBuilder.toString()
-    }
+    private fun MovieDTO.createCallbackButtonInfo() =
+        CallbackButtonInfo(movieMessageCreator.createMovieTitleForButton(this), kinopoiskMovieId.toString())
 
     private data class CallbackButtonInfo(val text: String, val callbackData: String)
 }

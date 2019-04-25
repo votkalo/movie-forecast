@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class MovieScheduleDTO(val title: String,
                             val originalTitle: String?,
-                            val year: String,
+                            val year: String?,
                             val scheduleURL: String,
                             val cinemas: List<CinemaScheduleDTO>,
                             val date: LocalDate)

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>movie-forecast-bot</artifactId>
+    <artifactId>movie-forecast-bot-message</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>movie-forecast-bot</name>
+    <name>movie-forecast-bot-message</name>
 
     <parent>
-        <artifactId>movie-forecast</artifactId>
+        <artifactId>movie-forecast-bot</artifactId>
         <groupId>com.vo.movie</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <modules>
-        <module>api</module>
-        <module>feign</module>
-        <module>core</module>
-        <module>dto</module>
-        <module>message</module>
+        <module>commons</module>
+        <module>movie</module>
+        <module>schedule</module>
+        <module>online-cinema</module>
     </modules>
+
 </project>

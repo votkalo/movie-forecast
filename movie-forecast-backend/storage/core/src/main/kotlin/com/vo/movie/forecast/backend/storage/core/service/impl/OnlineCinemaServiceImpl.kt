@@ -9,6 +9,7 @@ import com.vo.movie.forecast.parser.api.online.cinema.OnlineCinemaApi
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinemaDTO
+import feign.FeignException
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,9 +20,19 @@ class OnlineCinemaServiceImpl(private val onlineCinemaRepository: OnlineCinemaRe
         val onlineCinemaDocument = onlineCinema.toDocument()
         val movieAccess = onlineCinemaRepository.getMovieAccess(onlineCinemaDocument, movieInfo.toDocument())
         if (movieAccess != null) return movieAccess.toDTO()
-        val movieAccessDTO = onlineCinemaApi.getMovieAccessInfo(movieInfo, onlineCinema)
-            ?: throw NotFoundException("Movie ${movieInfo.title}'${movieInfo.originalTitle}'(${movieInfo.year}) not found in online cinema $onlineCinema")
+        val movieAccessDTO =
+            try {
+                onlineCinemaApi.getMovieAccessInfo(movieInfo, onlineCinema)
+            } catch (e: FeignException) {
+                if (e.status() != 404) {
+                    throw e
+                }
+                throw movieInfo.movieNotFoundExceptionw(onlineCinema)
+            } ?: throw movieInfo.movieNotFoundExceptionw(onlineCinema)
         onlineCinemaRepository.save(onlineCinemaDocument, movieAccessDTO.toDocument())
         return movieAccessDTO
     }
+
+    private fun MovieInfoDTO.movieNotFoundExceptionw(onlineCinema: OnlineCinemaDTO): NotFoundException =
+        NotFoundException("Movie $title'$originalTitle'($year) not found in online cinema $onlineCinema")
 }

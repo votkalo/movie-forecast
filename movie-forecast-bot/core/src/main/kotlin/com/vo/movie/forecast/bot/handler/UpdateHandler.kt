@@ -57,7 +57,7 @@ abstract class UpdateHandler {
         if (hasCallbackQuery()) {
             return createEditMessageText(callbackQuery.inlineMessageId, text)
         }
-        throw NullPointerException("Data for edit message not found")
+        throw NullPointerException("Data for edit com.vo.movie.forecast.bot.message not found")
     }
 
     protected fun Update.createEditMessageText(text: String,

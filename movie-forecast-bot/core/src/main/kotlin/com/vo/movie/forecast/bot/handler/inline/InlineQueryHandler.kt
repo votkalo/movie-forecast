@@ -3,6 +3,7 @@ package com.vo.movie.forecast.bot.handler.inline
 import com.vo.movie.forecast.backend.storage.api.MovieApi
 import com.vo.movie.forecast.bot.handler.UpdateHandler
 import com.vo.movie.forecast.bot.handler.callback.Callback
+import com.vo.movie.forecast.bot.message.movie.MovieMessageCreator
 import com.vo.movie.forecast.bot.util.*
 import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import com.vo.movie.forecast.parser.dto.movie.MovieSearchParamsDTO
@@ -15,7 +16,8 @@ import org.telegram.telegrambots.meta.api.objects.inlinequery.result.InlineQuery
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 
 @Component
-class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
+class InlineQueryHandler(private val movieApi: MovieApi,
+                         private val movieMessageCreator: MovieMessageCreator) : UpdateHandler() {
 
     override fun shouldHandle(update: Update): Boolean =
         update.hasInlineQuery() && update.inlineQuery.hasQuery() && update.inlineQuery.query.isNotBlank()
@@ -44,70 +46,20 @@ class InlineQueryHandler(private val movieApi: MovieApi) : UpdateHandler() {
         val article = InlineQueryResultArticle()
         article.inputMessageContent = toInputTextMessageContent()
         article.id = kinopoiskMovieId.toString()
-        article.title = createArticleTitle()
-        article.description = createArticleDescription()
+        article.title = movieMessageCreator.createMovieTitle(this)
+        article.description = movieMessageCreator.createShortMovieDescription(this)
         article.thumbUrl = smallPosterURL
         article.replyMarkup = createFollowButtonMarkup()
         return article
     }
 
-    private fun MovieDTO.createArticleTitle(): String {
-        val titleBuilder = StringBuilder()
-        titleBuilder.append(title)
-        if (year != null) {
-            titleBuilder.append(" ($year)")
-        }
-        return titleBuilder.toString()
-    }
-
-    private fun MovieDTO.createArticleDescription(): String {
-        val descriptionBuilder = StringBuilder()
-        if (originalTitle != null) {
-            descriptionBuilder.append("$originalTitle ")
-        }
-        if (kinopoiskRating != null) {
-            descriptionBuilder.append("★$kinopoiskRating")
-        }
-        if (genres != null) {
-            descriptionBuilder.append("\n$genres")
-        }
-        if (countries != null) {
-            descriptionBuilder.append("\n$countries")
-        }
-        return descriptionBuilder.toString()
-    }
 
     private fun MovieDTO.toInputTextMessageContent(): InputTextMessageContent {
         val messageContent = InputTextMessageContent()
         messageContent.enableWebPagePreview()
         messageContent.enableHtml(true)
-        messageContent.messageText = createMessageText()
+        messageContent.messageText = movieMessageCreator.createFullMovieInfo(this)
         return messageContent
-    }
-
-    private fun MovieDTO.createMessageText(): String {
-        val messageBuilder = StringBuilder()
-        messageBuilder.append("<b>")
-        messageBuilder.append(title)
-        if (year != null) {
-            messageBuilder.append(" ($year)")
-        }
-        messageBuilder.append("</b>")
-        if (originalTitle != null) {
-            messageBuilder.append("\n<i>$originalTitle</i>")
-        }
-        messageBuilder.append("\n<a href=\"$bigPosterURL\">&#8205;</a>")
-        messageBuilder.append("\n<a href=\"$sourceURL\">Кинопоиск</a>")
-        if (kinopoiskRating != null) {
-            messageBuilder.append(" &#x2B50; $kinopoiskRating")
-        }
-        if (genres != null) {
-            messageBuilder.append("\nЖанр: $genres")
-        }
-        if (countries != null) {
-            messageBuilder.append("\nСтрана: $countries")
-        }
-        return messageBuilder.toString()
     }
 
     private fun MovieDTO.createFollowButtonMarkup(): InlineKeyboardMarkup {

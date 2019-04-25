@@ -5,6 +5,7 @@ import com.vo.movie.forecast.backend.user.api.UserApi
 import com.vo.movie.forecast.backend.user.api.UserMovieApi
 import com.vo.movie.forecast.bot.api.NotificationApi
 import com.vo.movie.forecast.bot.data.NotificationDTO
+import com.vo.movie.forecast.bot.message.online.cinema.OnlineCinemaMessageCreator
 import com.vo.movie.forecast.parser.dto.movie.MovieDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieAccessDTO
 import com.vo.movie.forecast.parser.dto.online.cinema.MovieInfoDTO
@@ -12,13 +13,13 @@ import com.vo.movie.forecast.parser.dto.online.cinema.OnlineCinemaDTO
 import feign.FeignException
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
 
 @Component
 class OnlineCinemaNotifier(private val userApi: UserApi,
                            private val userMovieApi: UserMovieApi,
                            private val onlineCinemaApi: OnlineCinemaApi,
-                           private val notificationApi: NotificationApi) {
+                           private val notificationApi: NotificationApi,
+                           private val onlineCinemaMessageCreator: OnlineCinemaMessageCreator) {
 
     //    @Scheduled(cron = "0 31 18 * * ?", zone = "Europe/Minsk")
     @Scheduled(fixedDelay = 10000L)
@@ -55,45 +56,10 @@ class OnlineCinemaNotifier(private val userApi: UserApi,
                 } while (movies.size == pageSize)
                 onlineCinemaMovieAccessMap.forEach { (onlineCinema, movieAccessInfoList) ->
                     notificationApi.sendNotification(
-                            NotificationDTO(userId, createMessageText(onlineCinema, movieAccessInfoList))
+                            NotificationDTO(userId, onlineCinemaMessageCreator.createMoviesAccess(onlineCinema, movieAccessInfoList))
                     )
                 }
             }
         } while (usersIds.size == pageSize)
-    }
-
-    private fun createMessageText(onlineCinema: OnlineCinemaDTO,
-                                  notificationMovieAccessInfoList: List<MovieAccessDTO>): String {
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("Информация отслеживаемых фильмов в онлайн-кинотеатре <b>$onlineCinema</b>:\n\n")
-        notificationMovieAccessInfoList.forEach {
-            val title = it.title
-            val year = it.year
-            val originalTitle = it.originalTitle
-            stringBuilder.append("<b>")
-            stringBuilder.append(title)
-            if (year != null) {
-                stringBuilder.append(" ($year)")
-            }
-            stringBuilder.append("</b>")
-            if (originalTitle != null && originalTitle.isNotBlank()) {
-                stringBuilder.append("\n<i>$originalTitle</i>")
-            }
-            stringBuilder.append("\n")
-            if (it.isAllowBySubscription) {
-                stringBuilder.append("Подписка ")
-            }
-            if (it.price.compareTo(BigDecimal.ZERO) == 1) {
-                stringBuilder.append("Покупка(от ${it.price} ${it.currency}) ")
-            }
-            if (it.isPreOrder) {
-                stringBuilder.append("Предзаказ ")
-            }
-            if (!it.isAllowBySubscription && !it.isPreOrder && it.price.compareTo(BigDecimal.ZERO) == 0) {
-                stringBuilder.append("Бесплатно ")
-            }
-            stringBuilder.append("\n\n")
-        }
-        return stringBuilder.toString()
     }
 }

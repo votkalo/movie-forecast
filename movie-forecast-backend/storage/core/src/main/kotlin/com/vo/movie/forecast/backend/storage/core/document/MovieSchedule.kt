@@ -7,7 +7,7 @@ import java.time.LocalDate
 @Document(DOCUMENT_SCHEDULE_NAME)
 data class MovieSchedule(val title: String,
                          val originalTitle: String?,
-                         val year: String,
+                         val year: String?,
                          val scheduleURL: String,
                          val cinemas: List<CinemaSchedule>,
                          val locality: Locality,

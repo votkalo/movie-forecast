@@ -32,6 +32,11 @@
             <artifactId>movie-forecast-backend-storage-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vo.movie</groupId>
+            <artifactId>movie-forecast-bot-message-movie</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!--Spring-->
         <dependency>
