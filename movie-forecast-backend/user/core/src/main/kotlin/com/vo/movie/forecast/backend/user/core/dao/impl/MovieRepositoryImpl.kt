@@ -33,7 +33,7 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
     override fun existsMovie(userId: Long, kinopoiskMovieId: Long): Boolean {
         val query = Query()
             .addCriteria(criteriaUserId(userId))
-            .addCriteria(kinopoiskMovieIdIdCriteria(kinopoiskMovieId))
+            .addCriteria(kinopoiskMovieIdCriteria(kinopoiskMovieId))
         return mongoOperation.exists(query, User::class)
     }
 
@@ -42,7 +42,7 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
             arrayListOf(
                     aggregationMatchUserId(userId),
                     aggregationUnwindMovies(),
-                    Aggregation.match(kinopoiskMovieIdIdCriteria(kinopoiskMovieId)),
+                    Aggregation.match(kinopoiskMovieIdCriteria(kinopoiskMovieId)),
                     aggregationProjectMovie()
             )
         return mongoOperation.aggregate(Aggregation.newAggregation(operations), User::class.java, Movie::class.java)
@@ -108,7 +108,7 @@ open class MovieRepositoryImpl(private val mongoOperation: MongoOperations) : Mo
         mongoOperation.findAndModify(queryUser(userId), update, User::class.java)
     }
 
-    private fun kinopoiskMovieIdIdCriteria(kinopoiskMovieId: Long) =
+    private fun kinopoiskMovieIdCriteria(kinopoiskMovieId: Long) =
         Criteria.where("$PROPERTY_USER_MOVIES.$PROPERTY_MOVIE_KINOPOISK_MOVIE_ID").`is`(kinopoiskMovieId)
 
     private fun aggregationMatchUserId(userId: Long) = Aggregation.match(criteriaUserId(userId))

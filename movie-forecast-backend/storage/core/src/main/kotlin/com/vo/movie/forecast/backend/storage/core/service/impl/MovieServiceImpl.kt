@@ -24,9 +24,18 @@ class MovieServiceImpl(private val movieRepository: MovieRepository,
         return movies
     }
 
-    override fun getMovie(kinopoiskMovieId: Long): MovieDTO =
-        movieCaffeineCache.getIfPresent(kinopoiskMovieId)
+    override fun getMovie(kinopoiskMovieId: Long): MovieDTO {
+        return movieCaffeineCache.getIfPresent(kinopoiskMovieId)
             ?: movieRepository.getMovie(kinopoiskMovieId)?.toDTO()
-            ?: movieApi.getMovie(kinopoiskMovieId)
+            ?: getAndSaveMovie(kinopoiskMovieId)
+    }
+
+    private fun getAndSaveMovie(kinopoiskMovieId: Long): MovieDTO {
+        val movie =  movieApi.getMovie(kinopoiskMovieId)
+        movieRepository.saveMovie(movie.toDocument())
+        movieCaffeineCache.put(movie.kinopoiskMovieId, movie)
+        return movie
+    }
+
 
 }

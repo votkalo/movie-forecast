@@ -27,12 +27,12 @@ class OnlineCinemaServiceImpl(private val onlineCinemaRepository: OnlineCinemaRe
                 if (e.status() != 404) {
                     throw e
                 }
-                throw movieInfo.movieNotFoundExceptionw(onlineCinema)
-            } ?: throw movieInfo.movieNotFoundExceptionw(onlineCinema)
+                throw movieInfo.movieNotFoundException(onlineCinema)
+            } ?: throw movieInfo.movieNotFoundException(onlineCinema)
         onlineCinemaRepository.save(onlineCinemaDocument, movieAccessDTO.toDocument())
         return movieAccessDTO
     }
 
-    private fun MovieInfoDTO.movieNotFoundExceptionw(onlineCinema: OnlineCinemaDTO): NotFoundException =
+    private fun MovieInfoDTO.movieNotFoundException(onlineCinema: OnlineCinemaDTO): NotFoundException =
         NotFoundException("Movie $title'$originalTitle'($year) not found in online cinema $onlineCinema")
 }
