@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8993
 
 spring:
   data:
@@ -17,4 +17,4 @@ caffeine:
 
 feign:
   movie-forecast-parser:
-    url: http://localhost:8000
+    url: http://localhost:8999
